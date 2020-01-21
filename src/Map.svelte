@@ -1,14 +1,15 @@
 <script>
 
 
-export let iowa;
+// export let iowa;
   // export let mn;
-export let county;
+export let geojson;
+export let county_data;
 
 // let test_data = [{"officename":"President","statepostal":"IA","first":"Elizabeth","last":"Warren","party":"Dem","votecount":189,"votepct":0.3375,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Joe","last":"Biden","party":"Dem","votecount":149,"votepct":0.266071,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Amy","last":"Klobuchar","party":"Dem","votecount":131,"votepct":0.233929,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Deval","last":"Patrick","party":"Dem","votecount":15,"votepct":0.026786,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Andrew","last":"Yang","party":"Dem","votecount":13,"votepct":0.023214,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":null,"last":"Other","party":"Dem","votecount":10,"votepct":0.017857,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Bernie","last":"Sanders","party":"Dem","votecount":10,"votepct":0.017857,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Cory","last":"Booker","party":"Dem","votecount":9,"votepct":0.016071,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Tulsi","last":"Gabbard","party":"Dem","votecount":9,"votepct":0.016071,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Julian","last":"Castro","party":"Dem","votecount":8,"votepct":0.014286,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Pete","last":"Buttigieg","party":"Dem","votecount":7,"votepct":0.0125,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":"Tom","last":"Steyer","party":"Dem","votecount":6,"votepct":0.010714,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"},{"officename":"President","statepostal":"IA","first":null,"last":"Uncommitted","party":"Dem","votecount":4,"votepct":0.007143,"winner":false,"level":"county","fipscode":"19001","reportingunitname":"Adair","lastupdated":"2020-01-16T15:10:29.233Z"}]
 
 // $: county_data = county;
-$: county_data = _.groupBy(county, "fipscode")
+
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
 import { scaleOrdinal } from 'd3-scale';
@@ -20,6 +21,9 @@ let width = 400;
 let height = 400;
 let center = width / 2;
 
+
+
+console.log(county_data);
 
 // var utmZone = d3.scaleLinear()
 //     .domain([-177, 177])
@@ -48,7 +52,7 @@ const colorScale = scaleOrdinal()
 
 let path = geoPath().projection(projection);
 
-const land = feature(iowa, iowa.objects.cb_2015_iowa_county_20m)
+const land = feature(geojson, geojson.objects.cb_2015_iowa_county_20m)
 
 // function fillCounty(feature) {
 //   var fips = feature.properties.GEOID;
@@ -58,7 +62,7 @@ const land = feature(iowa, iowa.objects.cb_2015_iowa_county_20m)
 //   return colorScale(leader)
 //
 // }
-// const land = feature(mn, mn.objects.cb_2015_minnesota_county_20m);
+// const land = feature(geojson, geojson.objects.cb_2015_minnesota_county_20m);
 data = land.features;
 
 // test_data = county["19097"]
@@ -133,23 +137,6 @@ function test(feature) {
   </ul> -->
 
 
-<table>
-	{#each county_data as state}
-		<tr>
-			<td>
-				{#if state.first}
-					{state.first} {state.last}
-				{:else}
-					{state.last}
-				{/if}
-			</td>
-      <td>
-        {state.votecount}
-      </td>
-
-		</tr>
-	{/each}
-</table>
 
 
 </div>

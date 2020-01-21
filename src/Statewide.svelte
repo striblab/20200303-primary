@@ -1,9 +1,10 @@
 <script>
 
-export let state;
+export let statewide_data;
 
 </script>
 
+<h1>Statewide results</h1>
 <table>
   <tr>
       <th>
@@ -13,22 +14,18 @@ export let state;
           Votes
       </th>
   </tr>
-  {#each state as state}
+  {#each statewide_data as candidate}
     <tr>
       <td>
-        {#if state.first}
-          {state.first} {state.last}
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
         {:else}
-          {state.last}
+          {candidate.last}
         {/if}
       </td>
       <td>
-        {state.votecount}
+        {candidate.votecount}
       </td>
     </tr>
   {/each}
 </table>
-
-<!-- <p>
-  {state}
-</p> -->
