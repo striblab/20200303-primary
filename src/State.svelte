@@ -5,10 +5,17 @@ export let state;
 </script>
 
 <table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
   {#each state as state}
     <tr>
       <td>
-        <!-- check for Uncommitted -->
         {#if state.first}
           {state.first} {state.last}
         {:else}
@@ -21,3 +28,7 @@ export let state;
     </tr>
   {/each}
 </table>
+
+<!-- <p>
+  {state}
+</p> -->
