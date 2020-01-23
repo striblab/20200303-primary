@@ -2896,6 +2896,7 @@
           "AWATER": 2410445
         }
       }]
-    }
+    },
+    "cities":{"type":"GeometryCollection","geometries":[{"type":"Point","coordinates":[-93.625,41.5868],"properties":{"STATEFP":"19","PLACEFP":"21000","NAME":"Des Moines"}},{"type":"Point","coordinates":[-91.5302,41.6611],"properties":{"STATEFP":"19","PLACEFP":"38595","NAME":"Iowa City"}}]}
   }
 }
