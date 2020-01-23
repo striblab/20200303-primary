@@ -10,10 +10,13 @@ import _ from 'lodash';
 import * as d3 from 'd3';
 
 let data;
+let city_points;
 let width = 400;
 let height = 400;
 let center = width / 2;
-
+let tooltipResults;
+let tooltipHeight;
+let tooltipWidth;
 
 
 const projection = geoAlbers()
@@ -28,36 +31,63 @@ const projection = geoAlbers()
 let path = geoPath().projection(projection);
 
 const land = feature(geojson, geojson.objects.cb_2015_iowa_county_20m)
+const cities = feature(geojson, geojson.objects.cities)
 // const land = feature(geojson, geojson.objects.cb_2015_minnesota_county_20m);
 data = land.features;
+city_points = cities.features;
 
 function hideTooltip(feature) {
-  if (feature) {
-    this.set({
-      tooltipActive: false,
-      toolTipResults: undefined
-    });
+
+  var tooltip = document.getElementById('tooltip')
+  if (tooltip.classList.contains('tooltip-active')) {
+    tooltip.classList.remove('tooltip-active');
+  }
+  else {
+    tooltip.classList.add('tooltip-active');
   }
 
 }
 
 function buildTooltip(feature) {
 
-  if (feature) {
-
-    feature.set({
-      tooltipActive: true,
-      tooltipResults: results
-    })
-
     var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
-    var results = record[1]
+    tooltipResults = record[1];
 
-    console.log(feature.properties.GEOID)
-    console.log(feature.properties.NAME + ' County')
-    console.log(record)
-    console.log(record[1][0].last)
-  }
+    let tooltip = document.getElementById('tooltip')
+    if (tooltip.classList.contains('tooltip-active')) {
+      tooltip.classList.remove('tooltip-active');
+    }
+    else {
+      tooltip.classList.add('tooltip-active');
+    }
+
+    tooltipHeight = tooltip.clientHeight;
+    tooltipWidth = tooltip.clientWidth;
+
+    // console.log(feature.properties.GEOID)
+    // console.log(feature.properties.NAME + ' County')
+    // console.log(record)
+    // console.log(record[1][0].last)
+  // }
+}
+
+function positionTooltip(event, feature) {
+  let tooltip = d3.select('#tooltip')
+  var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
+  var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
+
+  let tooltipOffset = 25;
+  let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
+
+  if (!cursorOffPage) {
+      tooltip
+        .style('left', x - (tooltipWidth / 2) + 'px')
+        .style('top', y + tooltipOffset + 'px');
+  } else {
+      tooltip
+        .style('left', x - (tooltipWidth / 2) + 'px')
+        .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
+    }
 }
 
 function countyClass(feature, data) {
@@ -99,14 +129,10 @@ function countyClass(feature, data) {
   }
 </style>
 
-<slot>
-
-</slot>
-
 <div class="county-map">
 
-  <!-- <div class="county-map-tooltip { tooltipActive ? 'tooltip-active' : '' }">
-    <h4>{ toolTipResults ? toolTipResults.countyName : '' } County</h4>
+  <div class="county-map-tooltip" id="tooltip">
+    <h4>{ tooltipResults ? tooltipResults[0].reportingunitname : '' } County</h4>
     <table>
       <thead>
         <tr>
@@ -117,31 +143,38 @@ function countyClass(feature, data) {
       </thead>
 
       <tbody>
-        {#if toolTipResults}
-          {#each toolTipResults as result}
+        {#if tooltipResults}
+          {#each tooltipResults as result}
             <tr>
-              <td class="map-cand">{ keyedResults[result.candidate_id].candidate.last }</td>
-              <td class="map-votes">{ result.votes.toLocaleString() }</td>
-              <td class="map-pct">{ round(result.percent * 100, 1) }%</td>
+              <td class="map-cand">{result.last}</td>
+              <td class="map-votes">{result.votecount}</td>
+              <td class="map-pct">{result.votepct}</td>
             </tr>
           {/each}
         {/if}
       </tbody>
     </table>
 
-    {#if toolTipResults && toolTipResults[0] && toolTipResults[0].resultDetails}
+    <!-- {#if tooltipResults}
       <div class="reporting">
-        { round(toolTipResults[0].resultDetails.totalPrecincts ? toolTipResults[0].resultDetails.reporting / toolTipResults[0].resultDetails.totalPrecincts * 100 : 0, 0) }% precincts reporting in county
+        { round(tooltipResults[0].resultDetails.totalPrecincts ? tooltipResults[0].resultDetails.reporting / tooltipResults[0].resultDetails.totalPrecincts * 100 : 0, 0) }% precincts reporting in county
       </div>
-    {/if}
+    {/if} -->
   </div>
-   -->
+
   <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;" >
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(feature)}" on:mouseout="{hideTooltip(feature)}" />
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(feature)}" on:mousemove="{positionTooltip(event, feature)}" on:mouseout="{hideTooltip(feature)}" />
       {/each}
+    </g>
+    <g class="cities">
+      <!-- {#if city_points.length != 0} -->
+      {#each city_points as city}
+        <path d="{path(city)}"></path>
+      {/each}
+      <!-- {/if} -->
     </g>
   </svg>
 
