@@ -1,12 +1,12 @@
 <script>
 
 export let county;
-let county_fips = county[0];
+let county_name = county[1][0].reportingunitname;
 let candidates = county[1];
 
 </script>
 
-<h2>{county_fips} County</h2>
+<h2>{county_name} County</h2>
 <table>
   <tr>
       <th>
