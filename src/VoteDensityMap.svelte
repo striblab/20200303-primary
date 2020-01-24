@@ -1,0 +1,162 @@
+<script>
+
+import { geoAlbers, geoPath, geoMercator } from "d3-geo";
+import { scaleOrdinal } from 'd3-scale';
+import { feature } from 'topojson';
+import _ from 'lodash';
+import percentile from 'percentile';
+import * as d3 from 'd3';
+
+export let topojson;
+export let candidate;
+export let candidate_total_votes;
+export let votecounts;
+export let county_percentiles;
+
+// const z_scores = function (values) {
+//   const mean = (...values) => values.reduce((acc, val) => acc + val, 0) / values.length;
+//   const mean_value = mean(...values);
+//
+//   var squareDiffs = values.map(function(value){
+//     var diff = value - mean_value;
+//     var sqr = diff * diff;
+//     return sqr;
+//   });
+//
+//   var avgSquareDiff = mean(...squareDiffs);
+//   var stdDev = Math.sqrt(avgSquareDiff);
+//
+//   var z_scores = values.map(function(value){
+//     var z = (value - mean_value) / stdDev;
+//     return z;
+//   });
+//
+//   return z_scores;
+// }
+
+const percentiles = function (values) {
+  // This is not necessarily the canonical calculation of percentile -- we're trying to gauge where in the range of vote totals this candidate got is this number
+  let distinct_values = [...new Set(values)];
+  let distinct_values_sorted = distinct_values.slice().sort(function (a, b) {
+    return a - b;
+  });
+  let results = {}
+  for (var value of values) {
+    var position = 0;
+    for (var s of distinct_values_sorted) {
+      // console.log(copy.sort());
+      if (s > value) {
+        break;
+      }
+      position += 1;
+    }
+    // console.log(position);
+    results[value] = position/distinct_values_sorted.length;
+  }
+  return results;
+}
+
+// console.log(z_scores([1, 2, 3, 4, 5, 6]));
+// console.log(percentile(3, [1, 2, 3, 4, 5, 6]));
+// console.log(percentiles([6, 2, 3, 6, 1, 6, 2, 3, 4, 5, 10]));
+
+$: {
+  candidate_total_votes = 0
+  votecounts = candidate.results.map(function(county){
+    return county.votecount;
+  });
+  county_percentiles = percentiles(votecounts);
+
+  candidate.results.forEach(function(county){
+    candidate_total_votes += county.votecount;
+  });
+}
+
+export let width = 400;
+export let height = 400;
+let center = width / 2;
+
+const projection = geoAlbers()
+            // .center([width, height])
+            .scale(4500)
+            // .translate([0, height]);
+            // iowa translation
+            .translate([0, height + (width / 8)])
+            //mn translation
+            // .translate([0, height * 2])
+
+let path = geoPath().projection(projection);
+
+const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
+
+function setOpacity(feature, results_data) {
+  if (results_data.length == 0) {
+    return 'fill-opacity: 0.5'
+  } else {
+    var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
+
+    // opacity based on share of total votes received statewide
+    // var opacity = record.votecount / candidate_total_votes * 10;
+
+    // opacity based on county percentage
+    // var opacity = record.votepct * 3;
+
+    // opacity based on percentiles
+    var opacity = county_percentiles[record.votecount];
+
+    // console.log(opacity);
+    return 'fill-opacity: ' + opacity;
+  }
+}
+
+function countyClass(feature, results_data) {
+  // const data = await results;
+  // console.log(data)
+  if (results_data.length == 0) {
+    return 'no-leader';
+  }
+  else {
+    var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
+    // console.log(record);
+    let candidate_class = 'density-' + record.last.toLowerCase();
+    return candidate_class;
+  }
+}
+
+</script>
+
+
+<style>
+  .density-map {
+    max-width: 200px;
+    /* width: 100%; */
+    background-color: "#eeeeee";
+    /* margin: 0 auto; */
+    /* position: relative; */
+  }
+   .provinceShape {
+    /* fill: #f5f5f5; */
+    /* fill: grey; */
+    stroke: #999;
+    stroke-width: 0.5;
+  }
+
+  h4.cand-name {
+    font-size: 0.8em;
+  }
+</style>
+
+<div class="density-map">
+  {#if candidate.results.length > 0}
+  <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
+  {/if}
+  <svg viewbox="0 0 {width} {height}" style="width: 100%; height: 100%;" >
+    <!-- on:mouseout="{hideTooltip(event)}" -->
+    <g class="counties">
+      {#each land.features as feature}
+        <path d={path(feature)} class="provinceShape {countyClass(feature, candidate.results)}" style="{setOpacity(feature, candidate.results)}" />
+      {/each}
+    </g>
+  </svg>
+
+</div>

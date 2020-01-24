@@ -51,53 +51,53 @@ function hideTooltip(path, feature) {
 
 }
 
-function buildTooltip(path, feature) {
-
-    var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
-    tooltipResults = record[1];
-
-    let tooltip = document.getElementById('tooltip')
-    if (tooltip.classList.contains('tooltip-active')) {
-      tooltip.classList.remove('tooltip-active');
-    }
-    else {
-      tooltip.classList.add('tooltip-active');
-    }
-
-    tooltipHeight = tooltip.clientHeight;
-    tooltipWidth = tooltip.clientWidth;
-
-    d3.selectAll('.counties path')
-      .style('opacity', 0.65)
-
-    d3.select(path)
-      .style('opacity', 1)
-
-    // console.log(feature.properties.GEOID)
-    // console.log(feature.properties.NAME + ' County')
-    // console.log(record)
-    // console.log(record[1][0].last)
-  // }
-}
-
-function positionTooltip(event, feature) {
-  let tooltip = d3.select('#tooltip')
-  var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
-  var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
-
-  let tooltipOffset = 25;
-  let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
-
-  if (!cursorOffPage) {
-      tooltip
-        .style('left', x - (tooltipWidth / 2) + 'px')
-        .style('top', y + tooltipOffset + 'px');
-  } else {
-      tooltip
-        .style('left', x - (tooltipWidth / 2) + 'px')
-        .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
-    }
-}
+// function buildTooltip(path, feature) {
+//
+//     var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
+//     tooltipResults = record[1];
+//
+//     let tooltip = document.getElementById('tooltip')
+//     if (tooltip.classList.contains('tooltip-active')) {
+//       tooltip.classList.remove('tooltip-active');
+//     }
+//     else {
+//       tooltip.classList.add('tooltip-active');
+//     }
+//
+//     tooltipHeight = tooltip.clientHeight;
+//     tooltipWidth = tooltip.clientWidth;
+//
+//     d3.selectAll('.counties path')
+//       .style('opacity', 0.65)
+//
+//     d3.select(path)
+//       .style('opacity', 1)
+//
+//     // console.log(feature.properties.GEOID)
+//     // console.log(feature.properties.NAME + ' County')
+//     // console.log(record)
+//     // console.log(record[1][0].last)
+//   // }
+// }
+//
+// function positionTooltip(event, feature) {
+//   let tooltip = d3.select('#tooltip')
+//   var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
+//   var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
+//
+//   let tooltipOffset = 25;
+//   let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
+//
+//   if (!cursorOffPage) {
+//       tooltip
+//         .style('left', x - (tooltipWidth / 2) + 'px')
+//         .style('top', y + tooltipOffset + 'px');
+//   } else {
+//       tooltip
+//         .style('left', x - (tooltipWidth / 2) + 'px')
+//         .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
+//     }
+// }
 
 function countyClass(feature, data) {
   // const data = await results;
@@ -175,7 +175,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip(event, feature)}" on:mouseout="{hideTooltip(this, feature)}" />
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" />
       {/each}
     </g>
     <g class="cities">
