@@ -1,5 +1,4 @@
 <script>
-
 export let geojson;
 export let county_data_grouped;
 
@@ -48,6 +47,7 @@ function hideTooltip(path, feature) {
 
   d3.selectAll('.counties path')
     .style('opacity', null)
+    .style('stroke-width', null)
 
 }
 
@@ -72,12 +72,8 @@ function buildTooltip(path, feature) {
 
     d3.select(path)
       .style('opacity', 1)
+      .style('stroke-width', 1.5)
 
-    // console.log(feature.properties.GEOID)
-    // console.log(feature.properties.NAME + ' County')
-    // console.log(record)
-    // console.log(record[1][0].last)
-  // }
 }
 
 function positionTooltip(event, feature) {

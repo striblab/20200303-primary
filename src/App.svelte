@@ -47,7 +47,7 @@
 
 <Map geojson={iowa} {county_data_grouped}/>
 
-<Statewide {statewide_data}/>
+<Statewide {statewide_data} {county_data_grouped}/>
 
 {#each county_data_grouped as county}
 	<County {county}/>
