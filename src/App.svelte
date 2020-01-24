@@ -3,6 +3,7 @@
 	import Statewide from './Statewide.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
+	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import { onMount } from 'svelte';
 	// import { feature as topojsonFeature } from 'topojson';
@@ -45,7 +46,7 @@
 
 <h1>{title}</h1>
 
-<Map geojson={iowa} {county_data_grouped}/>
+<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
 
 <Statewide {statewide_data}/>
 

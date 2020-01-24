@@ -1,6 +1,7 @@
 <script>
 
-export let geojson;
+export let topojson;
+export let cityjson;
 export let county_data_grouped;
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
@@ -30,9 +31,9 @@ const projection = geoAlbers()
 
 let path = geoPath().projection(projection);
 
-const land = feature(geojson, geojson.objects.cb_2015_iowa_county_20m)
-const cities = feature(geojson, geojson.objects.cities)
-// const land = feature(geojson, geojson.objects.cb_2015_minnesota_county_20m);
+const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
+const cities = cityjson;
+// const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
 data = land.features;
 city_points = cities.features;
 
@@ -181,7 +182,8 @@ function countyClass(feature, data) {
     <g class="cities">
       <!-- {#if city_points.length != 0} -->
       {#each city_points as city}
-        <path d="{path(city)}"></path>
+        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
+        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1]}">{city.properties.NAME}</text>
       {/each}
       <!-- {/if} -->
     </g>
