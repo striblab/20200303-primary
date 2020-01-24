@@ -36,7 +36,7 @@ const cities = feature(geojson, geojson.objects.cities)
 data = land.features;
 city_points = cities.features;
 
-function hideTooltip(feature) {
+function hideTooltip(path, feature) {
 
   var tooltip = document.getElementById('tooltip')
   if (tooltip.classList.contains('tooltip-active')) {
@@ -46,9 +46,12 @@ function hideTooltip(feature) {
     tooltip.classList.add('tooltip-active');
   }
 
+  d3.selectAll('.counties path')
+    .style('opacity', null)
+
 }
 
-function buildTooltip(feature) {
+function buildTooltip(path, feature) {
 
     var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
     tooltipResults = record[1];
@@ -63,6 +66,12 @@ function buildTooltip(feature) {
 
     tooltipHeight = tooltip.clientHeight;
     tooltipWidth = tooltip.clientWidth;
+
+    d3.selectAll('.counties path')
+      .style('opacity', 0.65)
+
+    d3.select(path)
+      .style('opacity', 1)
 
     // console.log(feature.properties.GEOID)
     // console.log(feature.properties.NAME + ' County')
@@ -155,18 +164,18 @@ function countyClass(feature, data) {
       </tbody>
     </table>
 
-    <!-- {#if tooltipResults}
+    {#if tooltipResults}
       <div class="reporting">
-        { round(tooltipResults[0].resultDetails.totalPrecincts ? tooltipResults[0].resultDetails.reporting / tooltipResults[0].resultDetails.totalPrecincts * 100 : 0, 0) }% precincts reporting in county
+        { tooltipResults[0].precinctsreportingpct * 100 }% precincts reporting in county
       </div>
-    {/if} -->
+    {/if}
   </div>
 
   <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;" >
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(feature)}" on:mousemove="{positionTooltip(event, feature)}" on:mouseout="{hideTooltip(feature)}" />
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip(event, feature)}" on:mouseout="{hideTooltip(this, feature)}" />
       {/each}
     </g>
     <g class="cities">
