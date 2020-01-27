@@ -157,7 +157,7 @@ function countyClass(feature, data) {
             <tr>
               <td class="map-cand">{result.last}</td>
               <td class="map-votes">{result.votecount}</td>
-              <td class="map-pct">{result.votepct}</td>
+              <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
             </tr>
           {/each}
         {/if}

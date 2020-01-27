@@ -2,6 +2,7 @@
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Statewide from './Statewide.svelte';
+	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
 	import iacities from './data/iacities.json';
@@ -62,7 +63,10 @@
 
 <Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
 
-<Statewide {statewide_data} {county_data_grouped}/>
+<!-- <Statewide {statewide_data} {county_data_grouped}/> -->
+
+<h1>Statewide results</h1>
+<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
 
 <section id="density-maps">
 {#each results_by_candidate as candidate}
@@ -70,6 +74,6 @@
 {/each}
 </section>
 
-{#each county_data_grouped as county}
+<!-- {#each county_data_grouped as county}
 	<County {county}/>
-{/each}
+{/each} -->

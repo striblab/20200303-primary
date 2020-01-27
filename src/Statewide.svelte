@@ -1,7 +1,7 @@
 <script>
 import Autocomplete from './Autocomplete.svelte'
 export let statewide_data;
-export let county_data_grouped
+export let county_data_grouped;
 let last_updated;
 $: {
   if (statewide_data.length == 0) {
@@ -12,11 +12,11 @@ $: {
   }
 }
 
-let county_name;
-$: {
-  name = county_name;
-  console.log(name)
-}
+// let county_name;
+// $: {
+//   name = county_name;
+//   console.log(name)
+// }
 </script>
 
 

@@ -4,11 +4,36 @@
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
 
+		// declare responsive variables
+		let last_updated;
+		$: {
+			if (statewide_data.length == 0) {
+				last_updated = ''
+			}
+			else {
+				last_updated = statewide_data[0].lastupdated;
+			}
+		}
+		let county_search;
+		$: {
+			if (items.length == 0) {
+				county_search = []
+			}
+			else {
+				county_search = items.filter(function(d) {
+					// console.log(county_data_grouped)
+		      return d[1].reportingunitname == value;
+		    })
+			}
+		}
+
 			export let name= '';
 			export let value= '';
 			export let placeholder = 'Search for county results';
 			export let required= false;
 			export let disabled= false;
+			export let statewide_data;
+			export let county_data_grouped;
 
 			// autocomplete props
 			export let items= [];
@@ -181,3 +206,59 @@
 		{/each}
   </ul>
 </div>
+
+{#if search.length != 0}
+
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each value as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{:else if !search}
+
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each statewide_data as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{/if}
