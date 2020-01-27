@@ -4,7 +4,7 @@ import './scss/style.scss';
 const app = new App({
 	target: document.body,
 	props: {
-		title: '2018 Democratic Primary Live Results'
+		title: '2020 Democratic Primary Live Results'
 	}
 });
 
