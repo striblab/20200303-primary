@@ -19,6 +19,10 @@ $candColors: (
   .leader-#{$cand} {
     fill: $color;
   }
+
+  .density-#{$cand} {
+    fill: $color;
+  }
 }
 
 .cities {
@@ -83,4 +87,10 @@ $candColors: (
   &.tooltip-active {
     display: block;
   }
+}
+
+#density-maps {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
