@@ -4,7 +4,6 @@ import { geoAlbers, geoPath, geoMercator } from "d3-geo";
 import { scaleOrdinal } from 'd3-scale';
 import { feature } from 'topojson';
 import _ from 'lodash';
-import percentile from 'percentile';
 import * as d3 from 'd3';
 
 export let topojson;
@@ -96,12 +95,13 @@ function setOpacity(feature, results_data) {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
 
     // opacity based on share of total votes received statewide
-    // var opacity = record.votecount / candidate_total_votes * 10;
+    var opacity = record.votecount / candidate_total_votes * 10;
 
     // opacity based on county percentage
-    // var opacity = record.votepct * 3;
+    var opacity = record.votepct * 3;
 
     // opacity based on percentiles
+    // var opacity = county_percentiles[record.votepct];
     var opacity = county_percentiles[record.votecount];
 
     // console.log(opacity);
@@ -110,8 +110,6 @@ function setOpacity(feature, results_data) {
 }
 
 function countyClass(feature, results_data) {
-  // const data = await results;
-  // console.log(data)
   if (results_data.length == 0) {
     return 'no-leader';
   }
