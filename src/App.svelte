@@ -64,10 +64,14 @@
 
 <Statewide {statewide_data} {county_data_grouped}/>
 
-<section id="density-maps">
-{#each results_by_candidate as candidate}
-	<VoteDensityMap {candidate} topojson={iowa}/>
-{/each}
+<section id="candidate-support">
+	<h1>Where was each candidate's support strongest?</h1>
+  Darker colors show a higher percentage of that county's votes.
+	<div id="density-maps">
+	{#each results_by_candidate as candidate}
+		<VoteDensityMap {candidate} topojson={iowa}/>
+	{/each}
+	</div>
 </section>
 
 {#each county_data_grouped as county}
