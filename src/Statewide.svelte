@@ -24,7 +24,8 @@ $: {
 <h4>{last_updated}</h4>
 
 
-<Autocomplete bind:value={county_name} items={county_data_grouped}/>
+<!-- <Autocomplete bind:value={county_name} items={county_data_grouped}/> -->
+<Autocomplete items={county_data_grouped}/>
 
 <table>
   <tr>

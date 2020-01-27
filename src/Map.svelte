@@ -166,7 +166,7 @@ function countyClass(feature, data) {
 
     {#if tooltipResults}
       <div class="reporting">
-        { tooltipResults[0].precinctsreportingpct * 100 }% precincts reporting in county
+        { Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
       </div>
     {/if}
   </div>
@@ -182,7 +182,7 @@ function countyClass(feature, data) {
       <!-- {#if city_points.length != 0} -->
       {#each city_points as city}
         <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
-        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1]}">{city.properties.NAME}</text>
+        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
       {/each}
       <!-- {/if} -->
     </g>

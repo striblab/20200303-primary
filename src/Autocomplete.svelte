@@ -19,7 +19,7 @@
 			export let arrowCounter= 0;
 
 
-      let className= '';
+      let className= 'county_input';
       let isAsync= false;
       let minChar= 2;
       let maxItems= 10;
@@ -30,9 +30,7 @@
 
 			async function onChange (event) {
 				// Is the data given by an outside ajax request?
-				if (isAsync) {
-					isLoading = true;
-				} else if (search.length >= Number(minChar)) {
+			  if (search.length >= Number(minChar)) {
 					filterResults()
 					isOpen = true;
 				}
@@ -88,6 +86,8 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
+				// console.log(value)
+				// console.log(key)
       } else if (!value) {
         search = ''
       }

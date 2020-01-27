@@ -21,8 +21,22 @@ $candColors: (
   }
 }
 
+.cities {
+  pointer-events: none;
+}
+
 .no-leader {
   fill: grey;
+}
+
+.cities .cityLabel {
+  font-size: 10px;
+  font-family: "Benton Sans", sans-serif;
+  fill: white;
+}
+
+.cities .cityDot {
+  fill: white;
 }
 
 .county-map-tooltip {
