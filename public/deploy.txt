@@ -1,1 +1,1 @@
-[production] State change index of slider changed
+[production] static assets to prod bucket

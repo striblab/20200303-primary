@@ -8,7 +8,7 @@
 		let last_updated;
 		$: {
 			if (statewide_data.length == 0) {
-				last_updated = ''
+				last_updated = '';
 			}
 			else {
 				last_updated = statewide_data[0].lastupdated;
@@ -93,14 +93,15 @@
         arrowCounter =  arrowCounter - 1;
       } else if (event.keyCode === 13) {
         // Enter
-        // event.preventDefault()
+        event.preventDefault()
 
         if (arrowCounter === -1) {
 					if (search.length < 2) {
-
+						key = null;
 					}
 					else {
-						arrowCounter = 0 // Default select first item of list
+						arrowCounter = 0;
+						key = null;// Default select first item of list
 					}
         }
         close(arrowCounter)
@@ -120,12 +121,10 @@
 				// console.log(value)
 				// console.log(key)
       } else if (!value) {
-        search = '';
+        search = null;
+				key = null;
+				value = null;
       }
-			else {
-				value = ''
-				key = ''
-			}
     }
   function onupdate ({ changed, current }) {
     if (isAsync && changed.items && current.items.length) {
@@ -189,8 +188,17 @@
   .autocomplete-result:hover {
     background-color: #dbdbdb;
   }
+
+	/* .tableWrapper {
+		text-align: center;
+	} */
 </style>
-<svelte:window on:click="{()=>close()}" />
+<!-- <svelte:window on:click="{()=>close()}" /> -->
+<div class="tableWrapper">
+
+
+<h1>Statewide results</h1>
+<h4>{last_updated}</h4>
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
     type="text"
@@ -300,3 +308,4 @@
 </table>
 
 {/if}
+</div>

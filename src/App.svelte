@@ -44,21 +44,21 @@
 		});
 	}
 
-	// onMount(async function() {
-  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // });
-
-	// old data
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
 
+	// old data STATIC
+	// onMount(async function() {
+  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+  //   const json = await response.json()
+  //   data = json;
+  // });
+
 	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
+  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
   //   const json = await response.json()
   //   data = json;
   // }, 15000)
@@ -72,7 +72,6 @@
 
 <!-- <Statewide {statewide_data} {county_data_grouped}/> -->
 
-<h1>Statewide results</h1>
 <Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
 
 <section id="density-maps">
