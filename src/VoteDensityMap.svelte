@@ -10,6 +10,7 @@ export let topojson;
 export let candidate;
 export let candidate_total_votes;
 export let votecounts;
+export let votepcts;
 export let county_percentiles;
 
 // const z_scores = function (values) {
@@ -61,18 +62,29 @@ const percentiles = function (values) {
 
 $: {
   candidate_total_votes = 0
+
+
   votecounts = candidate.results.map(function(county){
     return county.votecount;
   });
-  county_percentiles = percentiles(votecounts);
+
+  votepcts = candidate.results.map(function(county){
+    return county.votepct;
+  });
+
+  // To calculate percentiles based on vote count (change in map below as well)
+  // county_percentiles = percentiles(votecounts);
+
+  // To calculate percentiles based on vote pct (change in map below as well)
+  county_percentiles = percentiles(votepcts);
 
   candidate.results.forEach(function(county){
-    candidate_total_votes += county.votecount;
+    candidate_total_votes += county.votepct;
   });
 }
 
 export let width = 400;
-export let height = 400;
+export let height = 300;
 let center = width / 2;
 
 const projection = geoAlbers()
@@ -95,14 +107,14 @@ function setOpacity(feature, results_data) {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
 
     // opacity based on share of total votes received statewide
-    var opacity = record.votecount / candidate_total_votes * 10;
+    // var opacity = record.votecount / candidate_total_votes * 10;
 
     // opacity based on county percentage
-    var opacity = record.votepct * 3;
+    // var opacity = record.votepct * 3;
 
     // opacity based on percentiles
-    // var opacity = county_percentiles[record.votepct];
-    var opacity = county_percentiles[record.votecount];
+    var opacity = county_percentiles[record.votepct];
+    // var opacity = county_percentiles[record.votecount];
 
     // console.log(opacity);
     return 'fill-opacity: ' + opacity;
@@ -116,8 +128,11 @@ function countyClass(feature, results_data) {
   else {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
     // console.log(record);
-    let candidate_class = 'density-' + record.last.toLowerCase();
-    return candidate_class;
+    if (record.votecount > 0) {
+      let candidate_class = 'density-' + record.last.toLowerCase();
+      return candidate_class;
+    }
+    return 'no-votes';
   }
 }
 
@@ -131,6 +146,8 @@ function countyClass(feature, results_data) {
     background-color: "#eeeeee";
     /* margin: 0 auto; */
     /* position: relative; */
+    /* border: 1px solid #333; */
+    margin: 0 1em;
   }
    .provinceShape {
     /* fill: #f5f5f5; */
@@ -141,6 +158,7 @@ function countyClass(feature, results_data) {
 
   h4.cand-name {
     font-size: 0.8em;
+    margin: 1em 0 0.5em;
   }
 </style>
 

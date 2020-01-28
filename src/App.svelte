@@ -44,16 +44,17 @@
 	}
 
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
+    // const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
 
-	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // }, 15000)
+	setInterval(async function() {
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+    const json = await response.json()
+    data = json;
+  }, 15000);
 
 
 </script>
@@ -64,10 +65,14 @@
 
 <Statewide {statewide_data} {county_data_grouped}/>
 
-<section id="density-maps">
-{#each results_by_candidate as candidate}
-	<VoteDensityMap {candidate} topojson={iowa}/>
-{/each}
+<section id="candidate-support">
+	<h1>Where was each candidate's support strongest?</h1>
+  Darker colors show a higher percentage of that county's votes.
+	<div id="density-maps">
+	{#each results_by_candidate as candidate}
+		<VoteDensityMap {candidate} topojson={iowa}/>
+	{/each}
+	</div>
 </section>
 
 {#each county_data_grouped as county}
