@@ -128,8 +128,11 @@ function countyClass(feature, results_data) {
   else {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
     // console.log(record);
-    let candidate_class = 'density-' + record.last.toLowerCase();
-    return candidate_class;
+    if (record.votecount > 0) {
+      let candidate_class = 'density-' + record.last.toLowerCase();
+      return candidate_class;
+    }
+    return 'no-votes';
   }
 }
 
