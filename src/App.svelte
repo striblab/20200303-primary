@@ -44,8 +44,15 @@
 		});
 	}
 
+	// onMount(async function() {
+  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
+  //   const json = await response.json()
+  //   data = json;
+  // });
+
+	// old data
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
+    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
     const json = await response.json()
     data = json;
   });

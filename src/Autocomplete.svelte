@@ -14,17 +14,14 @@
 				last_updated = statewide_data[0].lastupdated;
 			}
 		}
-		let county_search;
+		let counties = [];
+		var i;
 		$: {
-			if (items.length == 0) {
-				county_search = []
+			for (i = 0; i < county_data_grouped.length; i++) {
+				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
+				counties.push(county_data_grouped[i][1][0].reportingunitname);
 			}
-			else {
-				county_search = items.filter(function(d) {
-					// console.log(county_data_grouped)
-		      return d[1].reportingunitname == value;
-		    })
-			}
+			// console.log(counties)
 		}
 
 			export let name= '';
@@ -58,6 +55,9 @@
 			  if (search.length >= Number(minChar)) {
 					filterResults()
 					isOpen = true;
+				}
+				else {
+					isOpen = false;
 				}
 			}
 			function filterResults () {
@@ -93,9 +93,15 @@
         arrowCounter =  arrowCounter - 1;
       } else if (event.keyCode === 13) {
         // Enter
-        event.preventDefault()
+        // event.preventDefault()
+
         if (arrowCounter === -1) {
-          arrowCounter = 0 // Default select first item of list
+					if (search.length < 2) {
+
+					}
+					else {
+						arrowCounter = 0 // Default select first item of list
+					}
         }
         close(arrowCounter)
       } else if (event.keyCode === 27) {
@@ -114,8 +120,12 @@
 				// console.log(value)
 				// console.log(key)
       } else if (!value) {
-        search = ''
+        search = '';
       }
+			else {
+				value = ''
+				key = ''
+			}
     }
   function onupdate ({ changed, current }) {
     if (isAsync && changed.items && current.items.length) {
@@ -207,8 +217,9 @@
   </ul>
 </div>
 
-{#if search.length != 0}
+{#if search.length >= 2 && counties.includes(key)}
 
+<h2>{key} County</h2>
 <table>
   <tr>
       <th>
@@ -234,7 +245,34 @@
   {/each}
 </table>
 
-{:else if !search}
+{:else if search.length < 2}
+
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each statewide_data as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{:else}
 
 <table>
   <tr>

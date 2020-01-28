@@ -57,46 +57,59 @@ function hideTooltip(path, feature) {
 
 function buildTooltip(path, feature) {
 
-    var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
-    tooltipResults = record[1];
+    if (county_data_grouped.length == 0) {
 
-    let tooltip = document.getElementById('tooltip')
-    if (tooltip.classList.contains('tooltip-active')) {
-      tooltip.classList.remove('tooltip-active');
     }
     else {
-      tooltip.classList.add('tooltip-active');
+      var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
+      tooltipResults = record[1];
+
+      let tooltip = document.getElementById('tooltip')
+      if (tooltip.classList.contains('tooltip-active')) {
+        tooltip.classList.remove('tooltip-active');
+      }
+      else {
+        tooltip.classList.add('tooltip-active');
+      }
+
+      tooltipHeight = tooltip.clientHeight;
+      tooltipWidth = tooltip.clientWidth;
+
+      d3.selectAll('.counties path')
+        .style('opacity', 0.65)
+
+      d3.select(path)
+        .style('opacity', 1)
+        .style('stroke-width', 1.5)
     }
 
-    tooltipHeight = tooltip.clientHeight;
-    tooltipWidth = tooltip.clientWidth;
 
-    d3.selectAll('.counties path')
-      .style('opacity', 0.65)
-
-    d3.select(path)
-      .style('opacity', 1)
-      .style('stroke-width', 1.5)
 
 }
 
 function positionTooltip(event) {
-  let tooltip = d3.select('#tooltip')
-  var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
-  var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
+  if (county_data_grouped.length == 0) {
 
-  let tooltipOffset = 25;
-  let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
+  }
+  else {
+    let tooltip = d3.select('#tooltip')
+    var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
+    var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
 
-  if (!cursorOffPage) {
-      tooltip
-        .style('left', x - (tooltipWidth / 2) + 'px')
-        .style('top', y + tooltipOffset + 'px');
-  } else {
-      tooltip
-        .style('left', x - (tooltipWidth / 2) + 'px')
-        .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
+    let tooltipOffset = 25;
+    let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
+
+    if (!cursorOffPage) {
+        tooltip
+          .style('left', x - (tooltipWidth / 2) + 'px')
+          .style('top', y + tooltipOffset + 'px');
+    } else {
+        tooltip
+          .style('left', x - (tooltipWidth / 2) + 'px')
+          .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
     }
+  }
+
 }
 
 function countyClass(feature, data) {
@@ -179,12 +192,12 @@ function countyClass(feature, data) {
       {/each}
     </g>
     <g class="cities">
-      <!-- {#if city_points.length != 0} -->
-      {#each city_points as city}
-        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
-        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
-      {/each}
-      <!-- {/if} -->
+      {#if county_data_grouped.length != 0}
+        {#each city_points as city}
+          <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
+          <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
+        {/each}
+      {/if}
     </g>
   </svg>
 
