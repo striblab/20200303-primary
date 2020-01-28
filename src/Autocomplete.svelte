@@ -4,11 +4,33 @@
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
 
+		// declare responsive variables
+		let last_updated;
+		$: {
+			if (statewide_data.length == 0) {
+				last_updated = '';
+			}
+			else {
+				last_updated = statewide_data[0].lastupdated;
+			}
+		}
+		let counties = [];
+		var i;
+		$: {
+			for (i = 0; i < county_data_grouped.length; i++) {
+				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
+				counties.push(county_data_grouped[i][1][0].reportingunitname);
+			}
+			// console.log(counties)
+		}
+
 			export let name= '';
 			export let value= '';
 			export let placeholder = 'Search for county results';
 			export let required= false;
 			export let disabled= false;
+			export let statewide_data;
+			export let county_data_grouped;
 
 			// autocomplete props
 			export let items= [];
@@ -33,6 +55,9 @@
 			  if (search.length >= Number(minChar)) {
 					filterResults()
 					isOpen = true;
+				}
+				else {
+					isOpen = false;
 				}
 			}
 			function filterResults () {
@@ -69,8 +94,15 @@
       } else if (event.keyCode === 13) {
         // Enter
         event.preventDefault()
+
         if (arrowCounter === -1) {
-          arrowCounter = 0 // Default select first item of list
+					if (search.length < 2) {
+						key = null;
+					}
+					else {
+						arrowCounter = 0;
+						key = null;// Default select first item of list
+					}
         }
         close(arrowCounter)
       } else if (event.keyCode === 27) {
@@ -89,7 +121,9 @@
 				// console.log(value)
 				// console.log(key)
       } else if (!value) {
-        search = ''
+        search = null;
+				key = null;
+				value = null;
       }
     }
   function onupdate ({ changed, current }) {
@@ -154,8 +188,17 @@
   .autocomplete-result:hover {
     background-color: #dbdbdb;
   }
+
+	/* .tableWrapper {
+		text-align: center;
+	} */
 </style>
-<svelte:window on:click="{()=>close()}" />
+<!-- <svelte:window on:click="{()=>close()}" /> -->
+<div class="tableWrapper">
+
+
+<h1>Statewide results</h1>
+<h4>{last_updated}</h4>
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
     type="text"
@@ -180,4 +223,89 @@
 				</li>
 		{/each}
   </ul>
+</div>
+
+{#if search.length >= 2 && counties.includes(key)}
+
+<h2>{key} County</h2>
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each value as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{:else if search.length < 2}
+
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each statewide_data as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{:else}
+
+<table>
+  <tr>
+      <th>
+          Candidate
+      </th>
+      <th>
+          Votes
+      </th>
+  </tr>
+  {#each statewide_data as candidate}
+    <tr>
+      <td>
+        {#if candidate.first}
+          {candidate.first} {candidate.last}
+        {:else}
+          {candidate.last}
+        {/if}
+      </td>
+      <td>
+        {candidate.votecount}
+      </td>
+    </tr>
+  {/each}
+</table>
+
+{/if}
 </div>

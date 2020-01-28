@@ -2,6 +2,7 @@
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Statewide from './Statewide.svelte';
+	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
 	import iacities from './data/iacities.json';
@@ -44,11 +45,18 @@
 	}
 
 	onMount(async function() {
-    // const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-latest.json");
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
+
+
+	// old data STATIC
+	// onMount(async function() {
+  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+  //   const json = await response.json()
+  //   data = json;
+  // });
 
 	setInterval(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
@@ -63,7 +71,9 @@
 
 <Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
 
-<Statewide {statewide_data} {county_data_grouped}/>
+<!-- <Statewide {statewide_data} {county_data_grouped}/> -->
+
+<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
 
 <section id="candidate-support">
 	<h1>Where was each candidate's support strongest?</h1>
@@ -75,6 +85,6 @@
 	</div>
 </section>
 
-{#each county_data_grouped as county}
+<!-- {#each county_data_grouped as county}
 	<County {county}/>
-{/each}
+{/each} -->
