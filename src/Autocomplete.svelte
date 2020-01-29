@@ -53,7 +53,7 @@
 
       let className= 'county_input';
       let isAsync= false;
-      let minChar= 2;
+      let minChar= 1;
       let maxItems= 10;
       let fromStart= true; // Default type ahead
 			let list;
@@ -203,8 +203,12 @@
 <!-- <svelte:window on:click="{()=>close()}" /> -->
 <div class="tableWrapper">
 
+{#if key}
+<h2>{key} County results</h2>
+{:else}
+<h2>Statewide results</h2>
+{/if}
 
-<h1>Statewide results</h1>
 <h4>{last_updated}</h4>
 <!-- <h4>{new Date(last_updated).toString("MMM d, yyyy HH:mm")}</h4> -->
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
@@ -236,8 +240,6 @@
 <!-- {search}
 {key} -->
 {#if search.length > 2 && counties.includes(key)}
-
-<h2>{key} County</h2>
 <table>
   <tr>
       <th>

@@ -86,6 +86,15 @@
 		color: red;
 		text-align: center;
 		animation: fadeIn 1s infinite alternate;
+		margin-top: 30px;
+	}
+
+	.live2 {
+		font-family: "Benton Sans", sans-serif;
+		font-weight: 700;
+		color: red;
+		text-align: center;
+		margin-top: 30px;
 	}
 
 	@keyframes fadeIn {
@@ -94,29 +103,31 @@
 </style>
 
 <div class="leadin">
+
+	<p class="live2">LIVE <span class="live">&bull;</span></p>
+
 	<h1>{title}</h1>
 
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+</div>
 
-	<p class="live">LIVE &bull;</p>
-
+<section id="map">
 	{#if time < 10}
 	<p class="countdown">Checking for updates 0:0{time}</p>
 	{:else}
 	<p class="countdown">Checking for updates 0:{time}</p>
 	{/if}
-</div>
+	<div class="results">
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
+		<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
+	</div>
 
+</section>
 
-<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
-
-<!-- <Statewide {statewide_data} {county_data_grouped}/> -->
-
-<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
 
 <section id="candidate-support">
-	<h1>Where was each candidate's support strongest?</h1>
+	<h2>Where was each candidate's support strongest?</h2>
   Darker colors show a higher percentage of that county's votes.
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}

@@ -135,21 +135,7 @@ function countyClass(feature, data) {
 </script>
 
 
-<style>
-  .county-map {
-    max-width: 650px;
-    /* width: 100%; */
-    background-color: "#eeeeee";
-    margin: 0 auto;
-    position: relative;
-  }
-   .provinceShape {
-    /* fill: #f5f5f5; */
-    /* fill: grey; */
-    stroke: white;
-    stroke-width: 0.5;
-  }
-</style>
+
 
 <div class="county-map">
 
@@ -184,7 +170,7 @@ function countyClass(feature, data) {
     {/if}
   </div>
 
-  <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;" >
+  <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
