@@ -44,6 +44,16 @@
 		});
 	}
 
+	let time = 30;
+	function countdown() {
+		if (time == 0) {
+			time = 30
+		}
+		else {
+			time--;
+		}
+	}
+
 	onMount(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
@@ -58,6 +68,8 @@
   //   data = json;
   // });
 
+	setInterval(countdown, 1000);
+
 	setInterval(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
@@ -67,7 +79,35 @@
 
 </script>
 
-<h1>{title}</h1>
+<style>
+	.live {
+		font-family: "Benton Sans", sans-serif;
+		font-weight: 700;
+		color: red;
+		text-align: center;
+		animation: fadeIn 1s infinite alternate;
+	}
+
+	@keyframes fadeIn {
+		from { opacity: 0 }
+	}
+</style>
+
+<div class="leadin">
+	<h1>{title}</h1>
+
+	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+
+	<p class="live">LIVE &bull;</p>
+
+	{#if time < 10}
+	<p class="countdown">Checking for updates 0:0{time}</p>
+	{:else}
+	<p class="countdown">Checking for updates 0:{time}</p>
+	{/if}
+</div>
+
 
 <Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
 

@@ -11,7 +11,8 @@
 				last_updated = '';
 			}
 			else {
-				last_updated = statewide_data[0].lastupdated;
+				// last_updated = Date.parse(statewide_data[0].lastupdated);
+				last_updated = new Date(statewide_data[0].lastupdated).toString("MMM d, yyyy HH:mm")
 			}
 		}
 		let counties = [];
@@ -21,7 +22,6 @@
 				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
 				counties.push(county_data_grouped[i][1][0].reportingunitname);
 			}
-			// console.log(counties)
 		}
 
 		let state_precincts
@@ -108,11 +108,10 @@
 
         if (arrowCounter === -1) {
 					if (search.length < 2) {
-						key = null;
+
 					}
 					else {
-						arrowCounter = 0;
-						// Default select first item of list
+						arrowCounter = 0;	// Default select first item of list
 					}
         }
         close(arrowCounter)
@@ -129,12 +128,9 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
-				// console.log(value)
-				// console.log(key)
+
       } else if (!value) {
         search = null;
-				key = null;
-				value = null;
       }
     }
   function onupdate ({ changed, current }) {
@@ -210,6 +206,7 @@
 
 <h1>Statewide results</h1>
 <h4>{last_updated}</h4>
+<!-- <h4>{new Date(last_updated).toString("MMM d, yyyy HH:mm")}</h4> -->
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
     type="text"

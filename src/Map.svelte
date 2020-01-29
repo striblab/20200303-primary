@@ -192,12 +192,10 @@ function countyClass(feature, data) {
       {/each}
     </g>
     <g class="cities">
-      {#if county_data_grouped.length != 0}
         {#each city_points as city}
           <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
           <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
         {/each}
-      {/if}
     </g>
   </svg>
 
