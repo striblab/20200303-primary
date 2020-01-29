@@ -1,1 +1,1 @@
-[production] static assets to prod bucket
+[production] whoops lcd
