@@ -24,6 +24,16 @@
 			// console.log(counties)
 		}
 
+		let state_precincts
+		$: {
+			if (statewide_data.length == 0) {
+				state_precincts = '';
+			}
+			else {
+				state_precincts = statewide_data[0].precinctsreportingpct;
+			}
+		}
+
 			export let name= '';
 			export let value= '';
 			export let placeholder = 'Search for county results';
@@ -58,6 +68,7 @@
 				}
 				else {
 					isOpen = false;
+					key = null;
 				}
 			}
 			function filterResults () {
@@ -101,7 +112,7 @@
 					}
 					else {
 						arrowCounter = 0;
-						key = null;// Default select first item of list
+						// Default select first item of list
 					}
         }
         close(arrowCounter)
@@ -225,7 +236,9 @@
   </ul>
 </div>
 
-{#if search.length >= 2 && counties.includes(key)}
+<!-- {search}
+{key} -->
+{#if search.length > 2 && counties.includes(key)}
 
 <h2>{key} County</h2>
 <table>
@@ -253,7 +266,11 @@
   {/each}
 </table>
 
-{:else if search.length < 2}
+<!-- <div class="reporting">
+	{ Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
+</div> -->
+
+{:else if search.length <= 2 }
 
 <table>
   <tr>
@@ -279,6 +296,8 @@
     </tr>
   {/each}
 </table>
+
+<p>{ Math.round(state_precincts * 100) }% of precincts reporting</p>
 
 {:else}
 
