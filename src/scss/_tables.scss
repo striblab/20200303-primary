@@ -1,3 +1,12 @@
-.tableWrapper {
-  max-width: 600px;
+// .tableWrapper {
+//   width: 400px;
+// }
+
+table {
+  font-family: "Benton Sans", sans-serif;
+  max-width: 350px;
+}
+
+th {
+  text-align: left;
 }

@@ -24,10 +24,19 @@ h4 {
 	font-size: 13px;
 }
 
-.countdown {
-	text-align: center;
+.updates p.lastUpdated {
 	font-family: "Benton Sans", sans-serif;
 	font-size: 12px;
+	text-transform: uppercase;
+}
+
+.updates p.countdown {
+	font-family: "Benton Sans", sans-serif;
+	font-size: 12px;
+}
+
+.updates p {
+	margin-top: 7px;
 }
 
 .leadin {
@@ -42,12 +51,29 @@ h4 {
 }
 
 .results {
-	display: flex;
+	// display: flex;
+	// width: 800px;
+	// height: 650px;
 	// justify-content: center;
+	// max-width: 800px;
+	// display: inline-block;
+	display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+	justify-content: space-around;
+
+
 }
 
 #map {
-	// height: 650px;
-	display: block;
+	max-width: 1000px;
+	margin: 0 auto;
+	// display: flex;
+	// display: block;
+	// margin: 0 auto;
+}
+
+#candidate-support {
+	max-width: 1000px;
 	margin: 0 auto;
 }

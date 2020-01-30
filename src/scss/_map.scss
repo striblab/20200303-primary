@@ -97,15 +97,23 @@ $candColors: (
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  max-width: 1000px;
 }
 
 .county-map {
-  max-width: 650px;
+  width: 650px;
+  height: auto;
   /* width: 100%; */
-  background-color: "#eeeeee";
+  // background-color: "#eeeeee";
+  // float: right;
   /* margin: 0 auto;*/
-  position: relative; 
+  // position: relative;
 }
+
+// .resultsMap {
+//   max-width: 650px;
+//   max-height: 650px;
+// }
 
 .provinceShape {
   /* fill: #f5f5f5; */

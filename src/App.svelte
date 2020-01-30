@@ -44,16 +44,6 @@
 		});
 	}
 
-	let time = 30;
-	function countdown() {
-		if (time == 0) {
-			time = 30
-		}
-		else {
-			time--;
-		}
-	}
-
 	onMount(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
@@ -68,7 +58,7 @@
   //   data = json;
   // });
 
-	setInterval(countdown, 1000);
+
 
 	setInterval(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
@@ -113,11 +103,7 @@
 </div>
 
 <section id="map">
-	{#if time < 10}
-	<p class="countdown">Checking for updates 0:0{time}</p>
-	{:else}
-	<p class="countdown">Checking for updates 0:{time}</p>
-	{/if}
+
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
 		<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>

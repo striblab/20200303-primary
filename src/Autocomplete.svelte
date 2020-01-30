@@ -1,4 +1,6 @@
 <script>
+		import {intcomma} from 'journalize';
+
 
 		const regExpEscape = (s) => {
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
@@ -6,13 +8,17 @@
 
 		// declare responsive variables
 		let last_updated;
+		var datestring;
+		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
 			if (statewide_data.length == 0) {
 				last_updated = '';
 			}
 			else {
 				// last_updated = Date.parse(statewide_data[0].lastupdated);
-				last_updated = new Date(statewide_data[0].lastupdated).toString("MMM d, yyyy HH:mm")
+
+				datestring = new Date(statewide_data[0].lastupdated)
+				last_updated = datestring.toLocaleString('en-US', options)
 			}
 		}
 		let counties = [];
@@ -141,6 +147,16 @@
        filterResults();
     }
 	}
+	let time = 30;
+	function countdown() {
+		if (time == 0) {
+			time = 30
+		}
+		else {
+			time--;
+		}
+	}
+	setInterval(countdown, 1000);
 </script>
 
 <style>
@@ -153,6 +169,12 @@
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
   }
+
+	.county_input {
+		margin-top: 10px;
+		margin-bottom: 10px;
+		width: 250px;
+	}
 
   .autocomplete {
     position: relative;
@@ -196,6 +218,7 @@
     background-color: #dbdbdb;
   }
 
+
 	/* .tableWrapper {
 		text-align: center;
 	} */
@@ -209,7 +232,15 @@
 <h2>Statewide results</h2>
 {/if}
 
-<h4>{last_updated}</h4>
+<div class="updates">
+	{#if time < 10}
+	<p class="countdown">Checking for updates 0:0{time}</p>
+	{:else}
+	<p class="countdown">Checking for updates 0:{time}</p>
+	{/if}
+	<p class="lastUpdated">Last updated: {last_updated}</p>
+</div>
+
 <!-- <h4>{new Date(last_updated).toString("MMM d, yyyy HH:mm")}</h4> -->
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
@@ -241,13 +272,14 @@
 {key} -->
 {#if search.length > 2 && counties.includes(key)}
 <table>
-  <tr>
+  <tr class="header">
       <th>
           Candidate
       </th>
       <th>
           Votes
       </th>
+			<th>Pct.</th>
   </tr>
   {#each value as candidate}
     <tr>
@@ -259,26 +291,24 @@
         {/if}
       </td>
       <td>
-        {candidate.votecount}
+        {intcomma(candidate.votecount)}
       </td>
+			<td>
+				{Math.round(candidate.votepct * 100) }%
+			</td>
     </tr>
   {/each}
 </table>
 
-<!-- <div class="reporting">
-	{ Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
-</div> -->
+<p>{ Math.round(value[1].precinctsreportingpct * 100) }% of precincts reporting</p>
 
 {:else if search.length <= 2 }
 
 <table>
   <tr>
-      <th>
-          Candidate
-      </th>
-      <th>
-          Votes
-      </th>
+      <th>Candidate</th>
+      <th>Votes</th>
+			<th>Pct.</th>
   </tr>
   {#each statewide_data as candidate}
     <tr>
@@ -290,8 +320,11 @@
         {/if}
       </td>
       <td>
-        {candidate.votecount}
+        {intcomma(candidate.votecount)}
       </td>
+			<td>
+				{Math.round(candidate.votepct * 100) }%
+			</td>
     </tr>
   {/each}
 </table>
@@ -302,12 +335,9 @@
 
 <table>
   <tr>
-      <th>
-          Candidate
-      </th>
-      <th>
-          Votes
-      </th>
+      <th>Candidate</th>
+      <th>Votes</th>
+			<th>Pct.</th>
   </tr>
   {#each statewide_data as candidate}
     <tr>
@@ -319,11 +349,15 @@
         {/if}
       </td>
       <td>
-        {candidate.votecount}
+        {intcomma(candidate.votecount)}
       </td>
+			<td>
+				{Math.round(candidate.votepct * 100) }%
+			</td>
     </tr>
   {/each}
 </table>
 
+<p>{ Math.round(state_precincts * 100) }% of precincts reporting</p>
 {/if}
 </div>
