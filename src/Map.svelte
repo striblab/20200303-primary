@@ -1,5 +1,7 @@
 <script>
 
+import {intcomma} from 'journalize';
+// import * as jq from 'jquery';
 
 export let topojson;
 export let cityjson;
@@ -22,12 +24,26 @@ let tooltipHeight;
 let tooltipWidth;
 
 
+// var aspect = 500 / 500;
+// var chart = jq(".county-map svg");
+// var targetWidth = chart.parent().width();
+// chart.attr("width", targetWidth);
+// chart.attr("height", targetWidth / aspect);
+//
+// if (jq(window).width() <= 520) { jq(self.target + " svg").attr("viewBox","0 0 400 400"); }
+//
+// jq(window).on("resize", function() {
+//   targetWidth = chart.parent().width();
+//   chart.attr("width", targetWidth);
+//   chart.attr("height", targetWidth / aspect);
+// });
+
 const projection = geoAlbers()
             // .center([width, height])
             .scale(4500)
             // .translate([0, height]);
             // iowa translation
-            .translate([0, height + (width / 8)])
+            .translate([0, height])
             //mn translation
             // .translate([0, height * 2])
 
@@ -134,22 +150,15 @@ function countyClass(feature, data) {
 
 </script>
 
-
 <style>
-  .county-map {
-    max-width: 650px;
-    /* width: 100%; */
-    background-color: "#eeeeee";
-    margin: 0 auto;
-    position: relative;
-  }
-   .provinceShape {
-    /* fill: #f5f5f5; */
-    /* fill: grey; */
-    stroke: white;
-    stroke-width: 0.5;
-  }
+
+.county_map {
+  position: relative;
+  max-width: 650px;
+}
+
 </style>
+
 
 <div class="county-map">
 
@@ -169,7 +178,7 @@ function countyClass(feature, data) {
           {#each tooltipResults as result}
             <tr>
               <td class="map-cand">{result.last}</td>
-              <td class="map-votes">{result.votecount}</td>
+              <td class="map-votes">{intcomma(result.votecount)}</td>
               <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
             </tr>
           {/each}
@@ -183,7 +192,7 @@ function countyClass(feature, data) {
       </div>
     {/if}
   </div>
-
+<!-- width="500" height="500"  -->
   <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;" >
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
@@ -192,12 +201,10 @@ function countyClass(feature, data) {
       {/each}
     </g>
     <g class="cities">
-      {#if county_data_grouped.length != 0}
         {#each city_points as city}
           <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
           <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
         {/each}
-      {/if}
     </g>
   </svg>
 

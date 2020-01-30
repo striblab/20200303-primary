@@ -58,6 +58,8 @@
   //   data = json;
   // });
 
+
+
 	setInterval(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
@@ -67,16 +69,51 @@
 
 </script>
 
-<h1>{title}</h1>
+<style>
+	.live {
+		font-family: "Benton Sans", sans-serif;
+		font-weight: 700;
+		color: red;
+		text-align: center;
+		animation: fadeIn 1s infinite alternate;
+		margin-top: 30px;
+	}
 
-<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
+	.live2 {
+		font-family: "Benton Sans", sans-serif;
+		font-weight: 700;
+		color: red;
+		text-align: center;
+		margin-top: 30px;
+	}
 
-<!-- <Statewide {statewide_data} {county_data_grouped}/> -->
+	@keyframes fadeIn {
+		from { opacity: 0 }
+	}
+</style>
 
-<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
+<div class="leadin">
+
+	<p class="live2">LIVE <span class="live">&bull;</span></p>
+
+	<h1>{title}</h1>
+
+	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+</div>
+
+<section id="map">
+
+	<div class="results">
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
+		<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
+	</div>
+
+</section>
+
 
 <section id="candidate-support">
-	<h1>Where was each candidate's support strongest?</h1>
+	<h2>Where was each candidate's support strongest?</h2>
   Darker colors show a higher percentage of that county's votes.
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}

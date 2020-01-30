@@ -5,7 +5,75 @@ html, body {
 }
 
 h1 {
-  font-family: "Whitman Display", sans-serif;
+  font-family: "Whitman Display", Georgia, serif;
+	font-size: 60px;
+	font-weight: 400;
+	margin-top: 10px;
   // margin: 0 auto;
   // max-width: 650px;
+}
+
+h2 {
+	font-family: "Benton Sans", sans-serif;
+	font-weight: bold;
+}
+
+h4 {
+	font-family: "Benton Sans", sans-serif;
+	font-weight: 400;
+	font-size: 13px;
+}
+
+.updates p.lastUpdated {
+	font-family: "Benton Sans", sans-serif;
+	font-size: 12px;
+	text-transform: uppercase;
+}
+
+.updates p.countdown {
+	font-family: "Benton Sans", sans-serif;
+	font-size: 12px;
+}
+
+.updates p {
+	margin-top: 7px;
+}
+
+.leadin {
+	text-align: center;
+	margin-bottom: 100px;
+}
+
+.leadin p {
+	text-align: left;
+	max-width: 550px;
+	margin: 15px auto;
+}
+
+.results {
+	// display: flex;
+	// width: 800px;
+	// height: 650px;
+	// justify-content: center;
+	// max-width: 800px;
+	// display: inline-block;
+	display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+	justify-content: space-around;
+
+
+}
+
+#map {
+	max-width: 1000px;
+	margin: 0 auto;
+	// display: flex;
+	// display: block;
+	// margin: 0 auto;
+}
+
+#candidate-support {
+	max-width: 1000px;
+	margin: 0 auto;
 }
