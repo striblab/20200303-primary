@@ -19,7 +19,7 @@
 
   export let statewide_data;
 
-	export let active_candidates = ['Bennet', 'Biden', 'Bloomberg', 'Buttigieg', 'Delaney', 'Gabbard', 'Klobuchar', 'Patrick', 'Sanders', 'Steyer', 'Warren', 'Yang'];
+	export let active_candidates = ['Bennet', 'Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Patrick', 'Sanders', 'Steyer', 'Warren', 'Yang'];
 	export let results_by_candidate = [];
 
 	$ : {
@@ -44,27 +44,27 @@
 		});
 	}
 
-	onMount(async function() {
-    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-    const json = await response.json()
-    data = json;
-  });
-
-
-	// old data STATIC
 	// onMount(async function() {
-  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
   //   const json = await response.json()
   //   data = json;
   // });
 
 
-
-	setInterval(async function() {
-    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+	// old data STATIC
+	onMount(async function() {
+    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
     const json = await response.json()
     data = json;
-  }, 15000);
+  });
+
+
+
+	// setInterval(async function() {
+  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+  //   const json = await response.json()
+  //   data = json;
+  // }, 15000);
 
 
 </script>
@@ -105,8 +105,8 @@
 <section id="map">
 
 	<div class="results">
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped}/>
-		<Map topojson={iowa} cityjson={iacities} {county_data_grouped}/>
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
+		<Map topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
 
 </section>

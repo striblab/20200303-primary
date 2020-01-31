@@ -24,10 +24,13 @@ h4 {
 	font-size: 13px;
 }
 
-.updates p.lastUpdated {
+p.lastUpdated {
 	font-family: "Benton Sans", sans-serif;
 	font-size: 12px;
 	text-transform: uppercase;
+	color: #A0A0A0;
+	margin-top: 0;
+	margin-bottom: 12px;
 }
 
 .updates p.countdown {
@@ -36,7 +39,8 @@ h4 {
 }
 
 .updates p {
-	margin-top: 7px;
+	margin-top: 4px;
+	margin-bottom: 0;
 }
 
 .leadin {
@@ -60,14 +64,17 @@ h4 {
 	display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: space-evenly;
+}
 
-
+.results svg {
+	margin-left: 50px;
 }
 
 #map {
 	max-width: 1000px;
 	margin: 0 auto;
+	// height: auto;
 	// display: flex;
 	// display: block;
 	// margin: 0 auto;

@@ -1,18 +1,17 @@
 $candColors: (
-  warren: lightgreen,
-  biden: blue,
-  uncommitted: lightgrey,
-  other: darkgrey,
-  yang: navy,
-  buttigieg: green,
-  sanders: pink,
-  delaney: purple,
-  klobuchar: orange,
-  bloomberg: white,
-  patrick: lightblue,
-  steyer: lightgreen,
-  bennet: yellow,
-  gabbard: maroon
+  bennet: #C0FBFC,
+  biden: #C2DFE3,
+  bloomberg: #9DB4C0,
+  buttigieg: #85BAA1,
+  gabbard: #B7B5E4,
+  klobuchar: #7E9181,
+  patrick: #A2D729,
+  sanders: #3C91E6,
+  steyer: #8A4FFF,
+  warren: #A6FFA1,
+  yang: #7371FC,
+  uncommitted: #F5F5F5,
+  other: darkgrey
 );
 
 @each $cand, $color in $candColors {
@@ -30,7 +29,7 @@ $candColors: (
 }
 
 .no-leader {
-  fill: #b8b8b8;
+  fill: #D0D0D0;
 }
 
 .no-votes {
@@ -101,7 +100,7 @@ $candColors: (
 }
 
 .county-map {
-  width: 650px;
+  width: 550px;
   height: auto;
   /* width: 100%; */
   // background-color: "#eeeeee";

@@ -20,23 +20,11 @@ let width = 400;
 let height = 400;
 let center = width / 2;
 let tooltipResults;
+let top_five;
+let rest;
+let others;
 let tooltipHeight;
 let tooltipWidth;
-
-
-// var aspect = 500 / 500;
-// var chart = jq(".county-map svg");
-// var targetWidth = chart.parent().width();
-// chart.attr("width", targetWidth);
-// chart.attr("height", targetWidth / aspect);
-//
-// if (jq(window).width() <= 520) { jq(self.target + " svg").attr("viewBox","0 0 400 400"); }
-//
-// jq(window).on("resize", function() {
-//   targetWidth = chart.parent().width();
-//   chart.attr("width", targetWidth);
-//   chart.attr("height", targetWidth / aspect);
-// });
 
 const projection = geoAlbers()
             // .center([width, height])
@@ -79,6 +67,11 @@ function buildTooltip(path, feature) {
     else {
       var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
       tooltipResults = record[1];
+      top_five = tooltipResults.slice(0,5)
+      rest = tooltipResults.slice(5, tooltipResults.length)
+      // rest.forEach()
+      // console.log(top_five)
+      // console.log(others)
 
       let tooltip = document.getElementById('tooltip')
       if (tooltip.classList.contains('tooltip-active')) {
@@ -141,8 +134,10 @@ function countyClass(feature, data) {
     }
     else {
       var leader = record[1][0].last;
+      // var county = record[1][0].reportingunitname
       // console.log(leader)
-      var leader_class = 'leader-' + leader.toLowerCase();
+      var leader_class = 'leader-' + leader.toLowerCase()
+      // + ' ' + county;
       return leader_class
     }
   }
@@ -155,6 +150,10 @@ function countyClass(feature, data) {
 .county_map {
   position: relative;
   max-width: 650px;
+}
+
+.county-map-tooltip p {
+  max-width: 300px;
 }
 
 </style>
@@ -174,14 +173,34 @@ function countyClass(feature, data) {
       </thead>
 
       <tbody>
-        {#if tooltipResults}
-          {#each tooltipResults as result}
+        <!-- {#if tooltipResults}
+          {#each tooltipResults as result, i}
+            <tr>
+              <td class="map-cand">{result.last}</td>
+              <td class="map-votes">{intcomma(result.votecount)}</td>
+              <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
+            </tr>
+            {#if i > 5}
+              <p>Others receiving votes: {result.last} ({Math.round(result.votepct * 100)}%)</p>
+            {/if}
+          {/each}
+        {/if} -->
+        {#if top_five}
+          {#each top_five as result}
             <tr>
               <td class="map-cand">{result.last}</td>
               <td class="map-votes">{intcomma(result.votecount)}</td>
               <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
             </tr>
           {/each}
+        {/if}
+
+        {#if others}
+        <p> Others receiving votes:
+          {#each others as result}
+            {result.last} ({Math.round(result.votepct * 100)}%),
+          {/each}
+        </p>
         {/if}
       </tbody>
     </table>
@@ -197,7 +216,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" />
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME}/>
       {/each}
     </g>
     <g class="cities">
