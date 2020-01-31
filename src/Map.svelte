@@ -156,6 +156,10 @@ function countyClass(feature, data) {
   max-width: 300px;
 }
 
+.precincts {
+  margin-top: 5px;
+}
+
 </style>
 
 
@@ -166,9 +170,9 @@ function countyClass(feature, data) {
     <table>
       <thead>
         <tr>
-          <th class="map-cand">Candidate</th>
-          <th class="map-votes">Votes</th>
-          <th class="map-pct">Pct.</th>
+          <th class="cand">Candidate</th>
+          <th class="votes">Votes</th>
+          <th class="pct">Pct.</th>
         </tr>
       </thead>
 
@@ -188,9 +192,9 @@ function countyClass(feature, data) {
         {#if top_five}
           {#each top_five as result}
             <tr>
-              <td class="map-cand">{result.last}</td>
-              <td class="map-votes">{intcomma(result.votecount)}</td>
-              <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
+              <td class="cand">{result.last}</td>
+              <td class="votes">{intcomma(result.votecount)}</td>
+              <td class="pct">{Math.round(result.votepct * 100)}%</td>
             </tr>
           {/each}
         {/if}
@@ -206,7 +210,7 @@ function countyClass(feature, data) {
     </table>
 
     {#if tooltipResults}
-      <div class="reporting">
+      <div class="precincts">
         { Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
       </div>
     {/if}
@@ -216,7 +220,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME}/>
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'')}/>
       {/each}
     </g>
     <g class="cities">

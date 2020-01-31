@@ -30,7 +30,6 @@
       return d.level == "county";
     })
 		county_data_grouped = Object.entries(_.groupBy(county_data, "fipscode"));
-		// console.log(county_data_grouped)
 
 		results_by_candidate = [];
 		active_candidates.forEach(function(candidate){
@@ -94,7 +93,7 @@
 
 <div class="leadin">
 
-	<p class="live2">LIVE <span class="live">&bull;</span></p>
+	<p class="live2"><span class="live">&bull;</span> LIVE</p>
 
 	<h1>{title}</h1>
 
@@ -103,23 +102,28 @@
 </div>
 
 <section id="map">
-
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
 		<Map topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
-
 </section>
 
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
-  Darker colors show a higher percentage of that county's votes.
+  <p>Darker colors show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
 		<VoteDensityMap {candidate} topojson={iowa}/>
 	{/each}
 	</div>
+</section>
+
+<section id="delegate-tracker">
+	<h2>Delegate Tracker</h2>
+	<p>Chatter about delegate tracker</p>
+	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="450"></iframe>
+	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
 
 <!-- {#each county_data_grouped as county}

@@ -3,7 +3,7 @@
 // }
 
 .tableWrapper h2 {
-  margin-bottom: 0;
+  margin-bottom: 2px;
 }
 
 table {
@@ -15,33 +15,82 @@ th {
   text-align: left;
 }
 
-table.tableResults  {
+.tableResults  {
   border-collapse: collapse;
   border-spacing: 0;
+
+  thead th {
+    text-transform: uppercase;
+    color: #A0A0A0;
+    font-size: 12px;
+    font-weight: 400;
+    border-bottom: 2px solid #909090;
+    padding: 3px 3px;
+  }
+
+  tbody td {
+    padding: 6px 4px;
+    border-bottom: 1px solid #D8D8D8;
+  }
+
+  .cand {
+    // display: flex;
+    // align-items: center;
+    valign: baseline;
+    width: 200px;
+  }
+
+  .votes {
+    width: 75px;
+  }
+
+  .pct {
+    width: 40px;
+  }
 }
 
-.tableResults thead th {
-  text-transform: uppercase;
-  color: #A0A0A0;
-  font-size: 12px;
-  font-weight: 400;
-  border-bottom: 2px solid #909090;
-  padding: 3px 3px;
-}
+// TOOLTIP table
 
-.tableResults tbody td {
-  padding: 6px 4px;
-  border-bottom: 1px solid #D8D8D8;
-}
+.county-map-tooltip {
+  table {
+    border-collapse: collapse;
+    border-spacing: 0;
+  }
 
-.tableResults .cand {
-  width: 200px;
-}
+  thead th {
+    text-transform: uppercase;
+    color: #A0A0A0;
+    font-size: 11px;
+    font-weight: 400;
+    border-bottom: 2px solid #909090;
+    padding: 2px 2px;
+  }
 
-.tableResults .votes {
-  width: 75px;
-}
+  tbody td {
+    padding: 4px 2px;
+    border-bottom: 1px solid #D8D8D8;
+  }
 
-.tableResults .pct {
-  width: 40px;
+  h4 {
+    font-weight: bold;
+    font-size: 16px;
+    margin-bottom: 8px;
+  }
+
+  .cand {
+    width: 60%;
+  }
+
+  .votes {
+    width: 40%;
+  }
+
+  .pct {
+    width: 10%;
+  }
+
+  .precincts {
+    margin-top: 3px;
+    font-size: 10px;
+  }
 }

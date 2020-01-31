@@ -10,7 +10,8 @@
 		// declare responsive variables
 		let last_updated;
 		var datestring;
-		let county_selector_string
+		let county_selector_string;
+		let key_no_space;
 
 		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
@@ -41,6 +42,10 @@
 			else {
 				state_precincts = statewide_data[0].precinctsreportingpct;
 			}
+		}
+
+		function dotColor(candidate) {
+			return 'legend-' + candidate.toLowerCase();
 		}
 
 			export let name= '';
@@ -127,14 +132,7 @@
 						arrowCounter = 0;	// Default select first item of list
 					}
         }
-				// d3.selectAll('.counties path')
-				//   .style('opacity', 0.1);
 
-				county_selector_string = '[county_name=' + key + ']';
-
-				// d3.select(county_selector_string)
-				// 	.style('opacity', 1)
-				// 	.style('stroke-width', 1.5)
 
         close(arrowCounter)
       } else if (event.keyCode === 27) {
@@ -150,7 +148,15 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
+				d3.selectAll('.counties path')
+				  .style('opacity', 0.15);
 
+				key_no_space = key.replace(/\s/g, "")
+				county_selector_string = '[county_name=' + key_no_space + ']';
+
+				d3.select(county_selector_string)
+					.style('opacity', 1)
+					.style('stroke-width', 1.5)
       } else if (!value) {
         search = null;
       }
@@ -233,13 +239,6 @@
     background-color: #dbdbdb;
   }
 
-	.precincts {
-		font-family: "Benton Sans", sans-serif;
-		font-style: italic;
-		font-size: 12px;
-		color: #A0A0A0;
-	}
-
 	.tableWrapper table {
 		margin-top: 15px;
 	}
@@ -254,13 +253,13 @@
 {/if}
 <p class="lastUpdated">Last updated: {last_updated}</p>
 
-<div class="updates">
+<!-- <div class="updates">
 	{#if time < 10}
 	<p class="countdown">Checking for updates 0:0{time}</p>
 	{:else}
 	<p class="countdown">Checking for updates 0:{time}</p>
 	{/if}
-</div>
+</div> -->
 
 <!-- <h4>{new Date(last_updated).toString("MMM d, yyyy HH:mm")}</h4> -->
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
@@ -305,6 +304,7 @@
 			{#if active_candidates.includes(candidate.last)}
 	    <tr>
 	      <td class="cand">
+					<span>&#x25cf;</span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}
@@ -340,6 +340,7 @@
 			{#if active_candidates.includes(candidate.last)}
 	    <tr>
 	      <td class="cand">
+					<span class="{dotColor(candidate.last)}"></span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}
@@ -372,7 +373,7 @@
 	</thead>
 	<tbody>
 		{#each statewide_data as candidate}
-		{#if active_candidates.includes(candidate.last)}
+			{#if active_candidates.includes(candidate.last)}
 	    <tr>
 
 	      <td class="cand">
