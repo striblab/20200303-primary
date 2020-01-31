@@ -304,7 +304,7 @@
 			{#if active_candidates.includes(candidate.last)}
 	    <tr>
 	      <td class="cand">
-					<span>&#x25cf;</span>
+					<span class="{dotColor(candidate.last)}"></span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}
@@ -374,9 +374,28 @@
 	<tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-	    <tr>
+			{#if candidate.winner == true}
+			<tr class="winner">
+				<td class="cand">
+					<span>&#10004</span>
+					{#if candidate.first}
+						{candidate.first} {candidate.last}
+					{:else}
+						{candidate.last}
+					{/if}
+				</td>
+				<td class="votes">
+	        {intcomma(candidate.votecount)}
+	      </td>
+				<td class="pct">
+					{Math.round(candidate.votepct * 100) }%
+				</td>
+			</tr>
 
-	      <td class="cand">
+			{:else}
+	    <tr>
+				<td class="cand">
+					<span class="{dotColor(candidate.last)}"></span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}
@@ -391,6 +410,7 @@
 				</td>
 
 	    </tr>
+			{/if}
 			{/if}
 	  {/each}
 	</tbody>
