@@ -6,8 +6,8 @@ html, body {
 
 h1 {
   font-family: "Whitman Display", Georgia, serif;
-	font-size: 60px;
-	font-weight: 400;
+	font-size: 60px !important;
+	font-weight: 400 !important;
 	margin-top: 10px;
   // margin: 0 auto;
   // max-width: 650px;
@@ -16,6 +16,7 @@ h1 {
 h2 {
 	font-family: "Benton Sans", sans-serif;
 	font-weight: bold;
+	font-size: 1.5em !important;
 }
 
 h4 {
@@ -24,10 +25,13 @@ h4 {
 	font-size: 13px;
 }
 
-.updates p.lastUpdated {
+p.lastUpdated {
 	font-family: "Benton Sans", sans-serif;
 	font-size: 12px;
 	text-transform: uppercase;
+	color: #888888;
+	margin-top: 0;
+	margin-bottom: 12px;
 }
 
 .updates p.countdown {
@@ -36,7 +40,8 @@ h4 {
 }
 
 .updates p {
-	margin-top: 7px;
+	margin-top: 4px;
+	margin-bottom: 0;
 }
 
 .leadin {
@@ -60,14 +65,18 @@ h4 {
 	display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-	justify-content: space-around;
+	justify-content: space-between;
+}
 
-
+.results svg {
+	// margin-left: 50px;
 }
 
 #map {
 	max-width: 1000px;
 	margin: 0 auto;
+	margin-bottom: 75px;
+	// height: auto;
 	// display: flex;
 	// display: block;
 	// margin: 0 auto;
@@ -76,4 +85,35 @@ h4 {
 #candidate-support {
 	max-width: 1000px;
 	margin: 0 auto;
+	margin-bottom: 75px;
+
+	h2 {
+		margin-bottom: 0;
+	}
+
+	p {
+		font-family: "Benton Sans", sans-serif;
+		margin-top: 7px;
+	}
+}
+
+#delegate-tracker {
+	max-width: 1000px;
+	margin: 0 auto;
+
+	h2 {
+		margin-bottom: 0;
+	}
+
+	p {
+		font-family: "Benton Sans", sans-serif;
+		margin-top: 7px;
+	}
+}
+
+.precincts {
+	font-family: "Benton Sans", sans-serif;
+	font-style: italic;
+	font-size: 12px;
+	color: #A0A0A0;
 }
