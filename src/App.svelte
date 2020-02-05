@@ -43,27 +43,27 @@
 		});
 	}
 
-	// onMount(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // });
-
-
-	// old data STATIC
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
 
 
-
-	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+	// // old data STATIC
+	// onMount(async function() {
+  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
   //   const json = await response.json()
   //   data = json;
-  // }, 15000);
+  // });
+
+
+
+	setInterval(async function() {
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+    const json = await response.json()
+    data = json;
+  }, 15000);
 
 
 </script>

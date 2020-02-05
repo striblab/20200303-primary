@@ -1,10 +1,10 @@
 <script>
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
-import { scaleOrdinal } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { feature } from 'topojson';
 import _ from 'lodash';
-import * as d3 from 'd3';
+// import * as d3 from 'd3';
 
 export let topojson;
 export let candidate;
@@ -73,13 +73,13 @@ $: {
   });
 
   // To calculate percentiles based on vote count (change in map below as well)
-  // county_percentiles = percentiles(votecounts);
+  county_percentiles = percentiles(votecounts);
 
   // To calculate percentiles based on vote pct (change in map below as well)
-  county_percentiles = percentiles(votepcts);
+  // county_percentiles = percentiles(votepcts);
 
   candidate.results.forEach(function(county){
-    candidate_total_votes += county.votepct;
+    candidate_total_votes += county.votecount;
   });
 }
 
@@ -96,6 +96,10 @@ const projection = geoAlbers()
             //mn translation
             // .translate([0, height * 2])
 
+const densityscale = scaleLinear()
+  .domain([0.05, 0.40]) // vote pctage
+  .range([0.01, 1]) // opacity range
+
 let path = geoPath().projection(projection);
 
 const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
@@ -106,15 +110,22 @@ function setOpacity(feature, results_data) {
   } else {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
 
-    // opacity based on share of total votes received statewide
-    // var opacity = record.votecount / candidate_total_votes * 10;
+    if (record.votecount > 0) {
+      // opacity set by d3 scale
+      var opacity = densityscale(record.votepct);
 
-    // opacity based on county percentage
-    // var opacity = record.votepct * 3;
+      // opacity based on share of total votes received statewide
+      // var opacity = (record.votecount / candidate_total_votes) * 8;
+
+      // opacity based on county percentage
+      // var opacity = 0.1 + (record.votepct * 2);
+    } else {
+      var opacity = 0;
+    }
 
     // opacity based on percentiles
-    var opacity = county_percentiles[record.votepct];
     // var opacity = county_percentiles[record.votecount];
+    // var opacity = county_percentiles[record.votepct];
 
     // console.log(opacity);
     return 'fill-opacity: ' + opacity;
