@@ -3,8 +3,8 @@
 1. Create a .geojson of your state counties in QGIS, in unprojected coordinates (raw lat-lng)
 2. Convert to topojson, simplify and quantize to reduce file size:
 ```
-geo2topo counties=ia_counties.geojson | toposimplify -P 0.21 --filter-detached | topoquantize 1e3 > iowa.json
-geo2topo counties=nh_counties.geojson | toposimplify -P 0.21 --filter-detached | topoquantize 1e5 > nh.json
+geo2topo counties=ia_counties.geojson | toposimplify -S 0.007 --filter-all | topoquantize 1e3 > iowa.json
+geo2topo counties=nh_counties.geojson | toposimplify -S 0.007 --filter-all | topoquantize 1e5 > nh.json
 ```
 3. Tell the JS what projection values to use
 
