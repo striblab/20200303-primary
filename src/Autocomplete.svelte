@@ -9,7 +9,7 @@
 
 		// declare responsive variables
 		let last_updated;
-		var datestring;
+		let datestring;
 		let county_selector_string;
 		let key_no_space;
 

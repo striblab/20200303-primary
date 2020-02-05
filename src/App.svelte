@@ -8,6 +8,7 @@
 	import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
+	import content from './data/content.json';
 	import { onMount } from 'svelte';
 	// import { feature as topojsonFeature } from 'topojson';
 	import _ from 'lodash';
@@ -22,6 +23,19 @@
 
 	export let active_candidates = ['Bennet', 'Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Patrick', 'Sanders', 'Steyer', 'Warren', 'Yang'];
 	export let results_by_candidate = [];
+
+	export let stories = content.data;
+
+	// function contentIDGenerator(previous, object) {
+	// 	id = Math.floor((Math.random() * object.length))
+	// 	if (id == previous) {
+	// 		id = Math.floor((Math.random() * object.length));
+	// 		return id;
+	// 	}
+	// 	else {
+	// 		return id;
+	// 	}
+	// }
 
 	$ : {
 		statewide_data = data.filter(function(d) {
@@ -44,28 +58,36 @@
 		});
 	}
 
+	// export let id = contentIDGenerator(0, stories)
+	let id = 0;
+	let length;
+	function handleClick(length) {
+		if ( id == length - 1 ) {
+			id = 0
+		}
+		else {
+			id += 1;
+		}
+	}
+
 	onMount(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
 
-
-	// // old data STATIC
+	// old data STATIC
 	// onMount(async function() {
   //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
   //   const json = await response.json()
   //   data = json;
   // });
 
-
-
 	setInterval(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   }, 15000);
-
 
 </script>
 
@@ -107,6 +129,19 @@
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
 		<Map county_topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
+</section>
+
+
+<section id="related">
+	{#if stories.length == 0}
+	<div class="relatedContainer"></div>
+	{:else}
+	<div class="relatedContainer">
+		<a href="{stories[id].url}" class="relatedLink" target="_blank"><h2 on:click={handleClick(stories.length)}>{stories[id].headline}</h2></a>
+		<p>{stories[id].summary}</p>
+	</div>
+	{/if}
+
 </section>
 
 <section id="candidate-support">

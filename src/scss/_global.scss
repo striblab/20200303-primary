@@ -75,7 +75,7 @@ p.lastUpdated {
 #map {
 	max-width: 1000px;
 	margin: 0 auto;
-	margin-bottom: 75px;
+	// margin-bottom: 0;
 	// height: auto;
 	// display: flex;
 	// display: block;
@@ -116,4 +116,35 @@ p.lastUpdated {
 	font-style: italic;
 	font-size: 12px;
 	color: #A0A0A0;
+}
+
+#related {
+	max-width: 1000px;
+	margin: 0 auto;
+	margin-bottom: 85px;
+
+	.relatedContainer {
+		background-color: #D0D0D0;
+		padding: 15px 15px;
+	}
+
+	.relatedLink {
+		color: black;
+		text-decoration: none;
+		display: inline-block;
+	}
+
+	h2 {
+		margin-bottom: 6px;
+		font-size: 22px !important;
+	}
+
+	.relatedLink:hover {
+		text-decoration: underline;
+	}
+
+	p {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 14px;
+	}
 }
