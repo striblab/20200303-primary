@@ -5,7 +5,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
-	import nh from './data/nh.json';
+	// import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import content from './data/content.json';
@@ -58,7 +58,6 @@
 		});
 	}
 
-	// export let id = contentIDGenerator(0, stories)
 	let id = 0;
 	let length;
 	function handleClick(length) {
