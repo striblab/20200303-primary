@@ -5,6 +5,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
+	import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import { onMount } from 'svelte';
@@ -104,17 +105,16 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
-		<Map topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
+		<Map county_topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
 </section>
-
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
   <p>Darker colors show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} topojson={iowa}/>
+		<VoteDensityMap {candidate} county_topojson={iowa}/>
 	{/each}
 	</div>
 </section>

@@ -4,9 +4,9 @@ import { geoAlbers, geoPath, geoMercator } from "d3-geo";
 import { scaleLinear } from 'd3-scale';
 import { feature } from 'topojson';
 import _ from 'lodash';
-// import * as d3 from 'd3';
+import * as d3 from 'd3';
 
-export let topojson;
+export let county_topojson;
 export let candidate;
 export let candidate_total_votes;
 export let votecounts;
@@ -87,22 +87,38 @@ export let width = 400;
 export let height = 300;
 let center = width / 2;
 
-const projection = geoAlbers()
-            // .center([width, height])
-            .scale(4500)
-            // .translate([0, height]);
-            // iowa translation
-            .translate([0, height + (width / 8)])
-            //mn translation
-            // .translate([0, height * 2])
+const land = feature(county_topojson, county_topojson.objects.counties)
+// const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
+// data = land.features;
 
+// const projection = d3.geoTransverseMercator()
+//     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
+//     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+//     .fitSize([width, height], land);
+
+const projection = d3.geoTransverseMercator()
+    .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
+    .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .fitSize([width, height], land);
+
+let path = d3.geoPath().projection(projection);
+
+// const projection = geoAlbers()
+//             // .center([width, height])
+//             .scale(4500)
+//             // .translate([0, height]);
+//             // iowa translation
+//             .translate([0, height + (width / 8)])
+//             //mn translation
+//             // .translate([0, height * 2])
+//
 const densityscale = scaleLinear()
   .domain([0.05, 0.40]) // vote pctage
   .range([0.01, 1]) // opacity range
-
-let path = geoPath().projection(projection);
-
-const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
+//
+// let path = geoPath().projection(projection);
+//
+// const land = feature(topojson, topojson.objects.counties)
 
 function setOpacity(feature, results_data) {
   if (results_data.length == 0) {
@@ -177,7 +193,7 @@ function countyClass(feature, results_data) {
   {#if candidate.results.length > 0}
   <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
   {/if}
-  <svg viewbox="0 0 {width} {height}" style="width: 100%; height: 100%;" >
+  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each land.features as feature}
