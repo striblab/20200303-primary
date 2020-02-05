@@ -3,7 +3,7 @@
 import {intcomma} from 'journalize';
 // import * as jq from 'jquery';
 
-export let topojson;
+export let county_topojson;
 export let cityjson;
 
 export let county_data_grouped;
@@ -26,22 +26,23 @@ let others;
 let tooltipHeight;
 let tooltipWidth;
 
-const projection = geoAlbers()
-            // .center([width, height])
-            .scale(4500)
-            // .translate([0, height]);
-            // iowa translation
-            .translate([0, height])
-            //mn translation
-            // .translate([0, height * 2])
-
-let path = geoPath().projection(projection);
-
-const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
+const land = feature(county_topojson, county_topojson.objects.counties)
 const cities = cityjson;
 // const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
 data = land.features;
 city_points = cities.features;
+
+// const projection = d3.geoTransverseMercator()
+//     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
+//     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+//     .fitSize([width, height], land);
+
+const projection = d3.geoTransverseMercator()
+    .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
+    .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .fitSize([width, height], land);
+
+let path = d3.geoPath().projection(projection);
 
 function hideTooltip(path, feature) {
 
@@ -124,6 +125,7 @@ function positionTooltip(event) {
 function countyClass(feature, data) {
   // const data = await results;
   // console.log(data)
+  // return 'no-leader';
   if (data.length == 0) {
     return 'no-leader';
   }
@@ -216,7 +218,7 @@ function countyClass(feature, data) {
     {/if}
   </div>
 <!-- width="500" height="500"  -->
-  <svg viewbox="0 0 400 400" style="width: 100%; height: 100%;" >
+  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
@@ -224,10 +226,10 @@ function countyClass(feature, data) {
       {/each}
     </g>
     <g class="cities">
-        {#each city_points as city}
-          <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
-          <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
-        {/each}
+      {#each city_points as city}
+        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
+        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
+      {/each}
     </g>
   </svg>
 

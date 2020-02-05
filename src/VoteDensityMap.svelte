@@ -1,12 +1,12 @@
 <script>
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
-import { scaleOrdinal } from 'd3-scale';
+import { scaleLinear } from 'd3-scale';
 import { feature } from 'topojson';
 import _ from 'lodash';
 import * as d3 from 'd3';
 
-export let topojson;
+export let county_topojson;
 export let candidate;
 export let candidate_total_votes;
 export let votecounts;
@@ -73,13 +73,13 @@ $: {
   });
 
   // To calculate percentiles based on vote count (change in map below as well)
-  // county_percentiles = percentiles(votecounts);
+  county_percentiles = percentiles(votecounts);
 
   // To calculate percentiles based on vote pct (change in map below as well)
-  county_percentiles = percentiles(votepcts);
+  // county_percentiles = percentiles(votepcts);
 
   candidate.results.forEach(function(county){
-    candidate_total_votes += county.votepct;
+    candidate_total_votes += county.votecount;
   });
 }
 
@@ -87,18 +87,38 @@ export let width = 400;
 export let height = 300;
 let center = width / 2;
 
-const projection = geoAlbers()
-            // .center([width, height])
-            .scale(4500)
-            // .translate([0, height]);
-            // iowa translation
-            .translate([0, height + (width / 8)])
-            //mn translation
-            // .translate([0, height * 2])
+const land = feature(county_topojson, county_topojson.objects.counties)
+// const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
+// data = land.features;
 
-let path = geoPath().projection(projection);
+// const projection = d3.geoTransverseMercator()
+//     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
+//     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+//     .fitSize([width, height], land);
 
-const land = feature(topojson, topojson.objects.cb_2015_iowa_county_20m)
+const projection = d3.geoTransverseMercator()
+    .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
+    .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .fitSize([width, height], land);
+
+let path = d3.geoPath().projection(projection);
+
+// const projection = geoAlbers()
+//             // .center([width, height])
+//             .scale(4500)
+//             // .translate([0, height]);
+//             // iowa translation
+//             .translate([0, height + (width / 8)])
+//             //mn translation
+//             // .translate([0, height * 2])
+//
+const densityscale = scaleLinear()
+  .domain([0.05, 0.40]) // vote pctage
+  .range([0.01, 1]) // opacity range
+//
+// let path = geoPath().projection(projection);
+//
+// const land = feature(topojson, topojson.objects.counties)
 
 function setOpacity(feature, results_data) {
   if (results_data.length == 0) {
@@ -106,15 +126,22 @@ function setOpacity(feature, results_data) {
   } else {
     var record = results_data.find(element => element.fipscode == feature.properties.GEOID);
 
-    // opacity based on share of total votes received statewide
-    // var opacity = record.votecount / candidate_total_votes * 10;
+    if (record.votecount > 0) {
+      // opacity set by d3 scale
+      var opacity = densityscale(record.votepct);
 
-    // opacity based on county percentage
-    // var opacity = record.votepct * 3;
+      // opacity based on share of total votes received statewide
+      // var opacity = (record.votecount / candidate_total_votes) * 8;
+
+      // opacity based on county percentage
+      // var opacity = 0.1 + (record.votepct * 2);
+    } else {
+      var opacity = 0;
+    }
 
     // opacity based on percentiles
-    var opacity = county_percentiles[record.votepct];
     // var opacity = county_percentiles[record.votecount];
+    // var opacity = county_percentiles[record.votepct];
 
     // console.log(opacity);
     return 'fill-opacity: ' + opacity;
@@ -166,7 +193,7 @@ function countyClass(feature, results_data) {
   {#if candidate.results.length > 0}
   <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
   {/if}
-  <svg viewbox="0 0 {width} {height}" style="width: 100%; height: 100%;" >
+  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each land.features as feature}
