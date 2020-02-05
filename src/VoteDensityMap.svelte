@@ -88,37 +88,30 @@ export let height = 300;
 let center = width / 2;
 
 const land = feature(county_topojson, county_topojson.objects.counties)
-// const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
-// data = land.features;
+
+// Look up likely projection suspects here: https://github.com/veltman/d3-stateplane
 
 // const projection = d3.geoTransverseMercator()
 //     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
 //     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
 //     .fitSize([width, height], land);
 
-const projection = d3.geoTransverseMercator()
-    .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
-    .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
-    .fitSize([width, height], land);
+// const projection = d3.geoTransverseMercator()
+//     .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
+//     .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+//     .fitSize([width, height], land);
+
+// NAD83 / Iowa North (EPSG:26975)
+const projection = d3.geoConicConformal()
+  .parallels([42 + 4 / 60, 43 + 16 / 60])
+  .rotate([93 + 30 / 60, 0])
+  .fitSize([width, height], land);
 
 let path = d3.geoPath().projection(projection);
 
-// const projection = geoAlbers()
-//             // .center([width, height])
-//             .scale(4500)
-//             // .translate([0, height]);
-//             // iowa translation
-//             .translate([0, height + (width / 8)])
-//             //mn translation
-//             // .translate([0, height * 2])
-//
 const densityscale = scaleLinear()
   .domain([0.05, 0.40]) // vote pctage
   .range([0.01, 1]) // opacity range
-//
-// let path = geoPath().projection(projection);
-//
-// const land = feature(topojson, topojson.objects.counties)
 
 function setOpacity(feature, results_data) {
   if (results_data.length == 0) {

@@ -28,19 +28,26 @@ let tooltipWidth;
 
 const land = feature(county_topojson, county_topojson.objects.counties)
 const cities = cityjson;
-// const land = feature(topojson, topojson.objects.cb_2015_minnesota_county_20m);
 data = land.features;
 city_points = cities.features;
+
+// Look up likely projection suspects here: https://github.com/veltman/d3-stateplane
 
 // const projection = d3.geoTransverseMercator()
 //     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
 //     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
 //     .fitSize([width, height], land);
 
-const projection = d3.geoTransverseMercator()
-    .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
-    .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
-    .fitSize([width, height], land);
+// const projection = d3.geoTransverseMercator()
+//     .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
+//     .center([0, 41.8]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+//     .fitSize([width, height], land);
+
+// NAD83 / Iowa North (EPSG:26975)
+const projection = d3.geoConicConformal()
+  .parallels([42 + 4 / 60, 43 + 16 / 60])
+  .rotate([93 + 30 / 60, 0])
+  .fitSize([width, height], land);
 
 let path = d3.geoPath().projection(projection);
 
