@@ -5,6 +5,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 	import iowa from './data/iowa.json';
+	import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import { onMount } from 'svelte';
@@ -43,27 +44,27 @@
 		});
 	}
 
-	// onMount(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // });
-
-
-	// old data STATIC
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
     data = json;
   });
 
 
-
-	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+	// // old data STATIC
+	// onMount(async function() {
+  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
   //   const json = await response.json()
   //   data = json;
-  // }, 15000);
+  // });
+
+
+
+	setInterval(async function() {
+    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+    const json = await response.json()
+    data = json;
+  }, 15000);
 
 
 </script>
@@ -104,17 +105,16 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
-		<Map topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
+		<Map county_topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
 </section>
-
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
   <p>Darker colors show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} topojson={iowa}/>
+		<VoteDensityMap {candidate} county_topojson={iowa}/>
 	{/each}
 	</div>
 </section>

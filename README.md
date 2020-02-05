@@ -1,3 +1,15 @@
+# Building county maps
+
+1. Create a .geojson of your state counties in QGIS, in unprojected coordinates (raw lat-lng)
+2. Convert to topojson, simplify and quantize to reduce file size:
+```
+geo2topo counties=ia_counties.geojson | toposimplify -P 0.21 --filter-detached | topoquantize 1e3 > iowa.json
+geo2topo counties=nh_counties.geojson | toposimplify -P 0.21 --filter-detached | topoquantize 1e5 > nh.json
+```
+3. Tell the JS what projection values to use
+
+geoproject 'd3.geoTransverseMercator().rotate([-134.3333333333333, 0]).center([0, 36]).translate([d.width/2,d.height/2]).fitSize([1500,1500],d)' < geojson_output.json > geojson_transversemercator.json
+
 # svelte app
 
 This is a project template for [Svelte](https://svelte.dev) apps. It lives at https://github.com/sveltejs/template-webpack.
