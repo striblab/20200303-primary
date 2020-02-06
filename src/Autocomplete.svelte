@@ -19,6 +19,7 @@
 		export let search= '';
 		export let isLoading= false;
 		export let arrowCounter= 0;
+		let last_updated_str = '';
 
 
 		let className= 'county_input';
@@ -36,6 +37,10 @@
 		// let datestring;
 		let county_selector_string;
 		let key_no_space;
+
+		const unsubscribe = last_updated.subscribe(last_updated => {
+			last_updated_str = last_updated
+		});
 
 		const regExpEscape = (s) => {
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
@@ -255,7 +260,7 @@
 {:else}
 <h2>Statewide results</h2>
 {/if}
-<p class="lastUpdated">Last updated: {$last_updated}</p>
+<p class="lastUpdated">Last updated: {$last_updated_str}</p>
 
 <!-- <div class="updates">
 	{#if time < 10}

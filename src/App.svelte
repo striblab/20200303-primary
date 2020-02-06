@@ -186,11 +186,12 @@
 
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
+	{$last_updated}
 </div>
 
 <section id="map">
 	<div class="results">
-		<Autocomplete {last_updated} {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
 		<Map county_topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
 </section>
