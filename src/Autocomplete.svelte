@@ -2,16 +2,43 @@
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
 
+		export let name= '';
+		export let value= '';
+		export let placeholder = 'Search for county results';
+		export let required= false;
+		export let disabled= false;
+		export let statewide_data;
+		export let county_data_grouped;
+		export let active_candidates;
+
+		// autocomplete props
+		export let items= [];
+		export let isOpen= false;
+		export let results= [];
+		export let search= '';
+		export let isLoading= false;
+		export let arrowCounter= 0;
+
+
+		let className= 'county_input';
+		let isAsync= false;
+		let minChar= 1;
+		let maxItems= 10;
+		let fromStart= true; // Default type ahead
+		let list;
+		let input;
+		let key;
+
+		// declare responsive variables
+		let last_updated;
+		let counter = 0;
+		let datestring;
+		let county_selector_string;
+		let key_no_space;
 
 		const regExpEscape = (s) => {
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
-
-		// declare responsive variables
-		let last_updated;
-		let datestring;
-		let county_selector_string;
-		let key_no_space;
 
 		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
@@ -22,7 +49,10 @@
 				// last_updated = Date.parse(statewide_data[0].lastupdated);
 
 				datestring = new Date(statewide_data[0].lastupdated)
-				last_updated = datestring.toLocaleString('en-US', options)
+				console.log(datestring);
+				last_updated = datestring.toLocaleString('en-US', options) + ' ' +  counter;
+				console.log(last_updated);
+				counter += 1
 			}
 		}
 		let counties = [];
@@ -47,33 +77,6 @@
 		function dotColor(candidate) {
 			return 'legend-' + candidate.toLowerCase();
 		}
-
-			export let name= '';
-			export let value= '';
-			export let placeholder = 'Search for county results';
-			export let required= false;
-			export let disabled= false;
-			export let statewide_data;
-			export let county_data_grouped;
-			export let active_candidates;
-
-			// autocomplete props
-			export let items= [];
-			export let isOpen= false;
-			export let results= [];
-			export let search= '';
-			export let isLoading= false;
-			export let arrowCounter= 0;
-
-
-      let className= 'county_input';
-      let isAsync= false;
-      let minChar= 1;
-      let maxItems= 10;
-      let fromStart= true; // Default type ahead
-			let list;
-			let input;
-      let key;
 
 			async function onChange (event) {
 				// Is the data given by an outside ajax request?
