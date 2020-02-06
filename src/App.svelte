@@ -4,8 +4,8 @@
 	import Statewide from './Statewide.svelte';
 	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
-	import iowa from './data/iowa.json';
-	// import nh from './data/nh.json';
+	// import iowa from './data/iowa.json';
+	import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import content from './data/content.json';
@@ -36,6 +36,22 @@
 	// 		return id;
 	// 	}
 	// }
+
+	let last_updated;
+	let datestring;
+
+	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+	$: {
+		if (statewide_data.length == 0) {
+			last_updated = '';
+		}
+		else {
+			// last_updated = Date.parse(statewide_data[0].lastupdated);
+
+			datestring = new Date(statewide_data[0].lastupdated)
+			last_updated = datestring.toLocaleString('en-US', options)
+		}
+	}
 
 	$ : {
 		statewide_data = data.filter(function(d) {
@@ -123,10 +139,12 @@
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 </div>
 
+<p class="lastUpdated">Last updated: {last_updated}</p>
+
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
-		<Map county_topojson={iowa} cityjson={iacities} {county_data_grouped} {active_candidates}/>
+		<Map county_topojson={nh} cityjson={iacities} {county_data_grouped} {active_candidates}/>
 	</div>
 </section>
 
@@ -148,10 +166,12 @@
   <p>Darker colors show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} county_topojson={iowa}/>
+		<VoteDensityMap {candidate} county_topojson={nh}/>
 	{/each}
 	</div>
 </section>
+
+<!-- <div><div class="c016"><header class="c0112"><h2 class="c017">Morning Hot Dish</h2><div class="c018">Minnesota political news and musings, served up every weekday morning.</div></header><form class="c0111"><div class="c0116 c0113"><label class="c0114 c0117">Email<input class="c0115" type="email" placeholder="Please enter your email address" value=""></label><span class="c0122"></span></div><input type="submit" alt="Submit" class="c0123" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-1" data-evar48="Submit" data-evar58="button" data-evar75="newsletter" data-linkname="Submit" data-linktype="button" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-1" data-position="0-1" value="Sign Up"></form><a href="http://www.startribune.com/startribune-com-privacy-policy/218991591/" class="c0124" target="_blank" title="Privacy Policy" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-3" data-evar48="Privacy Policy" data-evar58="link" data-evar75="newsletter" data-linkname="Privacy Policy" data-linktype="link" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-3" data-position="0-3">Privacy Policy</a></div></div> -->
 
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>

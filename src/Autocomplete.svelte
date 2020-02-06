@@ -8,23 +8,10 @@
 		}
 
 		// declare responsive variables
-		let last_updated;
-		let datestring;
+
 		let county_selector_string;
 		let key_no_space;
 
-		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-		$: {
-			if (statewide_data.length == 0) {
-				last_updated = '';
-			}
-			else {
-				// last_updated = Date.parse(statewide_data[0].lastupdated);
-
-				datestring = new Date(statewide_data[0].lastupdated)
-				last_updated = datestring.toLocaleString('en-US', options)
-			}
-		}
 		let counties = [];
 		var i;
 		$: {
@@ -85,7 +72,7 @@
 					isOpen = false;
 					key = null;
 
-					d3.selectAll('.counties path')
+					d3.selectAll('.county-map svg .counties path')
 					  .style('opacity', 1)
 				}
 			}
@@ -148,7 +135,7 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
-				d3.selectAll('.counties path')
+				d3.selectAll('.county-map svg .counties path')
 				  .style('opacity', 0.15);
 
 				key_no_space = key.replace(/\s/g, "")
@@ -251,7 +238,7 @@
 {:else}
 <h2>Statewide results</h2>
 {/if}
-<p class="lastUpdated">Last updated: {last_updated}</p>
+
 
 <!-- <div class="updates">
 	{#if time < 10}
