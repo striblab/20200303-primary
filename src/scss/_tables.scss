@@ -37,15 +37,17 @@ th {
     // display: flex;
     // align-items: center;
     valign: baseline;
-    width: 200px;
+    width: 175px;
   }
 
   .votes {
     width: 75px;
+    text-align: right;
   }
 
   .pct {
     width: 40px;
+    text-align: right;
   }
 
   .winner {
@@ -82,15 +84,17 @@ th {
   }
 
   .cand {
-    width: 60%;
+    width: 25%;
   }
 
   .votes {
-    width: 40%;
+    width: 30%;
+    text-align: right;
   }
 
   .pct {
     width: 10%;
+    text-align: right;
   }
 
   .precincts {
