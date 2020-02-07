@@ -18,7 +18,7 @@
 	export let title;
 
 	export let data = [];
-	export let county_data;
+	export let county_data = [];
 	export let county_data_grouped;
 
   export let statewide_data;
@@ -62,20 +62,33 @@
     county_data = data.filter(function(d) {
       return d.level == "county";
     })
+
 		// county_data_grouped = Object.entries(_.groupBy(county_data, "fipscode"));
 		// county_data_grouped = Object.entries(_.orderBy(county_data, "votecount"));
 		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
+		// This data used to generate the density maps, in order of biggest vote getters
 		results_by_candidate = [];
-		active_candidates.forEach(function(candidate){
-			let candidate_data = {
-				'candidate': candidate,
-				'results': county_data.filter(function(d) {
-		      return d.last == candidate;
-		    })
-			}
-			results_by_candidate.push(candidate_data)
-		});
+		if (statewide_data.length > 0) {
+			active_candidates.forEach(function(candidate){
+				let candidate_data = {
+					'candidate': candidate,
+					'results': county_data.filter(function(d) {
+			      return d.last == candidate;
+			    })
+				}
+				if (candidate_data.results.length > 0) {
+					candidate_data.total_votes = statewide_data.filter(function(d) {
+			      return d.last == candidate;
+			    })[0].votecount
+					results_by_candidate.push(candidate_data);
+				}
+			});
+			results_by_candidate = results_by_candidate.sort(function(first, second) {
+			 return second.total_votes - first.total_votes;
+			})
+		}
+
 	}
 
 	// export let id = contentIDGenerator(0, stories)
