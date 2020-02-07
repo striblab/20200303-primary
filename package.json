@@ -35,6 +35,7 @@
   "dependencies": {
     "@babel/runtime": "^7.6.3",
     "@babel/runtime-corejs3": "^7.6.3",
+    "@gouch/to-title-case": "^2.2.1",
     "@sveltejs/svelte-scroller": "^2.0.5",
     "d3": "^5.15.0",
     "d3-geo": "^1.11.9",

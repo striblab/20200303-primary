@@ -60,7 +60,9 @@
     county_data = data.filter(function(d) {
       return d.level == "county";
     })
-		county_data_grouped = Object.entries(_.groupBy(county_data, "fipscode"));
+		// county_data_grouped = Object.entries(_.groupBy(county_data, "fipscode"));
+		// county_data_grouped = Object.entries(_.orderBy(county_data, "votecount"));
+		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
 		results_by_candidate = [];
 		active_candidates.forEach(function(candidate){
