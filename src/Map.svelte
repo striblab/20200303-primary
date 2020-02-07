@@ -219,7 +219,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'')}/>
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
       {/each}
     </g>
     <g class="cities">
