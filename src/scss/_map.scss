@@ -111,7 +111,7 @@ $candColors: (
 }
 
 .county-map {
-  width: 600px;
+  width: 550px;
   height: auto;
   /* width: 100%; */
   // background-color: "#eeeeee";
@@ -129,4 +129,11 @@ $candColors: (
   /* fill: grey; */
   stroke: white;
   stroke-width: 0.5;
+}
+
+// IE11 needs a specific height
+@media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
+  .county-map {
+    height: 400px;
+  }
 }

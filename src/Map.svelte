@@ -25,6 +25,7 @@ let rest;
 let others;
 let tooltipHeight;
 let tooltipWidth;
+let tooltip;
 
 const land = feature(county_topojson, county_topojson.objects.counties)
 const cities = cityjson;
@@ -33,10 +34,10 @@ city_points = cities.features;
 
 // Look up likely projection suspects here: https://github.com/veltman/d3-stateplane
 
-// const projection = d3.geoTransverseMercator()
-//     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
-//     .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
-//     .fitSize([width, height], land);
+const projection = d3.geoTransverseMercator()
+    .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
+    .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .fitSize([width, height], land);
 
 // const projection = d3.geoTransverseMercator()
 //     .rotate([93, 0]) // Central meridian for EPSG:26915 UTM Zone 15N (Iowa)
@@ -44,16 +45,16 @@ city_points = cities.features;
 //     .fitSize([width, height], land);
 
 // NAD83 / Iowa North (EPSG:26975)
-const projection = d3.geoConicConformal()
-  .parallels([42 + 4 / 60, 43 + 16 / 60])
-  .rotate([93 + 30 / 60, 0])
-  .fitSize([width, height], land);
+// const projection = d3.geoConicConformal()
+//   .parallels([42 + 4 / 60, 43 + 16 / 60])
+//   .rotate([93 + 30 / 60, 0])
+//   .fitSize([width, height], land);
 
 let path = d3.geoPath().projection(projection);
 
 function hideTooltip(path, feature) {
 
-  var tooltip = document.getElementById('tooltip')
+  tooltip = document.getElementById('tooltip')
   if (tooltip.classList.contains('tooltip-active')) {
     tooltip.classList.remove('tooltip-active');
   }
@@ -69,10 +70,6 @@ function hideTooltip(path, feature) {
 
 function buildTooltip(path, feature) {
 
-    if (county_data_grouped.length == 0) {
-
-    }
-    else {
       var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
       tooltipResults = record[1];
       top_five = tooltipResults.slice(0,5)
@@ -89,29 +86,22 @@ function buildTooltip(path, feature) {
         tooltip.classList.add('tooltip-active');
       }
 
-      tooltipHeight = tooltip.clientHeight;
-      tooltipWidth = tooltip.clientWidth;
-
       d3.selectAll('.counties path')
         .style('opacity', 0.65)
 
       d3.select(path)
         .style('opacity', 1)
         .style('stroke-width', 1.5)
-    }
-
-
 
 }
 
 function positionTooltip(event) {
-  if (county_data_grouped.length == 0) {
-
-  }
-  else {
     let tooltip = d3.select('#tooltip')
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
+
+    tooltipHeight = tooltip.node().clientHeight;
+    tooltipWidth = tooltip.node().clientWidth;
 
     let tooltipOffset = 25;
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
@@ -125,8 +115,6 @@ function positionTooltip(event) {
           .style('left', x - (tooltipWidth / 2) + 'px')
           .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
     }
-  }
-
 }
 
 function countyClass(feature, data) {
@@ -161,8 +149,8 @@ function countyClass(feature, data) {
   max-width: 650px;
 }
 
-.county-map-tooltip p {
-  max-width: 300px;
+.county-map-tooltip {
+  max-width: 170px;
 }
 
 .precincts {
@@ -174,8 +162,10 @@ function countyClass(feature, data) {
 
 <div class="county-map">
 
+
   <div class="county-map-tooltip" id="tooltip">
     <h4>{ tooltipResults ? tooltipResults[0].reportingunitname : '' } County</h4>
+    {#if tooltipResults}
     <table>
       <thead>
         <tr>
@@ -208,22 +198,22 @@ function countyClass(feature, data) {
           {/each}
         {/if}
 
-        {#if others}
+        <!-- {#if others}
         <p> Others receiving votes:
           {#each others as result}
             {result.last} ({Math.round(result.votepct * 100)}%),
           {/each}
         </p>
-        {/if}
+        {/if} -->
       </tbody>
     </table>
 
-    {#if tooltipResults}
       <div class="precincts">
         { Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
       </div>
-    {/if}
+  {/if}
   </div>
+
 <!-- width="500" height="500"  -->
   <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
