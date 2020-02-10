@@ -1,6 +1,7 @@
 <script>
 
 import {intcomma} from 'journalize';
+import { fade } from 'svelte/transition';
 // import * as jq from 'jquery';
 
 export let county_topojson;
@@ -9,9 +10,7 @@ export let cityjson;
 export let county_data_grouped;
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
-import { scaleOrdinal } from 'd3-scale';
 import { feature } from 'topojson';
-import _ from 'lodash';
 import * as d3 from 'd3';
 
 let data;
@@ -241,7 +240,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
       {/each}
     </g>
     <g class="cities">

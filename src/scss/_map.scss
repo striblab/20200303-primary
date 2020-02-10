@@ -78,6 +78,7 @@ $candColors: (
 
 .no-votes {
   fill: white;
+  transition: fill 1s;
 }
 
 .cities .cityLabel {
@@ -163,6 +164,11 @@ $candColors: (
   /* fill: grey; */
   stroke: white;
   stroke-width: 0.5;
+  -webkit-transition: all 700ms ease;
+  -moz-transition: all 700ms ease;
+  -ms-transition: all 700ms ease;
+  -o-transition: all 700ms ease;
+  transition: all 700ms ease;
 }
 
 // IE11 needs a specific height
