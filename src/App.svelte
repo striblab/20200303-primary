@@ -63,8 +63,7 @@
       return d.level == "county";
     })
 
-		// county_data_grouped = Object.entries(_.groupBy(county_data, "fipscode"));
-		// county_data_grouped = Object.entries(_.orderBy(county_data, "votecount"));
+		statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
 		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
 		// This data used to generate the density maps, in order of biggest vote getters
@@ -103,6 +102,27 @@
 		}
 	}
 
+	let getData = async function() {
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		const json = await response.json()
+		data = json;
+		time = 30;
+		timerInterval = setInterval(countdown, 1000);
+	}
+
+	let time = 30;
+	function countdown() {
+		if (time == 0) {
+			clearInterval(timerInterval);
+			time = 'Updating ...'
+			getData()
+		}
+		else {
+			time--;
+		}
+	}
+	let timerInterval = setInterval(countdown, 1000);
+
 	onMount(async function() {
     const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
     const json = await response.json()
@@ -116,11 +136,11 @@
   //   data = json;
   // });
 
-	setInterval(async function() {
-    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-    const json = await response.json()
-    data = json;
-  }, 15000);
+	// setInterval(async function() {
+  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+  //   const json = await response.json()
+  //   data = json;
+  // }, 15000);
 
 </script>
 
@@ -157,7 +177,19 @@
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 </div>
 
-<p class="lastUpdated">Last updated: {last_updated}</p>
+<div class="updates">
+	{#if typeof(time) == "string"}
+	<p class="countdown">{time}</p>
+	{:else}
+		{#if time < 10}
+		<p class="countdown">Checking for new data 0:0{time}</p>
+		{:else}
+		<p class="countdown">Checking for new data 0:{time}</p>
+		{/if}
+	{/if}
+		<p class="lastUpdated">Last change: {last_updated}</p>
+</div>
+
 
 <section id="map">
 	<div class="results">

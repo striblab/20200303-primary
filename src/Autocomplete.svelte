@@ -1,6 +1,7 @@
 <script>
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
+		require('@gouch/to-title-case')
 
 
 		const regExpEscape = (s) => {
@@ -29,10 +30,6 @@
 			else {
 				state_precincts = statewide_data[0].precinctsreportingpct;
 			}
-		}
-
-		function dotColor(candidate) {
-			return 'legend-' + candidate.toLowerCase();
 		}
 
 			export let name= '';
@@ -73,9 +70,45 @@
 					key = null;
 
 					d3.selectAll('.county-map svg .counties path')
+						.style('stroke-width', 1)
 					  .style('opacity', 1)
 				}
 			}
+
+			function dotColor(candidate, winner) {
+				if (!winner) {
+					return 'legend-' + candidate.toLowerCase() + 'noWinner';
+				}
+				else {
+					return 'legend-' + candidate.toLowerCase();
+				}
+
+			}
+
+			function dotColor2(candidate) {
+					return 'legend-' + candidate.toLowerCase();
+			}
+
+			function winner(winner) {
+				if (winner) {
+					return 'winner'
+				}
+				else {
+					return 'no-winner'
+				}
+			}
+
+			function titleCase (str) {
+			  if ((str===null) || (str===''))
+			       return false;
+			  else
+			   str = str.toString();
+
+			 return str.replace(/\w\S*/g,
+			function(txt){return txt.charAt(0).toUpperCase() +
+			       txt.substr(1).toLowerCase();});
+			}
+
 			function filterResults () {
         // console.log(items)
 				results = items.filter(item => {
@@ -89,7 +122,7 @@
 
 				})
 				.map(item => {
-					const text = item[1][0].reportingunitname
+					const text = item[1][0].reportingunitname.toUpperCase()
 					return {
 						key: text,
 						value: item[1],
@@ -135,6 +168,7 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
+
 				d3.selectAll('.county-map svg .counties path')
 				  .style('opacity', 0.15);
 
@@ -144,6 +178,7 @@
 				d3.select(county_selector_string)
 					.style('opacity', 1)
 					.style('stroke-width', 1.5)
+
       } else if (!value) {
         search = null;
       }
@@ -156,16 +191,7 @@
        filterResults();
     }
 	}
-	let time = 30;
-	function countdown() {
-		if (time == 0) {
-			time = 30
-		}
-		else {
-			time--;
-		}
-	}
-	setInterval(countdown, 1000);
+
 </script>
 
 <style>
@@ -173,18 +199,7 @@
     box-sizing: border-box;
   }
 
-  input {
-    height: 2rem;
-    font-size: 1rem;
-    padding: 0.25rem 0.5rem;
-  }
-
-	.county_input {
-		margin-top: 10px;
-		width: 250px;
-	}
-
-  .autocomplete {
+	.autocomplete {
     position: relative;
   }
 
@@ -225,16 +240,12 @@
   .autocomplete-result:hover {
     background-color: #dbdbdb;
   }
-
-	.tableWrapper table {
-		margin-top: 15px;
-	}
 </style>
 <!-- <svelte:window on:click="{()=>close()}" /> -->
 <div class="tableWrapper">
 
 {#if key}
-<h2>{key} County results</h2>
+<h2>{titleCase(key)} County results</h2>
 {:else}
 <h2>Statewide results</h2>
 {/if}
@@ -257,7 +268,7 @@
     {placeholder}
     {required}
     {disabled}
-    value="{key || ''}"
+    value="{!key ? '' : titleCase(key) }"
     autocomplete="{name}"
     bind:value="{search}"
     on:input="{(event)=>onChange(event)}"
@@ -269,7 +280,7 @@
   <ul class="autocomplete-results{!isOpen ? ' hide-results' : ''}" bind:this={list}>
 		{#each results as result, i}
 				<li on:click="{()=>close(i)}" class="autocomplete-result{ i === arrowCounter ? ' is-active' : '' }">
-				{@html result.label}
+				{@html titleCase(result.key)}
 				</li>
 		{/each}
   </ul>
@@ -291,7 +302,7 @@
 			{#if active_candidates.includes(candidate.last)}
 	    <tr>
 	      <td class="cand">
-					<span class="{dotColor(candidate.last)}"></span>
+					<span class="{dotColor2(candidate.last)}"></span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}
@@ -299,10 +310,18 @@
 	        {/if}
 	      </td>
 	      <td class="votes">
-	        {intcomma(candidate.votecount)}
+					{#if Math.round(value[1].precinctsreportingpct) == 0}
+						-
+					{:else}
+						{intcomma(candidate.votecount)}
+					{/if}
 	      </td>
 				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
+					{#if Math.round(value[1].precinctsreportingpct) == 0}
+						-
+					{:else}
+						{Math.round(candidate.votepct * 100) }%
+					{/if}
 				</td>
 	    </tr>
 			{/if}
@@ -325,24 +344,54 @@
   <tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-	    <tr>
-	      <td class="cand">
-					<span class="{dotColor(candidate.last)}"></span>
-	        {#if candidate.first}
-	          {candidate.first} {candidate.last}
-	        {:else}
-	          {candidate.last}
-	        {/if}
-	      </td>
-	      <td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-	    </tr>
+				
+				{#if statewide_data[0].winner == true}
+					<tr class="{winner(candidate.winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else}
+
+				<tr>
+					<td class="cand">
+						<span class="{dotColor2(candidate.last)}"></span>
+						{#if candidate.first}
+							{candidate.first} {candidate.last}
+						{:else}
+							{candidate.last}
+						{/if}
+					</td>
+					<td class="votes">
+						{#if state_precincts == 0}
+							-
+						{:else}
+							{intcomma(candidate.votecount)}
+						{/if}
+					</td>
+					<td class="pct">
+						{#if state_precincts == 0}
+							-
+						{:else}
+							{Math.round(candidate.votepct * 100) }%
+						{/if}
+					</td>
+				</tr>
+
+				{/if}
 			{/if}
-	  {/each}
+		{/each}
 	</tbody>
 </table>
 
@@ -382,7 +431,7 @@
 			{:else}
 	    <tr>
 				<td class="cand">
-					<span class="{dotColor(candidate.last)}"></span>
+					<span class="{dotColor(candidate.last, candidate.winner)}"></span>
 	        {#if candidate.first}
 	          {candidate.first} {candidate.last}
 	        {:else}

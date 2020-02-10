@@ -34,14 +34,24 @@ p.lastUpdated {
 	margin-bottom: 12px;
 }
 
-.updates p.countdown {
-	font-family: "Benton Sans", sans-serif;
-	font-size: 12px;
-}
+.updates {
+	background-color: #F5F5F5;
+	padding: 10px 10px;
+	text-align: center;
+	display: block;
+	margin: 0 auto;
+	max-width: 275px;
+	margin-bottom: 35px;
 
-.updates p {
-	margin-top: 4px;
-	margin-bottom: 0;
+	p {
+		margin-top: 4px;
+		margin-bottom: 0;
+	}
+
+	p.countdown {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 12px;
+	}
 }
 
 .leadin {
@@ -81,6 +91,21 @@ p.lastUpdated {
 	// display: flex;
 	// display: block;
 	// margin: 0 auto;
+
+	input {
+    height: 2rem;
+    font-size: 1rem;
+    padding: 0.25rem 0.5rem;
+  }
+
+	.county_input {
+		margin-top: 10px;
+		width: 250px;
+	}
+
+	.tableWrapper table {
+		margin-top: 15px;
+	}
 }
 
 #candidate-support {
