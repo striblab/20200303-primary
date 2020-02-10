@@ -83,15 +83,16 @@ $: {
   });
 }
 
-export let width = 250;
-export let height = 300;
+let aspect_ratio = 1.3
+export let width = 120;
+export let height = width * aspect_ratio;
 let center = width / 2;
 
 const land = feature(county_topojson, county_topojson.objects.counties).features;
 
 const projection = d3.geoTransverseMercator()
     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
-    .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .center([-4, 43.6]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
     .fitSize([width, height], {type: "FeatureCollection", features: land});
 
 let path = d3.geoPath().projection(projection);
@@ -130,7 +131,7 @@ const circle_sizer = function(input) {
 
 const circlescale = scaleLinear()
   .domain([0, 50000]) // votecount
-  .range([0, 150]) // radius range
+  .range([0, 80]) // radius range
 
 const densityscale = scaleLinear()
   .domain([0.05, 0.40]) // vote pctage
@@ -184,7 +185,7 @@ function countyClass(feature, results_data) {
 
 <style>
   .density-map {
-    max-width: 125px;
+    max-width: 120px;
     /* width: 100%; */
     background-color: "#eeeeee";
     /* margin: 0 auto; */
@@ -200,7 +201,7 @@ function countyClass(feature, results_data) {
   }
 
   h4.cand-name {
-    font-size: 0.8em;
+    font-size: 0.7em;
     margin: 1em 0 0.5em;
   }
 </style>
@@ -209,7 +210,7 @@ function countyClass(feature, results_data) {
   {#if candidate.results.length > 0}
   <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
   {/if}
-  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
+  <svg viewBox="0 15 {width} {height + 15}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each land as feature}
