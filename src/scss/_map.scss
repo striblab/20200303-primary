@@ -32,14 +32,40 @@ $candColors: (
     margin-right: 5px !important;
   }
 
+  // .legend-#{$cand}.noWinner {
+  //   display: none;
+  // }
+
+  .winner .legend-#{$cand} {
+    height: 10px;
+    width: 10px;
+    background-color: transparent;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px !important;
+  }
 }
+
+.no-winner {
+  background-color: white;
+
+  span {
+    display: none !important;
+  }
+}
+
+
 
 .cities {
   pointer-events: none;
 }
 
-.no-leader {
+.tie {
   fill: #D0D0D0;
+}
+
+.no-results {
+  fill: #E8E8E8;
 }
 
 .no-votes {

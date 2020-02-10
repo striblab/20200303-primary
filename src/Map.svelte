@@ -52,6 +52,17 @@ const projection = d3.geoTransverseMercator()
 
 let path = d3.geoPath().projection(projection);
 
+function titleCase (str) {
+  if ((str===null) || (str===''))
+       return false;
+  else
+   str = str.toString();
+
+ return str.replace(/\w\S*/g,
+function(txt){return txt.charAt(0).toUpperCase() +
+       txt.substr(1).toLowerCase();});
+}
+
 function hideTooltip(path, feature) {
 
   tooltip = document.getElementById('tooltip')
@@ -78,12 +89,16 @@ function buildTooltip(path, feature) {
       // console.log(top_five)
       // console.log(others)
 
-      let tooltip = document.getElementById('tooltip')
-      if (tooltip.classList.contains('tooltip-active')) {
-        tooltip.classList.remove('tooltip-active');
+      let tooltip =  d3.select('#tooltip')
+
+      // tooltipHeight = tooltip.node().clientHeight;
+      // tooltipWidth = tooltip.node().clientWidth;
+
+      if (tooltip.classed('tooltip-active')) {
+        tooltip.classed('tooltip-active', false);
       }
       else {
-        tooltip.classList.add('tooltip-active');
+        tooltip.classed('tooltip-active', true);
       }
 
       d3.selectAll('.counties path')
@@ -118,23 +133,19 @@ function positionTooltip(event) {
 }
 
 function countyClass(feature, data) {
-  // const data = await results;
-  // console.log(data)
-  // return 'no-leader';
-  if (data.length == 0) {
-    return 'no-leader';
+  var record = data.find(element => element[0] == feature.properties.GEOID);
+
+  if (data.length == 0 || record[1][0].precinctsreportingpct == 0) {
+    return 'no-results';
   }
   else {
     var record = data.find(element => element[0] == feature.properties.GEOID);
     if (record[1][0].votecount === record[1][1].votecount) {
-      return 'no-leader';
+      return 'tie';
     }
     else {
       var leader = record[1][0].last;
-      // var county = record[1][0].reportingunitname
-      // console.log(leader)
       var leader_class = 'leader-' + leader.toLowerCase()
-      // + ' ' + county;
       return leader_class
     }
   }
@@ -161,10 +172,8 @@ function countyClass(feature, data) {
 
 
 <div class="county-map">
-
-
   <div class="county-map-tooltip" id="tooltip">
-    <h4>{ tooltipResults ? tooltipResults[0].reportingunitname : '' } County</h4>
+    <h4>{ tooltipResults ? titleCase(tooltipResults[0].reportingunitname) : '' } County</h4>
     {#if tooltipResults}
     <table>
       <thead>
@@ -192,8 +201,20 @@ function countyClass(feature, data) {
           {#each top_five as result}
             <tr>
               <td class="cand">{result.last}</td>
-              <td class="votes">{intcomma(result.votecount)}</td>
-              <td class="pct">{Math.round(result.votepct * 100)}%</td>
+              <td class="votes">
+                {#if Math.round(tooltipResults[0].precinctsreportingpct) == 0}
+                  -
+                {:else}
+                  {intcomma(result.votecount)}
+                {/if}
+              </td>
+              <td class="pct">
+                {#if Math.round(tooltipResults[0].precinctsreportingpct) == 0}
+                  -
+                {:else}
+                  {Math.round(result.votepct * 100)}%
+                {/if}
+              </td>
             </tr>
           {/each}
         {/if}
