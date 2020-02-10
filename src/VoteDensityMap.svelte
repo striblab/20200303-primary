@@ -7,9 +7,11 @@ import _ from 'lodash';
 import * as d3 from 'd3';
 
 export let county_topojson;
+export let cityjson;
+let city_points = cityjson.features;
 export let candidate;
 let aspect_ratio = 1.3
-export let width = 120;
+export let width = 200;
 export let height = width * aspect_ratio;
 let center = width / 2;
 
@@ -55,7 +57,7 @@ const circlescale = scaleLinear()
 
 <style>
   .density-map {
-    max-width: 120px;
+    max-width: 200px;
     /* width: 100%; */
     background-color: "#eeeeee";
     /* margin: 0 auto; */
@@ -73,6 +75,11 @@ const circlescale = scaleLinear()
   h4.cand-name {
     font-size: 0.7em;
     margin: 1em 0 0.5em;
+  }
+
+  .cityDot,
+  .cityLabel {
+    fill: #000;
   }
 </style>
 
@@ -92,6 +99,12 @@ const circlescale = scaleLinear()
       {feature}
       <circle class="countyCircle circle-{candidate.results[0].last.toLowerCase()}" cx="{feature.centroid[0]}" cy="{feature.centroid[1]}" r="{circle_sizer(feature.votecount)}"/>
     {/each}
+    </g>
+    <g class="cities">
+      {#each city_points as city}
+        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
+        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
+      {/each}
     </g>
   </svg>
 

@@ -8,6 +8,7 @@
 	// import iowa from './data/iowa.json';
 
 	import nh from './data/nh.json';
+	import nh_cities from './data/nh_cities.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
 	import us_county_names from './data/us_county_names.json'
@@ -195,7 +196,7 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
-		<Map county_topojson={nh} cityjson={iacities} {county_data_grouped} {active_candidates}/>
+		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {active_candidates}/>
 	</div>
 </section>
 
@@ -217,7 +218,7 @@
   <p>Larger circles show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} county_topojson={nh}/>
+		<VoteDensityMap {candidate} county_topojson={nh} cityjson={nh_cities} />
 	{/each}
 	</div>
 </section>
