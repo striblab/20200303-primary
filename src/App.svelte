@@ -1,16 +1,18 @@
 <script>
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
-	import Statewide from './Statewide.svelte';
 	import Autocomplete from './Autocomplete.svelte';
 	import County from './County.svelte';
 
-	// import iowa from './data/iowa.json';
-
 	import nh from './data/nh.json';
 	import nh_cities from './data/nh_cities.json';
-	import iacities from './data/iacities.json';
-	import mn from './data/mncounties.json';
+
+	// import ia from './data/ia.json';
+	// import ia_cities from './data/iacities.json';
+
+	// import mn from './data/mncounties.json';
+	// import mn_cities from './data/mn_cities.json';
+
 	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
 	import { onMount } from 'svelte';
