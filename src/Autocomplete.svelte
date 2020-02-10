@@ -34,7 +34,7 @@
 
 			export let name= '';
 			export let value= '';
-			export let placeholder = 'Search for county results';
+			export let placeholder = 'Search for county-level results';
 			export let required= false;
 			export let disabled= false;
 			export let statewide_data;
@@ -70,6 +70,8 @@
 					key = null;
 
 					d3.selectAll('.county-map svg .counties path')
+						.transition()
+						.duration(450)
 						.style('stroke-width', 1)
 					  .style('opacity', 1)
 				}
@@ -170,12 +172,16 @@
 				key = results[index].key;
 
 				d3.selectAll('.county-map svg .counties path')
+					.transition()
+					.duration(450)
 				  .style('opacity', 0.15);
 
 				key_no_space = key.replace(/\s/g, "")
 				county_selector_string = '[county_name=' + key_no_space + ']';
 
 				d3.select(county_selector_string)
+					.transition()
+					.duration(450)
 					.style('opacity', 1)
 					.style('stroke-width', 1.5)
 
@@ -344,7 +350,7 @@
   <tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-				
+
 				{#if statewide_data[0].winner == true}
 					<tr class="{winner(candidate.winner)}">
 						<td class="cand">
