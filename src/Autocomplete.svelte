@@ -71,7 +71,7 @@
 
 					d3.selectAll('.county-map svg .counties path')
 						.transition()
-						.duration(450)
+						.duration(350)
 						.style('stroke-width', 1)
 					  .style('opacity', 1)
 				}
@@ -147,15 +147,8 @@
         event.preventDefault()
 
         if (arrowCounter === -1) {
-					if (search.length < 2) {
-
-					}
-					else {
 						arrowCounter = 0;	// Default select first item of list
-					}
         }
-
-
         close(arrowCounter)
       } else if (event.keyCode === 27) {
         // Escape
@@ -173,7 +166,7 @@
 
 				d3.selectAll('.county-map svg .counties path')
 					.transition()
-					.duration(450)
+					.duration(350)
 				  .style('opacity', 0.15);
 
 				key_no_space = key.replace(/\s/g, "")
@@ -181,7 +174,7 @@
 
 				d3.select(county_selector_string)
 					.transition()
-					.duration(450)
+					.duration(350)
 					.style('opacity', 1)
 					.style('stroke-width', 1.5)
 
