@@ -83,12 +83,21 @@ $candColors: (
 
 .cities .cityLabel {
   font-size: 10px;
+  font-weight: 400;
   font-family: "Benton Sans", sans-serif;
-  fill: white;
+  fill: #000;
+  text-shadow:
+		-1px -1px 0 #DDD,
+		1px -1px 0 #DDD,
+		-1px 1px 0 #DDD,
+		1px 1px 0 #DDD;
 }
 
 .cities .cityDot {
-  fill: white;
+  fill: #000;
+  stroke: #FFF;
+  stroke-width: 0.5;
+  stroke-opacity: 0.6;
 }
 
 .county-map-tooltip {
