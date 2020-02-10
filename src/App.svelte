@@ -138,12 +138,6 @@
   //   data = json;
   // });
 
-	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // }, 15000);
-
 </script>
 
 <style>
