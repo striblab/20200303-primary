@@ -112,7 +112,8 @@ function buildTooltip(path, feature) {
 
 function positionTooltip(event) {
     let tooltip = d3.select('#tooltip')
-    // let svg = d3.select('svg')
+    let svg = document.getElementById('resultsMap')
+    var bounding = svg.getBoundingClientRect()
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
 
@@ -124,16 +125,17 @@ function positionTooltip(event) {
     //
     // console.log(pt)
 
-    var cursorX = event.clientX - width;
+    var cursorX = event.clientX - bounding.left;
+    console.log(cursorX)
 
     tooltipHeight = tooltip.node().clientHeight;
     tooltipWidth = tooltip.node().clientWidth;
 
-    let tooltipOffset = 15;
+    let tooltipOffset = 25;
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
 
     if (!cursorOffPage) {
-      if (cursorX > width) {
+      if (cursorX > width / 2) {
         tooltip
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y + tooltipOffset + 'px');
@@ -154,7 +156,7 @@ function positionTooltip(event) {
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
       }
-      else if (cursorX < width) {
+      else if (cursorX < width / 2) {
         tooltip
           .style('left', x + 0 + 'px')
           // .style('left', x )
@@ -270,7 +272,7 @@ function countyClass(feature, data) {
   </div>
 
 <!-- width="500" height="500"  -->
-  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
+  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;" id="resultsMap">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
