@@ -10,6 +10,7 @@
 	import nh from './data/nh.json';
 	import iacities from './data/iacities.json';
 	import mn from './data/mncounties.json';
+	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
 	import { onMount } from 'svelte';
 	// import { feature as topojsonFeature } from 'topojson';
