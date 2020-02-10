@@ -1,0 +1,32 @@
+{
+  "type": "FeatureCollection",
+  "name": "iacities",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "33",
+        "PLACEFP": "11085",
+        "NAME": "Manchester"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -71.4548, 42.9956 ]}
+    }, {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "33",
+        "PLACEFP": "11110",
+        "NAME": "Nashua"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -71.4676, 42.7654 ]}
+    }, {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "33",
+        "PLACEFP": "13040",
+        "NAME": "Concord"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -71.5376, 43.2081 ]}
+    }
+  ]
+}
