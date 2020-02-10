@@ -31,7 +31,19 @@
 				state_precincts = statewide_data[0].precinctsreportingpct;
 			}
 		}
-
+		let county_record;
+		let county_name;
+		$: {
+			if (fips == null) {
+				county_name = ''
+			}
+			else {
+				county_record = us_county_names.find(element => element.geoid === fips);
+				// console.log(county_record)
+				// console.log(fips)
+				county_name = county_record.name;
+			}
+		}
 			export let name= '';
 			export let value= '';
 			export let placeholder = 'Search for county-level results';
@@ -40,6 +52,7 @@
 			export let statewide_data;
 			export let county_data_grouped;
 			export let active_candidates;
+			export let us_county_names;
 
 			// autocomplete props
 			export let items= [];
@@ -58,6 +71,7 @@
 			let list;
 			let input;
       let key;
+			let fips;
 
 			async function onChange (event) {
 				// Is the data given by an outside ajax request?
@@ -68,6 +82,7 @@
 				else {
 					isOpen = false;
 					key = null;
+					fips = null;
 
 					d3.selectAll('.county-map svg .counties path')
 						.transition()
@@ -91,13 +106,18 @@
 					return 'legend-' + candidate.toLowerCase();
 			}
 
-			function winner(winner) {
-				if (winner) {
-					return 'winner'
-				}
-				else {
-					return 'no-winner'
-				}
+			function winner(winner, manual_winner) {
+
+					if (manual_winner === true) {
+						return 'winner'
+					}
+					else if (winner === true) {
+						return 'winner'
+					}
+					else {
+						return 'no-winner'
+					}
+
 			}
 
 			function titleCase (str) {
@@ -125,8 +145,10 @@
 				})
 				.map(item => {
 					const text = item[1][0].reportingunitname.toUpperCase()
+					const fips = item[1][0].fipscode
 					return {
 						key: text,
+						fips: +fips,
 						value: item[1],
 						label: search.trim() === '' ? text : text.replace(RegExp(regExpEscape(search.trim()), 'i'), "<span>$&</span>")
 					}
@@ -163,6 +185,7 @@
       if (index > -1) {
       	value = results[index].value;
 				key = results[index].key;
+				fips = results[index].fips;
 
 				d3.selectAll('.county-map svg .counties path')
 					.transition()
@@ -244,7 +267,7 @@
 <div class="tableWrapper">
 
 {#if key}
-<h2>{titleCase(key)} County results</h2>
+<h2>{county_name} County results</h2>
 {:else}
 <h2>Statewide results</h2>
 {/if}
@@ -343,9 +366,7 @@
   <tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-
-				{#if statewide_data[0].winner == true}
-					<tr class="{winner(candidate.winner)}">
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 							{#if candidate.first}
@@ -361,34 +382,6 @@
 							{Math.round(candidate.votepct * 100) }%
 						</td>
 					</tr>
-				{:else}
-
-				<tr>
-					<td class="cand">
-						<span class="{dotColor2(candidate.last)}"></span>
-						{#if candidate.first}
-							{candidate.first} {candidate.last}
-						{:else}
-							{candidate.last}
-						{/if}
-					</td>
-					<td class="votes">
-						{#if state_precincts == 0}
-							-
-						{:else}
-							{intcomma(candidate.votecount)}
-						{/if}
-					</td>
-					<td class="pct">
-						{#if state_precincts == 0}
-							-
-						{:else}
-							{Math.round(candidate.votepct * 100) }%
-						{/if}
-					</td>
-				</tr>
-
-				{/if}
 			{/if}
 		{/each}
 	</tbody>
@@ -409,45 +402,24 @@
 	<tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-			{#if candidate.winner == true}
-			<tr class="winner">
-				<td class="cand">
-					<span>&#10004</span>
-					{#if candidate.first}
-						{candidate.first} {candidate.last}
-					{:else}
-						{candidate.last}
-					{/if}
-				</td>
-				<td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-			</tr>
-
-			{:else}
-	    <tr>
-				<td class="cand">
-					<span class="{dotColor(candidate.last, candidate.winner)}"></span>
-	        {#if candidate.first}
-	          {candidate.first} {candidate.last}
-	        {:else}
-	          {candidate.last}
-	        {/if}
-	      </td>
-	      <td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-
-	    </tr>
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
 			{/if}
-			{/if}
-	  {/each}
+		{/each}
 	</tbody>
 </table>
 

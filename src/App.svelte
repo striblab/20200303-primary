@@ -198,8 +198,8 @@
 
 <section id="map">
 	<div class="results">
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates}/>
-		<Map county_topojson={nh} cityjson={iacities} {county_data_grouped} {active_candidates}/>
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}/>
+		<Map county_topojson={nh} cityjson={iacities} {county_data_grouped} {active_candidates} {us_county_names}/>
 	</div>
 </section>
 
