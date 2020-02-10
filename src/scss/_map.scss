@@ -23,6 +23,14 @@ $candColors: (
     fill: $color;
   }
 
+  .circle-#{$cand} {
+    fill: $color;
+    fill-opacity: 0.5;
+    stroke-width: 1;
+    stroke-opacity: 1;
+    stroke: $color;
+  }
+
   .legend-#{$cand} {
     height: 10px;
     width: 10px;
