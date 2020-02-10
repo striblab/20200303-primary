@@ -16,7 +16,6 @@
 	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
 	import { onMount } from 'svelte';
-	// import { feature as topojsonFeature } from 'topojson';
 	import _ from 'lodash';
 
 	export let title;
