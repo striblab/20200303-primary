@@ -152,6 +152,10 @@
 		font-weight: 700;
 		color: red;
 		text-align: center;
+		-webkit-transition: fadeIn 1s infinite alternate;
+		-moz-transition: fadeIn 1s infinite alternate;
+		-ms-transition: fadeIn 1s infinite alternate;
+		-o-transition: fadeIn 1s infinite alternate;
 		animation: fadeIn 1s infinite alternate;
 		margin-top: 30px;
 	}
