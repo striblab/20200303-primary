@@ -213,7 +213,7 @@
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
-  <p>Darker colors show a higher percentage of that county's votes.</p>
+  <p>Larger circles show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
 		<VoteDensityMap {candidate} county_topojson={nh}/>
