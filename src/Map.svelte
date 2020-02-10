@@ -16,8 +16,9 @@ import * as d3 from 'd3';
 
 let data;
 let city_points;
-let width = 400;
-let height = 400;
+let aspect_ratio = 1.3
+export let width = 400;
+export let height = width * aspect_ratio;
 let center = width / 2;
 let tooltipResults;
 let top_five;
@@ -36,7 +37,7 @@ city_points = cities.features;
 
 const projection = d3.geoTransverseMercator()
     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
-    .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .center([-4, 43.6]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
     .fitSize([width, height], land);
 
 // const projection = d3.geoTransverseMercator()
