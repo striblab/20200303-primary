@@ -2,16 +2,28 @@
 
 import {intcomma} from 'journalize';
 import { fade } from 'svelte/transition';
-// import * as jq from 'jquery';
 
 export let county_topojson;
 export let cityjson;
-
+export let us_county_names;
 export let county_data_grouped;
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
 import { feature } from 'topojson';
 import * as d3 from 'd3';
+
+let county_record;
+let county_name;
+$: {
+  if (record == null) {
+    county_name = ''
+  }
+  else {
+    county_record = us_county_names.find(element => element.geoid == tooltipResults[0].fipscode);
+    county_name = county_record.name;
+  }
+}
+
 
 let data;
 let city_points;
@@ -26,6 +38,7 @@ let others;
 let tooltipHeight;
 let tooltipWidth;
 let tooltip;
+let record;
 
 const land = feature(county_topojson, county_topojson.objects.counties)
 const cities = cityjson;
@@ -81,7 +94,7 @@ function hideTooltip(path, feature) {
 
 function buildTooltip(path, feature) {
 
-      var record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
+      record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
       tooltipResults = record[1];
       top_five = tooltipResults.slice(0,5)
       rest = tooltipResults.slice(5, tooltipResults.length)
@@ -112,35 +125,28 @@ function buildTooltip(path, feature) {
 
 function positionTooltip(event) {
     let tooltip = d3.select('#tooltip')
-    // let svg = d3.select('svg')
+    let svg = document.getElementById('resultsMap')
+    var bounding = svg.getBoundingClientRect()
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
 
-    // var pt;
-    //
-    // pt.x = event.clientX;
-    // pt.y = evt.clientY;
-    // pt.matrixTransform(svg.getScreenCTM().inverse());
-    //
-    // console.log(pt)
-
-    var cursorX = event.clientX - width;
+    var cursorX = event.clientX - bounding.left;
 
     tooltipHeight = tooltip.node().clientHeight;
     tooltipWidth = tooltip.node().clientWidth;
 
-    let tooltipOffset = 15;
+    let tooltipOffset = 25;
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
 
     if (!cursorOffPage) {
-      if (cursorX > width) {
+      if (cursorX > width / 2) {
         tooltip
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y + tooltipOffset + 'px');
       }
-      else if (cursorX < width) {
+      else if (cursorX < width / 2) {
         tooltip
-          .style('left', x + (tooltipWidth / 16) + 'px')
+          .style('left', x + 0 + 'px')
           // .style('left', x )
           .style('top', y + tooltipOffset + 'px');
       }
@@ -149,12 +155,12 @@ function positionTooltip(event) {
         //   .style('top', y + tooltipOffset + 'px');
     }
     else {
-      if (cursorX > width) {
+      if (cursorX > width / 2) {
         tooltip
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
       }
-      else if (cursorX < width) {
+      else if (cursorX < width / 2) {
         tooltip
           .style('left', x + 0 + 'px')
           // .style('left', x )
@@ -207,7 +213,7 @@ function countyClass(feature, data) {
 
 <div class="county-map">
   <div class="county-map-tooltip" id="tooltip">
-    <h4>{ tooltipResults ? titleCase(tooltipResults[0].reportingunitname) : '' } County</h4>
+    <h4>{ county_name } County</h4>
     {#if tooltipResults}
     <table>
       <thead>
@@ -270,7 +276,7 @@ function countyClass(feature, data) {
   </div>
 
 <!-- width="500" height="500"  -->
-  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;">
+  <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;" id="resultsMap">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
