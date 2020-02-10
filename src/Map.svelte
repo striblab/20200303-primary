@@ -112,23 +112,57 @@ function buildTooltip(path, feature) {
 
 function positionTooltip(event) {
     let tooltip = d3.select('#tooltip')
+    // let svg = d3.select('svg')
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
+
+    // var pt;
+    //
+    // pt.x = event.clientX;
+    // pt.y = evt.clientY;
+    // pt.matrixTransform(svg.getScreenCTM().inverse());
+    //
+    // console.log(pt)
+
+    var cursorX = event.clientX - width;
 
     tooltipHeight = tooltip.node().clientHeight;
     tooltipWidth = tooltip.node().clientWidth;
 
-    let tooltipOffset = 25;
+    let tooltipOffset = 15;
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
 
     if (!cursorOffPage) {
+      if (cursorX > width) {
         tooltip
-          .style('left', x - (tooltipWidth / 2) + 'px')
+          .style('left', x - (tooltipWidth) + 'px')
           .style('top', y + tooltipOffset + 'px');
-    } else {
+      }
+      else if (cursorX < width) {
         tooltip
-          .style('left', x - (tooltipWidth / 2) + 'px')
+          .style('left', x + (tooltipWidth / 16) + 'px')
+          // .style('left', x )
+          .style('top', y + tooltipOffset + 'px');
+      }
+        // tooltip
+        //   .style('left', x - (tooltipWidth / 2) + 'px')
+        //   .style('top', y + tooltipOffset + 'px');
+    }
+    else {
+      if (cursorX > width) {
+        tooltip
+          .style('left', x - (tooltipWidth) + 'px')
           .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
+      }
+      else if (cursorX < width) {
+        tooltip
+          .style('left', x + 0 + 'px')
+          // .style('left', x )
+          .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
+      }
+        // tooltip
+        //   .style('left', x - (tooltipWidth / 2) + 'px')
+        //   .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
     }
 }
 
