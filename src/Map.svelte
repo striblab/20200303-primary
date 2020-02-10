@@ -1,6 +1,7 @@
 <script>
 
 import {intcomma} from 'journalize';
+import { fade } from 'svelte/transition';
 // import * as jq from 'jquery';
 
 export let county_topojson;
@@ -9,15 +10,14 @@ export let cityjson;
 export let county_data_grouped;
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
-import { scaleOrdinal } from 'd3-scale';
 import { feature } from 'topojson';
-import _ from 'lodash';
 import * as d3 from 'd3';
 
 let data;
 let city_points;
-let width = 400;
-let height = 400;
+let aspect_ratio = 1.3
+export let width = 400;
+export let height = width * aspect_ratio;
 let center = width / 2;
 let tooltipResults;
 let top_five;
@@ -36,7 +36,7 @@ city_points = cities.features;
 
 const projection = d3.geoTransverseMercator()
     .rotate([75, 0]) // Central meridian for EPSG:26918 UTM Zone 18N (New Hampshire)
-    .center([-4, 43]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
+    .center([-4, 43.6]) // Set x to relative longitude degrees from central meridian. Set y coordinate of center to latitude you want centered
     .fitSize([width, height], land);
 
 // const projection = d3.geoTransverseMercator()
@@ -240,7 +240,7 @@ function countyClass(feature, data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each data as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
       {/each}
     </g>
     <g class="cities">
