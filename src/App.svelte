@@ -1,19 +1,20 @@
 <script>
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
-	import Statewide from './Statewide.svelte';
 	import Autocomplete from './Autocomplete.svelte';
-	import County from './County.svelte';
-
-	// import iowa from './data/iowa.json';
 
 	import nh from './data/nh.json';
-	import iacities from './data/iacities.json';
-	import mn from './data/mncounties.json';
+	import nh_cities from './data/nh_cities.json';
+
+	// import ia from './data/ia.json';
+	// import ia_cities from './data/iacities.json';
+
+	// import mn from './data/mncounties.json';
+	// import mn_cities from './data/mn_cities.json';
+
 	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
 	import { onMount } from 'svelte';
-	// import { feature as topojsonFeature } from 'topojson';
 	import _ from 'lodash';
 
 	export let title;
@@ -137,12 +138,6 @@
   //   data = json;
   // });
 
-	// setInterval(async function() {
-  //   const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-  //   const json = await response.json()
-  //   data = json;
-  // }, 15000);
-
 </script>
 
 <style>
@@ -221,7 +216,7 @@
   <p>Larger circles show a higher percentage of that county's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} county_topojson={nh}/>
+		<VoteDensityMap {candidate} county_topojson={nh} cityjson={nh_cities} />
 	{/each}
 	</div>
 </section>
@@ -234,7 +229,3 @@
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="450"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
-
-<!-- {#each county_data_grouped as county}
-	<County {county}/>
-{/each} -->
