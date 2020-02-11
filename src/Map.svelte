@@ -24,7 +24,7 @@ $: {
   }
 }
 
-
+let viable = ['Biden', 'Sanders', 'Warren', 'Buttigieg', 'Bloomberg', 'Klobuchar']
 let data;
 let city_points;
 let aspect_ratio = 1.3
@@ -32,7 +32,7 @@ export let width = 400;
 export let height = width * aspect_ratio;
 let center = width / 2;
 let tooltipResults;
-let top_five;
+let top_six = [];
 let rest;
 let others;
 let tooltipHeight;
@@ -65,16 +65,16 @@ const projection = d3.geoTransverseMercator()
 
 let path = d3.geoPath().projection(projection);
 
-function titleCase (str) {
-  if ((str===null) || (str===''))
-       return false;
-  else
-   str = str.toString();
-
- return str.replace(/\w\S*/g,
-function(txt){return txt.charAt(0).toUpperCase() +
-       txt.substr(1).toLowerCase();});
-}
+// function titleCase (str) {
+//   if ((str===null) || (str===''))
+//        return false;
+//   else
+//    str = str.toString();
+//
+//  return str.replace(/\w\S*/g,
+// function(txt){return txt.charAt(0).toUpperCase() +
+//        txt.substr(1).toLowerCase();});
+// }
 
 function hideTooltip(path, feature) {
 
@@ -93,13 +93,28 @@ function hideTooltip(path, feature) {
 }
 
 function buildTooltip(path, feature) {
-
+      var i;
       record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
       tooltipResults = record[1];
-      top_five = tooltipResults.slice(0,5)
-      rest = tooltipResults.slice(5, tooltipResults.length)
+
+      top_six = [];
+
+      if (tooltipResults[0].precinctsreporting === 0) {
+        for (i = 0; i < tooltipResults.length; i++) {
+  				if (viable.includes(tooltipResults[i].last)) {
+            top_six.push(tooltipResults[i])
+          }
+  			}
+      }
+      else {
+        top_six = tooltipResults.slice(0,6)
+        rest = tooltipResults.slice(6, tooltipResults.length)
+      }
+
+
+
       // rest.forEach()
-      // console.log(top_five)
+      // console.log(top_six)
       // console.log(others)
 
       let tooltip =  d3.select('#tooltip')
@@ -237,19 +252,19 @@ function countyClass(feature, data) {
             {/if}
           {/each}
         {/if} -->
-        {#if top_five}
-          {#each top_five as result}
+        {#if top_six}
+          {#each top_six as result}
             <tr>
               <td class="cand">{result.last}</td>
               <td class="votes">
-                {#if Math.round(top_five[0].precinctsreporting) === 0}
+                {#if Math.round(top_six[0].precinctsreporting) === 0}
                   -
                 {:else}
                   {intcomma(result.votecount)}
                 {/if}
               </td>
               <td class="pct">
-                {#if Math.round(top_five[0].precinctsreporting) === 0}
+                {#if Math.round(top_six[0].precinctsreporting) === 0}
                   -
                 {:else}
                   {Math.round(result.votepct * 100)}%

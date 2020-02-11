@@ -14,7 +14,7 @@
 		let counties = [];
 		var i;
 		$: {
-			console.log(county_data_grouped)
+			// console.log(county_data_grouped)
 			for (i = 0; i < county_data_grouped.length; i++) {
 				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
 				counties.push(county_data_grouped[i][1][0].reportingunitname);
@@ -195,7 +195,7 @@
 				d3.selectAll('.county-map svg .counties path')
 					.transition()
 					.duration(350)
-				  .style('opacity', 0.15);
+				  .style('opacity', 0.25);
 
 				key_no_space = key.replace(/\s/g, "")
 				county_selector_string = '[county_name=' + key_no_space + ']';
