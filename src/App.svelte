@@ -5,6 +5,7 @@
 
 	import nh from './data/nh.json';
 	import nh_cities from './data/nh_cities.json';
+	import nh_roads from './data/nh_roads.json';
 
 	// import ia from './data/ia.json';
 	// import ia_cities from './data/ia_cities.json';
@@ -192,7 +193,7 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}/>
-		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={nh} cityjson={nh_cities} roads_topojson={nh_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 

@@ -4,7 +4,9 @@
 2. Convert to topojson, simplify and quantize to reduce file size:
 ```
 geo2topo counties=ia_counties.geojson | toposimplify -S 0.007 --filter-all | topoquantize 1e3 > iowa.json
-geo2topo counties=nh_counties.geojson | toposimplify -S 0.007 --filter-all | topoquantize 1e5 > nh.json
+
+geo2topo counties=nh_counties.geojson | toposimplify -S 0.1 --filter-all | topoquantize 1e5 > nh.json
+geo2topo roads=nh_interstates.geojson | toposimplify -S 0.1 --filter-all | topoquantize 1e5 > nh_roads.json
 ```
 3. Tell the JS what projection values to use
 
