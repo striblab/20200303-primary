@@ -7,7 +7,6 @@
 		}
 
 		// declare responsive variables
-
 		let county_selector_string;
 		let key_no_space;
 
@@ -21,13 +20,13 @@
 			}
 		}
 
-		let state_precincts
+		let state_precincts_pct
 		$: {
 			if (statewide_data.length == 0) {
-				state_precincts = '';
+				state_precincts_pct = '';
 			}
 			else {
-				state_precincts = statewide_data[0].precinctsreportingpct;
+				state_precincts_pct = statewide_data[0].precinctsreportingpct;
 			}
 		}
 		let county_record;
@@ -267,6 +266,15 @@
   .autocomplete-result:hover {
     background-color: #dbdbdb;
   }
+
+	.filtered {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 12px;
+		font-style: italic;
+		color: #989898;
+		margin-top: 6px;
+		margin-bottom: 6px;
+	}
 </style>
 <!-- <svelte:window on:click="{()=>close()}" /> -->
 <div class="tableWrapper">
@@ -277,7 +285,9 @@
 <h2>Statewide results</h2>
 {/if}
 
+<slot>
 
+</slot>
 <!-- <div class="updates">
 	{#if time < 10}
 	<p class="countdown">Checking for updates 0:0{time}</p>
@@ -316,6 +326,7 @@
 <!-- {search}
 {key} -->
 {#if counties.includes(key)}
+<p class="filtered">Results are filtered</p>
 <table class="tableResults">
 	<thead>
 		<tr>
@@ -337,14 +348,14 @@
 	        {/if}
 	      </td>
 	      <td class="votes">
-					{#if Math.round(value[1].precinctsreportingpct) == 0}
+					{#if Math.round(value[1].precinctsreporting) == 0}
 						-
 					{:else}
 						{intcomma(candidate.votecount)}
 					{/if}
 	      </td>
 				<td class="pct">
-					{#if Math.round(value[1].precinctsreportingpct) == 0}
+					{#if Math.round(value[1].precinctsreporting) == 0}
 						-
 					{:else}
 						{Math.round(candidate.votepct * 100) }%
@@ -416,14 +427,14 @@
 						{/if}
 					</td>
 					<td class="votes">
-						{#if state_precincts == 0}
+						{#if state_precincts_pct == 0}
 							-
 						{:else}
 							{intcomma(candidate.votecount)}
 						{/if}
 					</td>
 					<td class="pct">
-						{#if state_precincts == 0}
+						{#if state_precincts_pct == 0}
 							-
 						{:else}
 							{Math.round(candidate.votepct * 100) }%
@@ -436,7 +447,7 @@
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts * 100) }% of precincts reporting</p>
+<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
 
 {:else}
 
@@ -493,6 +504,6 @@
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts * 100) }% of precincts reporting</p>
+<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
 {/if}
 </div>

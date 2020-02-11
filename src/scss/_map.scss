@@ -67,7 +67,7 @@ $candColors: (
   background-color: white;
 
   span {
-    display: none !important;
+    visibility: hidden !important;
   }
 }
 
@@ -78,7 +78,7 @@ $candColors: (
 }
 
 .tie {
-  fill: #D0D0D0;
+  fill: #a9a9a9;
 }
 
 .no-results {
@@ -94,16 +94,16 @@ $candColors: (
   font-size: 10px;
   font-weight: 400;
   font-family: "Benton Sans", sans-serif;
-  fill: #000;
+  fill: #fff;
   text-shadow:
-		-1px -1px 0 #DDD,
-		1px -1px 0 #DDD,
-		-1px 1px 0 #DDD,
-		1px 1px 0 #DDD;
+		-1px -1px 0 #707070,
+		1px -1px 0 #707070,
+		-1px 1px 0 #707070,
+		1px 1px 0 #707070;
 }
 
 .cities .cityDot {
-  fill: #000;
+  fill: #fff;
   stroke: #FFF;
   stroke-width: 0.5;
   stroke-opacity: 0.6;

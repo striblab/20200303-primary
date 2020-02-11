@@ -63,7 +63,7 @@ const circlescale = scaleLinear()
     /* margin: 0 auto; */
     /* position: relative; */
     /* border: 1px solid #333; */
-    margin: 0 1em;
+    /* margin: 0 1em; */
   }
    .provinceShape {
     /* fill: #f5f5f5; */
@@ -73,7 +73,7 @@ const circlescale = scaleLinear()
   }
 
   h4.cand-name {
-    font-size: 0.7em;
+    font-size: 0.9em;
     margin: 1em 0 0.5em;
   }
 
@@ -102,8 +102,8 @@ const circlescale = scaleLinear()
     </g>
     <g class="cities">
       {#each city_points as city}
-        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
-        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
+        <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2 style="fill:#000;"></circle>
+        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}" style="font-size: 10px; fill: #000; font-weight: 400;font-family:'Benton Sans', sans-serif; text-shadow:none;">{city.properties.NAME}</text>
       {/each}
     </g>
   </svg>
