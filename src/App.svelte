@@ -50,8 +50,6 @@
 			last_updated = '';
 		}
 		else {
-			// last_updated = Date.parse(statewide_data[0].lastupdated);
-
 			datestring = new Date(statewide_data[0].lastupdated)
 			last_updated = datestring.toLocaleString('en-US', options)
 		}
@@ -194,7 +192,7 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}/>
-		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {active_candidates} {us_county_names}/>
+		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
