@@ -104,6 +104,8 @@
 
 	let getData = async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
+
 		const json = await response.json()
 		data = json;
 		time = 30;
@@ -113,9 +115,9 @@
 	let time = 30;
 	function countdown() {
 		if (time == 0) {
+			time = 'Updating...'
+			setTimeout(getData, 1000)
 			clearInterval(timerInterval);
-			time = 'Updating ...'
-			getData()
 		}
 		else {
 			time--;
@@ -124,7 +126,8 @@
 	let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
-    const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+    // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
     const json = await response.json()
     data = json;
   });
@@ -144,11 +147,11 @@
 		font-weight: 700;
 		color: red;
 		text-align: center;
-		-webkit-transition: fadeIn 1s infinite alternate;
-		-moz-transition: fadeIn 1s infinite alternate;
-		-ms-transition: fadeIn 1s infinite alternate;
-		-o-transition: fadeIn 1s infinite alternate;
-		animation: fadeIn 1s infinite alternate;
+		-webkit-transition: fadeIn 0.75s infinite alternate;
+		-moz-transition: fadeIn 0.75s infinite alternate;
+		-ms-transition: fadeIn 0.75s infinite alternate;
+		-o-transition: fadeIn 0.75s infinite alternate;
+		animation: fadeIn 0.75s infinite alternate;
 		margin-top: 30px;
 	}
 
@@ -186,12 +189,15 @@
 		{/if}
 	{/if}
 		<p class="lastUpdated">Last change: {last_updated}</p>
+		<!-- <span class="updatedTime">{last_updated}</span> -->
 </div>
 
 
 <section id="map">
 	<div class="results">
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}/>
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
+			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
+		</Autocomplete>
 		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>

@@ -37,7 +37,8 @@ th {
     // display: flex;
     // align-items: center;
     valign: baseline;
-    width: 175px;
+    width: 200px;
+    padding-left: 8px;
   }
 
   .votes {
@@ -46,7 +47,7 @@ th {
   }
 
   .pct {
-    width: 40px;
+    width: 50px;
     text-align: right;
   }
 
