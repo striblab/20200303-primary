@@ -5,6 +5,7 @@ import { fade } from 'svelte/transition';
 
 export let county_topojson;
 export let cityjson;
+export let roads_topojson;
 export let us_county_names;
 export let county_data_grouped;
 
@@ -27,6 +28,7 @@ $: {
 let viable = ['Biden', 'Sanders', 'Warren', 'Buttigieg', 'Bloomberg', 'Klobuchar']
 let data;
 let city_points;
+let road_lines;
 let aspect_ratio = 1.3
 export let width = 400;
 export let height = width * aspect_ratio;
@@ -40,10 +42,12 @@ let tooltipWidth;
 let tooltip;
 let record;
 
-const land = feature(county_topojson, county_topojson.objects.counties)
+const land = feature(county_topojson, county_topojson.objects.counties);
+const roads = feature(roads_topojson, roads_topojson.objects.roads);
 const cities = cityjson;
 data = land.features;
 city_points = cities.features;
+road_lines = roads.features;
 
 // Look up likely projection suspects here: https://github.com/veltman/d3-stateplane
 
@@ -213,6 +217,13 @@ function countyClass(feature, data) {
   margin-top: 5px;
 }
 
+.roadLine {
+  fill: none;
+  stroke-width: 1;
+  stroke: #CCC;
+  stroke-opacity: 0.8;
+}
+
 </style>
 
 
@@ -286,6 +297,11 @@ function countyClass(feature, data) {
     <g class="counties">
       {#each data as feature}
         <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
+      {/each}
+    </g>
+    <g class="roads">
+      {#each road_lines as feature}
+        <path d={path(feature)} class="roadLine"/>
       {/each}
     </g>
     <g class="cities">
