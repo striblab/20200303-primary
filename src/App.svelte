@@ -10,8 +10,9 @@
 	// import ia from './data/ia.json';
 	// import ia_cities from './data/ia_cities.json';
 
-	// import mn from './data/mncounties.json';
-	// import mn_cities from './data/mn_cities.json';
+	import mn from './data/mn.json';
+	import mn_cities from './data/mn_cities.json';
+	import mn_roads from './data/mn_roads.json';
 
 	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
@@ -193,7 +194,7 @@
 <section id="map">
 	<div class="results">
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}/>
-		<Map county_topojson={nh} cityjson={nh_cities} roads_topojson={nh_roads} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
@@ -215,7 +216,7 @@
   <p>Larger circles show a larger share of each candidate's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} county_topojson={nh} cityjson={nh_cities} />
+		<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
 	{/each}
 	</div>
 </section>
