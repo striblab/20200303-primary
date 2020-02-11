@@ -1,8 +1,6 @@
 <script>
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
-		require('@gouch/to-title-case')
-
 
 		const regExpEscape = (s) => {
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
@@ -16,6 +14,7 @@
 		let counties = [];
 		var i;
 		$: {
+			console.log(county_data_grouped)
 			for (i = 0; i < county_data_grouped.length; i++) {
 				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
 				counties.push(county_data_grouped[i][1][0].reportingunitname);
@@ -107,17 +106,23 @@
 			}
 
 			function winner(winner, manual_winner) {
-
-					if (manual_winner === true) {
-						return 'winner'
-					}
-					else if (winner === true) {
+				// if (winner && manual_winner) {
+				// 	if (manual_winner) {
+				// 		return 'winner'
+				// 	}
+				// 	else if (manual_winner && )
+				// 	else {
+				// 		return 'no-winner'
+				// 	}
+				// }
+				// else {
+					if (winner || manual_winner) {
 						return 'winner'
 					}
 					else {
 						return 'no-winner'
 					}
-
+				// }
 			}
 
 			function titleCase (str) {
@@ -366,6 +371,7 @@
   <tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
+				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
@@ -382,6 +388,49 @@
 							{Math.round(candidate.votepct * 100) }%
 						</td>
 					</tr>
+				{:else if statewide_data.filter(e => e.winner == true).length > 0}
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else}
+				<tr>
+					<td class="cand">
+						<span class="{dotColor2(candidate.last)}"></span>
+						{#if candidate.first}
+							{candidate.first} {candidate.last}
+						{:else}
+							{candidate.last}
+						{/if}
+					</td>
+					<td class="votes">
+						{#if state_precincts == 0}
+							-
+						{:else}
+							{intcomma(candidate.votecount)}
+						{/if}
+					</td>
+					<td class="pct">
+						{#if state_precincts == 0}
+							-
+						{:else}
+							{Math.round(candidate.votepct * 100) }%
+						{/if}
+					</td>
+				</tr>
+				{/if}
 			{/if}
 		{/each}
 	</tbody>
@@ -402,24 +451,45 @@
 	<tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
-						<td class="cand">
-							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
-							{#if candidate.first}
-								{candidate.first} {candidate.last}
-							{:else}
-								{candidate.last}
-							{/if}
-						</td>
-						<td class="votes">
-							{intcomma(candidate.votecount)}
-						</td>
-						<td class="pct">
-							{Math.round(candidate.votepct * 100) }%
-						</td>
-					</tr>
+			{#if candidate.winner == true}
+			<tr class="winner">
+				<td class="cand">
+					<span>&#10004</span>
+					{#if candidate.first}
+						{candidate.first} {candidate.last}
+					{:else}
+						{candidate.last}
+					{/if}
+				</td>
+				<td class="votes">
+	        {intcomma(candidate.votecount)}
+	      </td>
+				<td class="pct">
+					{Math.round(candidate.votepct * 100) }%
+				</td>
+			</tr>
+
+			{:else}
+	    <tr>
+				<td class="cand">
+					<span class="{dotColor(candidate.last, candidate.winner)}"></span>
+	        {#if candidate.first}
+	          {candidate.first} {candidate.last}
+	        {:else}
+	          {candidate.last}
+	        {/if}
+	      </td>
+	      <td class="votes">
+	        {intcomma(candidate.votecount)}
+	      </td>
+				<td class="pct">
+					{Math.round(candidate.votepct * 100) }%
+				</td>
+
+	    </tr>
 			{/if}
-		{/each}
+			{/if}
+	  {/each}
 	</tbody>
 </table>
 

@@ -242,14 +242,14 @@ function countyClass(feature, data) {
             <tr>
               <td class="cand">{result.last}</td>
               <td class="votes">
-                {#if Math.round(tooltipResults[0].precinctsreportingpct) == 0}
+                {#if Math.round(top_five[0].precinctsreporting) === 0}
                   -
                 {:else}
                   {intcomma(result.votecount)}
                 {/if}
               </td>
               <td class="pct">
-                {#if Math.round(tooltipResults[0].precinctsreportingpct) == 0}
+                {#if Math.round(top_five[0].precinctsreporting) === 0}
                   -
                 {:else}
                   {Math.round(result.votepct * 100)}%

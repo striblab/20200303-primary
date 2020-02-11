@@ -40,6 +40,15 @@ $candColors: (
     margin-right: 5px !important;
   }
 
+  .noWinner.legend-#{$cand} {
+    height: 10px;
+    width: 10px;
+    background-color: $color;
+    border-radius: 50%;
+    display: inline-block;
+    margin-right: 5px !important;
+  }
+
   // .legend-#{$cand}.noWinner {
   //   display: none;
   // }
