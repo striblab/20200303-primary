@@ -7,7 +7,7 @@
 	import nh_cities from './data/nh_cities.json';
 
 	// import ia from './data/ia.json';
-	// import ia_cities from './data/iacities.json';
+	// import ia_cities from './data/ia_cities.json';
 
 	// import mn from './data/mncounties.json';
 	// import mn_cities from './data/mn_cities.json';
@@ -211,7 +211,7 @@
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
-  <p>Larger circles show a higher percentage of that county's votes.</p>
+  <p>Larger circles show a larger share of each candidate's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
 		<VoteDensityMap {candidate} county_topojson={nh} cityjson={nh_cities} />
