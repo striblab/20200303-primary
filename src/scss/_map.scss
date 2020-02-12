@@ -63,6 +63,11 @@ $candColors: (
   }
 }
 
+#resultsMap {
+  margin-left: 15px;
+  max-width: 500px;
+}
+
 .no-winner {
   background-color: white;
 
@@ -96,17 +101,16 @@ $candColors: (
   font-family: "Benton Sans", sans-serif;
   fill: #fff;
   text-shadow:
-		-1px -1px 0 #707070,
-		1px -1px 0 #707070,
-		-1px 1px 0 #707070,
-		1px 1px 0 #707070;
+		-1px -1px 0 #686868,
+		1px -1px 0 #686868,
+		-1px 1px 0 #686868,
+		1px 1px 0 #686868;
 }
 
 .cities .cityDot {
   fill: #fff;
-  stroke: #FFF;
-  stroke-width: 0.5;
-  stroke-opacity: 0.6;
+  stroke: #686868;
+  stroke-width: 0.5px;
 }
 
 .county-map-tooltip {
@@ -159,7 +163,7 @@ $candColors: (
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  // justify-content: space-between;
+  justify-content: space-between;
   max-width: 1000px;
 }
 
@@ -194,4 +198,10 @@ $candColors: (
   .county-map {
     height: 400px;
   }
+}
+
+@media (max-width: 500px) {
+	#density-maps {
+		justify-content: center;
+	}
 }

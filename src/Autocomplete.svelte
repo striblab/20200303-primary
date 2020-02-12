@@ -196,7 +196,7 @@
 					.duration(350)
 				  .style('opacity', 0.25);
 
-				key_no_space = key.replace(/\s/g, "")
+				key_no_space = key.replace(/\s/g, "").replace(/\./g,'')
 				county_selector_string = '[county_name=' + key_no_space + ']';
 
 				d3.select(county_selector_string)
