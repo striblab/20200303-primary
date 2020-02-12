@@ -45,6 +45,7 @@ const projection = d3.geoConicConformal()
 let path = d3.geoPath().projection(projection);
 
 var county_centroids = land.map(function (feature) {
+  console.log(candidate.results);
   var record = candidate.results.find(element => element.fipscode == feature.properties.GEOID);
   return {
     'votecount': record.votecount,
