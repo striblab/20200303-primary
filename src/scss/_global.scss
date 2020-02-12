@@ -4,6 +4,10 @@ html, body {
 	height: 100%;
 }
 
+.l-container {
+	padding: 20px 20px;
+}
+
 @keyframes fadeIn {
 	from { opacity: 0 }
 }
@@ -133,6 +137,7 @@ p.lastUpdated {
 #delegate-tracker {
 	max-width: 1000px;
 	margin: 0 auto;
+	margin-bottom: 45px;
 
 	h2 {
 		margin-bottom: 0;
@@ -149,6 +154,7 @@ p.lastUpdated {
 	font-style: italic;
 	font-size: 12px;
 	color: #A0A0A0;
+	margin-top: 12px !important;
 }
 
 #related {
@@ -182,7 +188,17 @@ p.lastUpdated {
 	}
 }
 
-@media (max-width: 650px) {
+#credits {
+	max-width: 1000px;
+	margin: 0 auto;
+	p {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 12px;
+		color: #989898;
+	}
+}
+
+@media (max-width: 800px) {
 	.results {
 		justify-content: center;
 		flex-wrap: wrap;
