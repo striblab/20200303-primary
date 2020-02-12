@@ -1,0 +1,48 @@
+{
+  "type": "FeatureCollection",
+  "name": "mncities",
+  "crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "27",
+        "PLACEFP": "17000",
+        "PLACENS": "02394568",
+        "GEOID": "2717000",
+        "NAME": "Duluth"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -92.12504500828652, 46.778375067074762 ]}
+    }, {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "27",
+        "PLACEFP": "43864",
+        "PLACENS": "02395392",
+        "GEOID": "2743864",
+        "NAME": "Moorhead"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -96.746011190991737, 46.867412771930717 ]}
+    }, {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "27",
+        "PLACEFP": "54880",
+        "PLACENS": "02396395",
+        "GEOID": "2754880",
+        "NAME": "Rochester"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -92.477824767849526, 44.015179042663497 ]}
+    }, {
+      "type": "Feature",
+      "properties": {
+        "STATEFP": "27",
+        "PLACEFP": "tc",
+        "PLACENS": "tc",
+        "GEOID": "tc",
+        "NAME": "Twin Cities"
+      },
+      "geometry": { "type": "Point", "coordinates": [ -93.2682, 44.9645 ]}
+    }
+  ]
+}

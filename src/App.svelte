@@ -3,15 +3,16 @@
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
 
-	import nh from './data/nh.json';
-	import nh_cities from './data/nh_cities.json';
-	import nh_roads from './data/nh_roads.json';
+	import mn from './data/mn.json';
+	import mn_cities from './data/mn_cities.json';
+	import mn_roads from './data/mn_roads.json';
+
+	// import nh from './data/nh.json';
+	// import nh_cities from './data/nh_cities.json';
+	// import nh_roads from './data/nh_roads.json';
 
 	// import ia from './data/ia.json';
 	// import ia_cities from './data/ia_cities.json';
-
-	// import mn from './data/mncounties.json';
-	// import mn_cities from './data/mn_cities.json';
 
 	import us_county_names from './data/us_county_names.json'
 	import content from './data/content.json';
@@ -199,7 +200,7 @@
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
 			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 		</Autocomplete>
-		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names} roads_topojson={nh_roads}/>
+		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
@@ -221,7 +222,7 @@
   <p>Larger circles show a larger share of each candidate's votes.</p>
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
-		<VoteDensityMap {candidate} county_topojson={nh} cityjson={nh_cities} />
+		<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
 	{/each}
 	</div>
 </section>
