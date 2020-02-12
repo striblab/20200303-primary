@@ -2,6 +2,7 @@
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
+	import VotesByPop from './VotesByPop.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -165,6 +166,10 @@
 		margin-top: 30px;
 	}
 
+	.demographics {
+		width: 500px;
+	}
+
 	@keyframes fadeIn {
 		from { opacity: 0 }
 	}
@@ -223,6 +228,11 @@
 	<div id="density-maps">
 	{#each results_by_candidate as candidate}
 		<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
+		<div class="demographics">
+			<VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' />
+			<VotesByPop {candidate} x_var='median_income' x_var_label='median income' />
+			<VotesByPop {candidate} x_var='dPct_2016' x_var_label='Dem percentage 2016' />
+		</div>
 	{/each}
 	</div>
 </section>

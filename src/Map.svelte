@@ -223,8 +223,9 @@ function countyClass(feature, county_data) {
 .roadLine {
   fill: none;
   stroke-width: 1;
-  stroke: #CCC;
-  stroke-opacity: 0.8;
+  stroke: #FFF;
+  stroke-opacity: 0.6;
+  pointer-events: none;
 }
 
 </style>

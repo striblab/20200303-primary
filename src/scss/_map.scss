@@ -1,17 +1,37 @@
+// $candColors: (
+//   bennet: #C0FBFC,
+//   biden: #C2DFE3,
+//   bloomberg: #9DB4C0,
+//   buttigieg: #7E9181,
+//   gabbard: #B7B5E4,
+//   klobuchar: #8A4FFF,
+//   patrick: #7371FC,
+//   sanders: #3C91E6,
+//   steyer: #85BAA1,
+//   warren: #A2D729,
+//   yang: #A6FFA1,
+//   uncommitted: #F5F5F5,
+//   other: darkgrey
+// );
+
 $candColors: (
-  bennet: #C0FBFC,
-  biden: #C2DFE3,
-  bloomberg: #9DB4C0,
-  buttigieg: #7E9181,
-  gabbard: #B7B5E4,
-  klobuchar: #8A4FFF,
-  patrick: #7371FC,
-  sanders: #3C91E6,
-  steyer: #85BAA1,
-  warren: #A2D729,
-  yang: #A6FFA1,
-  uncommitted: #F5F5F5,
-  other: darkgrey
+  sanders: #528CAE,
+  buttigieg: #755893,
+  klobuchar: #65935F,
+  biden: #BED6E5,
+  bloomberg: #BEBADA,
+  warren: #C6D99E,
+
+  steyer: #9F9F9F,
+  gabbard: #9F9F9F,
+  other: #9F9F9F,
+  uncommitted: #9F9F9F,
+
+  // dropped out
+  booker: #9F9F9F,
+  patrick: #9F9F9F,
+  bennet: #9F9F9F,
+  yang: #9F9F9F,
 );
 
 @each $cand, $color in $candColors {
@@ -92,19 +112,20 @@ $candColors: (
 
 .cities .cityLabel {
   font-size: 10px;
-  font-weight: 400;
+  font-weight: 500;
   font-family: "Benton Sans", sans-serif;
   fill: #fff;
-  text-shadow:
-		-1px -1px 0 #707070,
-		1px -1px 0 #707070,
-		-1px 1px 0 #707070,
-		1px 1px 0 #707070;
+  // text-shadow:
+	// 	-1px -1px 0 #707070,
+	// 	1px -1px 0 #707070,
+	// 	-1px 1px 0 #707070,
+	// 	1px 1px 0 #707070;
+  text-shadow: 1px 1px 3px #000000;
 }
 
 .cities .cityDot {
   fill: #fff;
-  stroke: #FFF;
+  stroke: #000;
   stroke-width: 0.5;
   stroke-opacity: 0.6;
 }
