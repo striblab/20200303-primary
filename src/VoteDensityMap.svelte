@@ -65,6 +65,7 @@ const circlescale = scaleLinear()
 <style>
   .density-map {
     max-width: 200px;
+    margin: 1.5em;
     /* width: 100%; */
     background-color: "#eeeeee";
     /* margin: 0 auto; */
