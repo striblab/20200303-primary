@@ -45,7 +45,7 @@ let record;
 const land = feature(county_topojson, county_topojson.objects.counties);
 const roads = feature(roads_topojson, roads_topojson.objects.roads);
 const cities = cityjson;
-data = land.features;
+data = land;
 city_points = cities.features;
 road_lines = roads.features;
 
@@ -110,12 +110,6 @@ function buildTooltip(path, feature) {
         top_six = tooltipResults.slice(0,6)
         rest = tooltipResults.slice(6, tooltipResults.length)
       }
-
-
-
-      // rest.forEach()
-      // console.log(top_six)
-      // console.log(others)
 
       let tooltip =  d3.select('#tooltip')
 
@@ -187,14 +181,14 @@ function positionTooltip(event) {
     }
 }
 
-function countyClass(feature, data) {
-  var record = data.find(element => element[0] == feature.properties.GEOID);
+function countyClass(feature, county_data) {
+  var record = county_data.find(element => element[0] == feature.properties.GEOID);
 
-  if (data.length == 0 || record[1][0].precinctsreportingpct == 0) {
+  if (county_data.length == 0 || record[1][0].precinctsreportingpct == 0) {
     return 'no-results';
   }
   else {
-    var record = data.find(element => element[0] == feature.properties.GEOID);
+    var record = county_data.find(element => element[0] == feature.properties.GEOID);
     if (record[1][0].votecount === record[1][1].votecount) {
       return 'tie';
     }
@@ -301,7 +295,7 @@ function countyClass(feature, data) {
   <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;" id="resultsMap">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
-      {#each data as feature}
+      {#each data.features as feature}
         <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
       {/each}
     </g>
