@@ -26,7 +26,7 @@
 
   export let statewide_data;
 
-	export let active_candidates = ['Bennet', 'Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Patrick', 'Sanders', 'Steyer', 'Warren', 'Yang'];
+	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Patrick', 'Sanders', 'Steyer', 'Warren'];
 	export let results_by_candidate = [];
 
 	export let stories = content.data;
@@ -199,7 +199,7 @@
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
 			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 		</Autocomplete>
-		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names} roads_topojson={nh_roads}/>
 	</div>
 </section>
 
