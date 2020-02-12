@@ -7,6 +7,7 @@ import _ from 'lodash';
 import * as d3 from 'd3';
 
 export let county_topojson;
+export let county_centroids;
 export let cityjson;
 let city_points = cityjson.features;
 export let candidate;
@@ -44,13 +45,15 @@ const projection = d3.geoConicConformal()
 
 let path = d3.geoPath().projection(projection);
 
-var county_centroids = land.map(function (feature) {
-  var record = candidate.results.find(element => element.fipscode == feature.properties.GEOID);
-  return {
-    'votecount': record.votecount,
-    'centroid': path.centroid(feature)
-  };
-});
+$: {
+  county_centroids = land.map(function (feature) {
+    var record = candidate.results.find(element => element.fipscode == feature.properties.GEOID);
+    return {
+      'votecount': record.votecount,
+      'centroid': path.centroid(feature)
+    };
+  });
+}
 
 const circle_sizer = function(input) {
   return circlescale(input);
