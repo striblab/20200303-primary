@@ -199,7 +199,7 @@
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
 			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 		</Autocomplete>
-		<Map county_topojson={nh} cityjson={nh_cities} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={nh} cityjson={nh_cities} roads_topojson={nh_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
