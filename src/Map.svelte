@@ -26,7 +26,7 @@ $: {
 }
 
 let viable = ['Biden', 'Sanders', 'Warren', 'Buttigieg', 'Bloomberg', 'Klobuchar']
-let data;
+let county_features;
 let city_points;
 let road_lines;
 let aspect_ratio = 1.3
@@ -45,7 +45,7 @@ let record;
 const land = feature(county_topojson, county_topojson.objects.counties);
 const roads = feature(roads_topojson, roads_topojson.objects.roads);
 const cities = cityjson;
-data = land;
+county_features = land.features;
 city_points = cities.features;
 road_lines = roads.features;
 
@@ -95,40 +95,43 @@ function hideTooltip(path, feature) {
 function buildTooltip(path, feature) {
       var i;
       record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
-      tooltipResults = record[1];
+      if (record.length > 0) {
+        tooltipResults = record[1];
 
-      top_six = [];
+        top_six = [];
 
-      if (tooltipResults[0].precinctsreporting === 0) {
-        for (i = 0; i < tooltipResults.length; i++) {
-  				if (viable.includes(tooltipResults[i].last)) {
-            top_six.push(tooltipResults[i])
-          }
-  			}
+        if (tooltipResults[0].precinctsreporting === 0) {
+          for (i = 0; i < tooltipResults.length; i++) {
+    				if (viable.includes(tooltipResults[i].last)) {
+              top_six.push(tooltipResults[i])
+            }
+    			}
+        }
+        else {
+          top_six = tooltipResults.slice(0,6)
+          rest = tooltipResults.slice(6, tooltipResults.length)
+        }
+
+        let tooltip =  d3.select('#tooltip')
+
+        // tooltipHeight = tooltip.node().clientHeight;
+        // tooltipWidth = tooltip.node().clientWidth;
+
+        if (tooltip.classed('tooltip-active')) {
+          tooltip.classed('tooltip-active', false);
+        }
+        else {
+          tooltip.classed('tooltip-active', true);
+        }
+
+        d3.selectAll('.counties path')
+          .style('opacity', 0.65)
+
+        d3.select(path)
+          .style('opacity', 1)
+          .style('stroke-width', 1.5)
       }
-      else {
-        top_six = tooltipResults.slice(0,6)
-        rest = tooltipResults.slice(6, tooltipResults.length)
-      }
 
-      let tooltip =  d3.select('#tooltip')
-
-      // tooltipHeight = tooltip.node().clientHeight;
-      // tooltipWidth = tooltip.node().clientWidth;
-
-      if (tooltip.classed('tooltip-active')) {
-        tooltip.classed('tooltip-active', false);
-      }
-      else {
-        tooltip.classed('tooltip-active', true);
-      }
-
-      d3.selectAll('.counties path')
-        .style('opacity', 0.65)
-
-      d3.select(path)
-        .style('opacity', 1)
-        .style('stroke-width', 1.5)
 
 }
 
@@ -295,7 +298,7 @@ function countyClass(feature, county_data) {
   <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;" id="resultsMap">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
-      {#each data.features as feature}
+      {#each county_features as feature}
         <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
       {/each}
     </g>
