@@ -15,6 +15,8 @@ let aspect_ratio = 1.3
 export let width = 200;
 export let height = width * aspect_ratio;
 let center = width / 2;
+const min_circle_area = 0;
+const max_circle_area = 22;
 
 const land = feature(county_topojson, county_topojson.objects.counties).features;
 
@@ -55,13 +57,22 @@ $: {
   });
 }
 
-const circle_sizer = function(input) {
-  return circlescale(input);
+const radius_calc = function(area) {
+  return Math.sqrt(area / Math.PI)
 }
 
-const circlescale = scaleLinear()
-  .domain([0, 50000]) // votecount
-  .range([0, 80]) // radius range
+// const circlescale = scaleLinear()
+//   .domain([0, 50000]) // votecount
+//   .range([0, 80]) // radius range
+
+const circlescalearea = d3.scaleLinear()
+  //.domain([0, 75000]) // votecount Clinton 2016 test data
+  .domain([0, 17000]) // votecount
+  .range([min_circle_area, max_circle_area]); // radius range
+
+const circle_sizer = function(input) {
+  return circlescalearea(input);
+}
 
 </script>
 
@@ -110,7 +121,7 @@ const circlescale = scaleLinear()
     <g class="cities">
       {#each city_points as city}
         <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2 style="fill:#000;"></circle>
-        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}" style="font-size: 10px; fill: #000; font-weight: 400;font-family:'Benton Sans', sans-serif; text-shadow:none;">{city.properties.NAME}</text>
+        <text id="{city.properties.NAME.replace(' ', '-')}-label" class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}" style="font-size: 10px; fill: #000; font-weight: 400;font-family:'Benton Sans', sans-serif; text-shadow:none;">{city.properties.NAME}</text>
       {/each}
     </g>
   </svg>

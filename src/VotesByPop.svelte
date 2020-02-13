@@ -40,23 +40,22 @@
     });
   }
 
-  const circle_sizer = function(input) {
-    return radius_calc(circlescalearea(input));
-  }
-
   const positionScale = d3.scaleLinear()
     .domain([min_x, max_x]) // population or other x var
     .range([0, width]) // position range
 
-  const circlescale = d3.scaleLinear()
-    .domain([0, 75000]) // votecount
-    .range([min_circle_radius, max_circle_radius]) // radius range
+  // const circlescale = d3.scaleLinear()
+  //   .domain([0, 75000]) // votecount
+  //   .range([min_circle_radius, max_circle_radius]) // radius range
 
   const circlescalearea = d3.scaleLinear()
     //.domain([0, 75000]) // votecount Clinton 2016 test data
     .domain([0, 15000]) // votecount
     .range([min_circle_area, max_circle_area]) // radius range
 
+  const circle_sizer = function(input) {
+    return radius_calc(circlescalearea(input));
+  }
 </script>
 
 <style>

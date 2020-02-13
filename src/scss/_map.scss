@@ -209,6 +209,11 @@ $candColors: (
   transition: fill 500ms ease;
 }
 
+#Twin-Cities-label {
+  text-anchor: end;
+  transform: translate(-4px, 0);
+}
+
 // IE11 needs a specific height
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .county-map {

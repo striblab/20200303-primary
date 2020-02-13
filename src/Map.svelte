@@ -283,15 +283,15 @@ function countyClass(feature, county_data) {
         <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
-    <g class="roads">
+    <!-- <g class="roads">
       {#each road_lines as feature}
         <path d={path(feature)} class="roadLine"/>
       {/each}
-    </g>
+    </g> -->
     <g class="cities">
       {#each city_points as city}
         <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>
-        <text class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
+        <text id="{city.properties.NAME.replace(' ', '-')}-label" class="cityLabel" x="{projection(city.geometry.coordinates)[0]}" y="{projection(city.geometry.coordinates)[1] - 5}">{city.properties.NAME}</text>
       {/each}
     </g>
   </svg>

@@ -42,7 +42,7 @@
         "GEOID": "tc",
         "NAME": "Twin Cities"
       },
-      "geometry": { "type": "Point", "coordinates": [ -93.2682, 44.9645 ]}
+      "geometry": { "type": "Point", "coordinates": [ -93.202, 44.97 ]}
     }
   ]
 }
