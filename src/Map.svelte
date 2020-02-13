@@ -209,7 +209,7 @@ function countyClass(feature, county_data) {
 
 .county_map {
   position: relative;
-  max-width: 650px;
+  max-width: 550px;
 }
 
 .county-map-tooltip {
@@ -245,18 +245,6 @@ function countyClass(feature, county_data) {
       </thead>
 
       <tbody>
-        <!-- {#if tooltipResults}
-          {#each tooltipResults as result, i}
-            <tr>
-              <td class="map-cand">{result.last}</td>
-              <td class="map-votes">{intcomma(result.votecount)}</td>
-              <td class="map-pct">{Math.round(result.votepct * 100)}%</td>
-            </tr>
-            {#if i > 5}
-              <p>Others receiving votes: {result.last} ({Math.round(result.votepct * 100)}%)</p>
-            {/if}
-          {/each}
-        {/if} -->
         {#if top_six}
           {#each top_six as result}
             <tr>
@@ -278,14 +266,6 @@ function countyClass(feature, county_data) {
             </tr>
           {/each}
         {/if}
-
-        <!-- {#if others}
-        <p> Others receiving votes:
-          {#each others as result}
-            {result.last} ({Math.round(result.votepct * 100)}%),
-          {/each}
-        </p>
-        {/if} -->
       </tbody>
     </table>
 
@@ -300,7 +280,7 @@ function countyClass(feature, county_data) {
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
       {#each county_features as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').toUpperCase()}/>
+        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
     <g class="roads">

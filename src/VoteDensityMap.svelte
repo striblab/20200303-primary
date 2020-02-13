@@ -70,6 +70,7 @@ const circlescale = scaleLinear()
     max-width: 250px;
     margin: 1.5em;
     /* width: 100%; */
+    margin: 15px 15px;
     background-color: "#eeeeee";
     /* margin: 0 auto; */
     /* position: relative; */

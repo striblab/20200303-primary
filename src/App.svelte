@@ -3,6 +3,7 @@
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
 	import VotesByPop from './VotesByPop.svelte';
+	import Promos from './Promos.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -53,8 +54,9 @@
 			last_updated = '';
 		}
 		else {
-			datestring = new Date(statewide_data[0].lastupdated)
-			last_updated = datestring.toLocaleString('en-US', options)
+			// datestring = new Date(statewide_data[0].lastupdated)
+			// last_updated = datestring.toLocaleString('en-US', options)
+			last_updated = statewide_data[0].lastupdated
 		}
 	}
 
@@ -226,15 +228,16 @@
 
 
 <section id="related">
-	{#if stories.length == 0}
+	<!-- {#if stories.length == 0}
 	<div class="relatedContainer"></div>
 	{:else}
 	<div class="relatedContainer">
 		<a href="{stories[id].url}" class="relatedLink" target="_blank"><h2 on:click={handleClick(stories.length)}>{stories[id].headline}</h2></a>
 		<p>{stories[id].summary}</p>
 	</div>
-	{/if}
+	{/if} -->
 
+	<Promos />
 </section>
 
 <section id="candidate-support">
@@ -258,11 +261,22 @@
 
 </section>
 
-<!-- <div><div class="c016"><header class="c0112"><h2 class="c017">Morning Hot Dish</h2><div class="c018">Minnesota political news and musings, served up every weekday morning.</div></header><form class="c0111"><div class="c0116 c0113"><label class="c0114 c0117">Email<input class="c0115" type="email" placeholder="Please enter your email address" value=""></label><span class="c0122"></span></div><input type="submit" alt="Submit" class="c0123" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-1" data-evar48="Submit" data-evar58="button" data-evar75="newsletter" data-linkname="Submit" data-linktype="button" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-1" data-position="0-1" value="Sign Up"></form><a href="http://www.startribune.com/startribune-com-privacy-policy/218991591/" class="c0124" target="_blank" title="Privacy Policy" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-3" data-evar48="Privacy Policy" data-evar58="link" data-evar75="newsletter" data-linkname="Privacy Policy" data-linktype="link" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-3" data-position="0-3">Privacy Policy</a></div></div> -->
+<div class="otherStoriesMobile">
+	<h3>More Star Tribune political coverage from Super Tuesday</h3>
+	<ul>
+		<li><a href="http://startribune.com">POLITICS TEAM STORY 1</a></li>
+		<li><a href="http://startribune.com">POLITICS TEAM STORY 2</a></li>
+		<li><a href="http://startribune.com">POLITICS TEAM STORY 3</a></li>
+	</ul>
+</div>
 
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>
 	<p>Chatter about delegate tracker</p>
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="450"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
+</section>
+
+<section id="credits">
+		<p>Design and development by Michael Corey and Thomas Oide</p>
 </section>
