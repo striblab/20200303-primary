@@ -245,9 +245,11 @@
 
 			<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
 			<div class="demographics">
-				<VotesByPop {candidate} x_var='median_income' x_var_label='median income' x_min_formatter='$,' x_max_formatter='$,' x_unit='' />
+				<VotesByPop {candidate} x_var='median_income' x_var_label='average income' x_min_formatter='$,' x_max_formatter='$,' x_unit='' />
+				<VotesByPop {candidate} x_var='median_age' x_var_label='average age' x_min_formatter='.2r' x_max_formatter='.2r' x_unit=' years old' />
+				<VotesByPop {candidate} x_var='pct_nonwhite' x_var_label='percentage non-white'  x_min_formatter='.0%' x_max_formatter='.0%' x_unit=' non-white' />
 				<VotesByPop {candidate} x_var='rPct_2016' x_var_label='Trump percentage 2016'  x_min_formatter='.0%' x_max_formatter='.0%' x_unit=' voted for Trump' />
-				<VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' />
+				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
 			</div>
 		</div>
 		{/if}

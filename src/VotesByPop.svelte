@@ -33,6 +33,7 @@
       var record = candidate.results.find(element => element.fipscode == county.fips);
       return {
         //'votecount': county.dVotes_2016,  // Clinton 2016 test data
+        'name': county.county,
         'votecount': record.votecount,
         'x_var': county[x_var],
         'x_var_name': x_var_label
@@ -42,7 +43,6 @@
     chart_data = chart_data.sort(function(first, second) {
       return second.votecount - first.votecount;
     });
-    console.log(chart_data);
   }
 
   const positionScale = d3.scaleLinear()
@@ -74,6 +74,7 @@
   .county-circle-center {
     fill: #FFF;
     fill-opacity: 1;
+    pointer-events: none;
   }
 
   svg {
@@ -100,7 +101,7 @@
 </style>
 
 <div class="demographic-chart">
-  <h5>Votes by {chart_data[0].x_var_name}</h5>
+  <h5>Votes by county {chart_data[0].x_var_name}</h5>
   <svg viewBox="0 -{max_circle_radius} {width} {height + max_circle_radius}" style="width: 100%;">
     <g class="chart-lines">
       <line class="x-axis" x1="0" x2="0" y1="-10" y2="10"/>
@@ -115,7 +116,7 @@
     <g class="county-circles">
     {#each chart_data as county}
       {#if county.votecount > 0}
-      <circle class="countyCircle circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}" cy="0" r="{circle_sizer(county.votecount)}"/>
+      <circle class="countyCircle circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={console.log(county.name)}/>
       <circle class="county-circle-center circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}" cy="0" r="1"/>
       {/if}
     {/each}
