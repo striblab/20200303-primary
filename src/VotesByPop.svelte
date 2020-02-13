@@ -14,7 +14,7 @@
   let median_x = d3.median(mn_demographics.map(i => i[x_var]));
 
   let chart_data;
-  const width = 400;
+  const width = 700;
   const height = 80;
   const min_circle_radius = 0;
   const max_circle_radius = 30;
@@ -52,6 +52,7 @@
   .demographic-chart {
     width: 100%;
     height: 100px;
+    margin-bottom: 1em;
   }
 
   .county-circle-center {
@@ -64,7 +65,7 @@
   }
 
   svg .chart-labels {
-    font-size: 10px;
+    font-size: 11px;
     font-weight: 500;
     font-family: "Benton Sans", sans-serif;
   }
@@ -92,8 +93,8 @@
       <line class="median" x1="{positionScale(median_x)}" x2="{positionScale(median_x)}" y1="-22" y2="22"/>
     </g>
     <g class="chart-labels">
-      <text class="axis-label" x="-3" y="22">{f_min(min_x)} {x_unit}</text>
-      <text class="axis-label" text-anchor="end" x="{width + 3}" y="20">{f_max(max_x)}{x_unit}</text>
+      <text class="axis-label" x="-3" y="23">{f_min(min_x)} {x_unit}</text>
+      <text class="axis-label" text-anchor="end" x="{width + 3}" y="23">{f_max(max_x)}{x_unit}</text>
     </g>
     <g class="county-circles">
     {#each chart_data as county}

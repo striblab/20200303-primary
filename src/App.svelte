@@ -166,8 +166,23 @@
 		margin-top: 30px;
 	}
 
+	h4.cand-name {
+		font-size: 0.9em;
+		margin: 1em 0 0.5em;
+	}
+
 	.demographics {
-		width: 500px;
+		max-width: 650px;
+		width: 100%;
+		margin-left: 2em;
+	}
+
+	.candidate-breakdown {
+		display: flex;
+	  flex-direction: row;
+	  flex-wrap: wrap;
+	  /* justify-content: space-between;*/
+	  max-width: 1000px;
 	}
 
 	@keyframes fadeIn {
@@ -225,16 +240,22 @@
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
   <p>Larger circles show a larger share of each candidate's votes.</p>
-	<div id="density-maps">
+
 	{#each results_by_candidate as candidate}
+	{#if candidate.results.length > 0}
+	<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
+	{/if}
+	<div id="{candidate.last}-breakdown" class="candidate-breakdown">
+
 		<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
 		<div class="demographics">
 			<VotesByPop {candidate} x_var='median_income' x_var_label='median income' x_min_formatter='$,' x_max_formatter='$,' x_unit='' />
 			<VotesByPop {candidate} x_var='rPct_2016' x_var_label='Trump percentage 2016'  x_min_formatter='.0%' x_max_formatter='.0%' x_unit=' voted for Trump' />
 			<VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' />
 		</div>
-	{/each}
 	</div>
+	{/each}
+
 </section>
 
 <!-- <div><div class="c016"><header class="c0112"><h2 class="c017">Morning Hot Dish</h2><div class="c018">Minnesota political news and musings, served up every weekday morning.</div></header><form class="c0111"><div class="c0116 c0113"><label class="c0114 c0117">Email<input class="c0115" type="email" placeholder="Please enter your email address" value=""></label><span class="c0122"></span></div><input type="submit" alt="Submit" class="c0123" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-1" data-evar48="Submit" data-evar58="button" data-evar75="newsletter" data-linkname="Submit" data-linktype="button" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-1" data-position="0-1" value="Sign Up"></form><a href="http://www.startribune.com/startribune-com-privacy-policy/218991591/" class="c0124" target="_blank" title="Privacy Policy" data-evar44="" data-evar45="Politics Strib Tag" data-evar47="0-3" data-evar48="Privacy Policy" data-evar58="link" data-evar75="newsletter" data-linkname="Privacy Policy" data-linktype="link" data-modulename="Politics Strib Tag" data-moduletype="newsletter-0-3" data-position="0-3">Privacy Policy</a></div></div> -->
