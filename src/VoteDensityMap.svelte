@@ -67,7 +67,7 @@ const circlescale = scaleLinear()
 
 <style>
   .density-map {
-    max-width: 200px;
+    max-width: 250px;
     margin: 1.5em;
     /* width: 100%; */
     margin: 15px 15px;
@@ -84,11 +84,6 @@ const circlescale = scaleLinear()
     stroke-width: 0.5;
   }
 
-  h4.cand-name {
-    font-size: 0.9em;
-    margin: 1em 0 0.5em;
-  }
-
   .cityDot,
   .cityLabel {
     fill: #000;
@@ -96,9 +91,9 @@ const circlescale = scaleLinear()
 </style>
 
 <div class="density-map">
-  {#if candidate.results.length > 0}
+  <!-- {#if candidate.results.length > 0}
   <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
-  {/if}
+  {/if} -->
   <svg viewBox="0 15 {width} {height + 15}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
