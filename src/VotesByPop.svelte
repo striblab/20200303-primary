@@ -17,7 +17,13 @@
   const width = 700;
   const height = 80;
   const min_circle_radius = 0;
-  const max_circle_radius = 30;
+  const max_circle_radius = 10;
+  const min_circle_area = 0;
+  const max_circle_area = 2500;
+
+  const radius_calc = function(area) {
+    return Math.sqrt(area / Math.PI)
+  }
 
   const f_min = d3.format(x_min_formatter);
   const f_max = d3.format(x_max_formatter);
@@ -26,6 +32,7 @@
     chart_data = mn_demographics.map(function (county) {
       var record = candidate.results.find(element => element.fipscode == county.fips);
       return {
+        //'votecount': county.dVotes_2016,  // Clinton 2016 test data
         'votecount': record.votecount,
         'x_var': county[x_var],
         'x_var_name': x_var_label
@@ -34,7 +41,7 @@
   }
 
   const circle_sizer = function(input) {
-    return circlescale(input);
+    return radius_calc(circlescalearea(input));
   }
 
   const positionScale = d3.scaleLinear()
@@ -42,8 +49,13 @@
     .range([0, width]) // position range
 
   const circlescale = d3.scaleLinear()
-    .domain([0, 16000]) // votecount
+    .domain([0, 75000]) // votecount
     .range([min_circle_radius, max_circle_radius]) // radius range
+
+  const circlescalearea = d3.scaleLinear()
+    //.domain([0, 75000]) // votecount Clinton 2016 test data
+    .domain([0, 15000]) // votecount
+    .range([min_circle_area, max_circle_area]) // radius range
 
 </script>
 
