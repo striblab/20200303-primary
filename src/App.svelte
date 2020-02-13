@@ -241,19 +241,19 @@
 	<h2>Where was each candidate's support strongest?</h2>
   <p>Larger circles show a larger share of each candidate's votes.</p>
 
-	{#each results_by_candidate as candidate}
-	{#if candidate.results.length > 0}
-	<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
-	{/if}
-	<div id="{candidate.last}-breakdown" class="candidate-breakdown">
+	{#each results_by_candidate as candidate, i}
+		{#if i < 6 && candidate.results.length > 0}
+		<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
+		<div id="{candidate.last}-breakdown" class="candidate-breakdown">
 
-		<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
-		<div class="demographics">
-			<VotesByPop {candidate} x_var='median_income' x_var_label='median income' x_min_formatter='$,' x_max_formatter='$,' x_unit='' />
-			<VotesByPop {candidate} x_var='rPct_2016' x_var_label='Trump percentage 2016'  x_min_formatter='.0%' x_max_formatter='.0%' x_unit=' voted for Trump' />
-			<VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' />
+			<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
+			<div class="demographics">
+				<VotesByPop {candidate} x_var='median_income' x_var_label='median income' x_min_formatter='$,' x_max_formatter='$,' x_unit='' />
+				<VotesByPop {candidate} x_var='rPct_2016' x_var_label='Trump percentage 2016'  x_min_formatter='.0%' x_max_formatter='.0%' x_unit=' voted for Trump' />
+				<VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' />
+			</div>
 		</div>
-	</div>
+		{/if}
 	{/each}
 
 </section>
