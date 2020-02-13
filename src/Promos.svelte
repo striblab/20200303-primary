@@ -17,7 +17,8 @@ export let local;
     </ul>
   </div>
   <div class="hot-dish">
-    <h3>Hot Dish hed here</h3>
+    <h3>Morning Hot Dish</h3>
+    <p>Minnesota political news and musings, served up every weekday morning.</p>
     <iframe width="300" height="150" src="http://www.startribune.com/weekly-sports-signup/527965271/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
   </div>
   <div class="otherStories">
