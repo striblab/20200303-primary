@@ -73,6 +73,24 @@ p.lastUpdated {
 .leadin {
 	text-align: center;
 	margin-bottom: 100px;
+	margin-top: 100px;
+
+	.elexLogo {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		margin-bottom: 35px;
+
+		img {
+			width: 50px;
+		}
+
+		.text {
+			font-family: "Popular", sans-serif;
+			margin-right: 5px;
+		}
+	}
 }
 
 .leadin p {
@@ -126,6 +144,19 @@ p.lastUpdated {
 
 	h2 {
 		margin-bottom: 0;
+	}
+
+	h4 {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 16px;
+		font-weight: bold;
+	}
+
+	h5 {
+		font-family: "Benton Sans", sans-serif;
+		font-size: 13px;
+		margin-bottom: 26px;
+		font-weight: normal;
 	}
 
 	p {
