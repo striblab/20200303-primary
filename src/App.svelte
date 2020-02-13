@@ -17,13 +17,14 @@
 	// import ia_cities from './data/ia_cities.json';
 
 	import us_county_names from './data/us_county_names.json'
-	import content from './data/content.json';
 	import { onMount } from 'svelte';
 	import _ from 'lodash';
 
 	export let title;
 
 	export let data = [];
+	export let wire = [];
+	export let local = [];
 	export let county_data = [];
 	export let county_data_grouped;
 
@@ -31,19 +32,6 @@
 
 	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Sanders', 'Steyer', 'Warren'];
 	export let results_by_candidate = [];
-
-	export let stories = content.data;
-
-	// function contentIDGenerator(previous, object) {
-	// 	id = Math.floor((Math.random() * object.length))
-	// 	if (id == previous) {
-	// 		id = Math.floor((Math.random() * object.length));
-	// 		return id;
-	// 	}
-	// 	else {
-	// 		return id;
-	// 	}
-	// }
 
 	let last_updated;
 	let datestring;
@@ -132,9 +120,15 @@
 
 	onMount(async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
+		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json")
     // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
     const json = await response.json()
+		const wireJson = await wireResponse.json()
+		const localJson = await localResponse.json()
     data = json;
+		wire = wireJson;
+		local = localJson;
   });
 
 	// old data STATIC
@@ -237,7 +231,7 @@
 	</div>
 	{/if} -->
 
-	<Promos />
+	<Promos {wire} {local}/>
 </section>
 
 <section id="candidate-support">
@@ -264,9 +258,9 @@
 <div class="otherStoriesMobile">
 	<h3>More Star Tribune political coverage from Super Tuesday</h3>
 	<ul>
-		<li><a href="http://startribune.com">POLITICS TEAM STORY 1</a></li>
-		<li><a href="http://startribune.com">POLITICS TEAM STORY 2</a></li>
-		<li><a href="http://startribune.com">POLITICS TEAM STORY 3</a></li>
+		{#each local as result}
+		<li><a href="{result.url}">{result.headline}</a></li>
+		{/each}
 	</ul>
 </div>
 
