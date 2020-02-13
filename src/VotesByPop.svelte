@@ -38,6 +38,11 @@
         'x_var_name': x_var_label
       };
     });
+
+    chart_data = chart_data.sort(function(first, second) {
+      return second.votecount - first.votecount;
+    });
+    console.log(chart_data);
   }
 
   const positionScale = d3.scaleLinear()
