@@ -49,7 +49,7 @@
 
   const positionScale = d3.scaleLinear()
     .domain([x_axis_min, x_axis_max]) // population or other x var
-    .range([0, width]) // position range
+    .range([0, 100]) // position range
 
   // const circlescale = d3.scaleLinear()
   //   .domain([0, 75000]) // votecount
@@ -80,10 +80,12 @@
   }
 
   h5.chart-label {
-    text-align: right;
+    /* text-align: right; */
   }
 
   svg {
+    /* width: 100%;
+    height: {height}px; */
     overflow: visible;
   }
 
@@ -108,22 +110,23 @@
 
 <div class="demographic-chart">
   <h5 class="chart-label">{x_var_label}</h5>
-  <svg viewBox="0 -{max_circle_radius} {width} {height + max_circle_radius}" style="width: 100%;">
+  <svg style="width: 100%; height: {height}px;">
+  <!-- <svg viewBox="0 -{max_circle_radius} {width} {height + max_circle_radius}" style="width: 100%;"> -->
     <g class="chart-lines">
       <line class="x-axis" x1="0" x2="0" y1="-10" y2="10"/>
-      <line class="x-axis" x1="0" x2="{width}" y1="0" y2="0"/>
-      <line class="x-axis" x1="{width}" x2="{width}" y1="-10" y2="10"/>
-      <line class="median" x1="{positionScale(median_x)}" x2="{positionScale(median_x)}" y1="-22" y2="22"/>
+      <line class="x-axis" x1="0" x2="100%" y1="0" y2="0"/>
+      <line class="x-axis" x1="100%" x2="100%" y1="-10" y2="10"/>
+      <line class="median" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-22" y2="22"/>
     </g>
     <g class="chart-labels">
       <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)} {x_unit}</text>
-      <text class="axis-label" text-anchor="end" x="{width + 3}" y="23">{f_max(x_axis_max)}{x_unit}</text>
+      <text class="axis-label" text-anchor="end" x="100%" y="23">{f_max(x_axis_max)}{x_unit}</text>
     </g>
     <g class="county-circles">
     {#each chart_data as county}
       {#if county.votecount > 0}
-      <circle class="countyCircle circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={console.log(county.name)}/>
-      <circle class="county-circle-center circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}" cy="0" r="1"/>
+      <circle class="countyCircle circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}%" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={console.log(county.name)}/>
+      <circle class="county-circle-center circle-{candidate.results[0].last.toLowerCase()}" cx="{positionScale(county.x_var)}%" cy="0" r="1"/>
       {/if}
     {/each}
     </g>
