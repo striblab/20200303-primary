@@ -165,9 +165,9 @@
 		margin-top: 30px;
 	}
 
-	h4.cand-name {
-		font-size: 0.9em;
-		margin: 1em 0 0.5em;
+	.small-maps {
+		display: flex;
+		flex-wrap: wrap;
 	}
 
 	.demographics {
@@ -237,20 +237,21 @@
 </section>
 
 <section id="candidate-support">
-	<h2>Where was each candidate's support strongest?</h2>
-  <p>Larger circles show a larger share of each candidate's votes.</p>
+	<section class="demographics" id="geography">
+		<h2>Where was each candidate's support strongest?</h2>
+	  <p>Larger circles show a larger share of each candidate's votes.</p>
 
-	{#each results_by_candidate as candidate, i}
-		{#if i < 6 && candidate.results.length > 0}
-		<div>
-			<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
-			<VoteDensityMap {candidate} county_topojson={ia} cityjson={ia_cities} />
+		<div class="small-maps">
+		{#each results_by_candidate as candidate, i}
+			{#if i < 6 && candidate.results.length > 0}
+				<VoteDensityMap {candidate} county_topojson={ia} cityjson={ia_cities} />
+			{/if}
+		{/each}
 		</div>
-		{/if}
-	{/each}
+	</section>
 
 	<section class="demographics" id="income">
-		<h4>Votes by county average income</h4>
+		<h2>Votes by county average income</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
 			<div>
@@ -273,7 +274,7 @@
 	</section>
 
 	<section class="demographics" id="age">
-		<h4>Votes by county average age</h4>
+		<h2>Votes by county average age</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
 			<div>
@@ -295,7 +296,7 @@
 	</section>
 
 	<section class="demographics" id="nonwhite">
-		<h4>Votes by county percentage non-white</h4>
+		<h2>Votes by county percentage non-white</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
 			<div>
@@ -316,7 +317,7 @@
 	</section>
 
 	<section class="demographics" id="trump">
-		<h4>Votes by county percentage who voted for Trump 2016</h4>
+		<h2>Votes by county percentage who voted for Trump 2016</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
 			<div>
