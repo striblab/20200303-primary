@@ -29,11 +29,11 @@ let viable = ['Biden', 'Sanders', 'Warren', 'Buttigieg', 'Bloomberg', 'Klobuchar
 let county_features;
 let city_points;
 let road_lines;
-let aspect_ratio = 1.3
+let aspect_ratio = 1.3;
 export let width = 400;
 export let height = width * aspect_ratio;
 let center = width / 2;
-let tooltipResults;
+export let tooltipResults;
 let top_six = [];
 let rest;
 let others;
@@ -94,7 +94,13 @@ function hideTooltip(path, feature) {
 
 function buildTooltip(path, feature) {
       var i;
-      record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
+      if (county_data_grouped) {
+        record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
+      }
+      else {
+        return;
+      }
+
       if (record.length > 0) {
         tooltipResults = record[1];
 
@@ -136,6 +142,7 @@ function buildTooltip(path, feature) {
 }
 
 function positionTooltip(event) {
+  // if (tooltipResults.length > 0) {
     let tooltip = d3.select('#tooltip')
     let svg = document.getElementById('resultsMap')
     var bounding = svg.getBoundingClientRect()
@@ -182,6 +189,7 @@ function positionTooltip(event) {
         //   .style('left', x - (tooltipWidth / 2) + 'px')
         //   .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
     }
+  // }
 }
 
 function countyClass(feature, county_data) {
@@ -272,7 +280,7 @@ function countyClass(feature, county_data) {
       <div class="precincts">
         { Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
       </div>
-  {/if}
+      {/if}
   </div>
 
 <!-- width="500" height="500"  -->

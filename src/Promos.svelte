@@ -12,8 +12,6 @@ export let local;
       {#each wire as result}
       <li><a href="{result.url}">{result.headline}</a></li>
       {/each}
-      <!-- <li><a href="http://startribune.com">WIRE ANALYSIS GOES HERE</a></li>
-      <li><a href="http://startribune.com">WIRE ANALYSIS GOES HERE</a></li> -->
     </ul>
   </div>
   <div class="hot-dish">

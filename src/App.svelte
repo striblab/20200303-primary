@@ -9,13 +9,6 @@
 	import mn_cities from './data/mn_cities.json';
 	import mn_roads from './data/mn_roads.json';
 
-	// import nh from './data/nh.json';
-	// import nh_cities from './data/nh_cities.json';
-	// import nh_roads from './data/nh_roads.json';
-
-	// import ia from './data/ia.json';
-	// import ia_cities from './data/ia_cities.json';
-
 	import us_county_names from './data/us_county_names.json'
 	import { onMount } from 'svelte';
 	import _ from 'lodash';
@@ -131,35 +124,16 @@
 		local = localJson;
   });
 
-	// old data STATIC
-	// onMount(async function() {
-  //   const response = await fetch("https://static.startribune.com.s3.amazonaws.com/staging/news/projects/all/2020-election-results/json/results-test-20200127145521.json");
-  //   const json = await response.json()
-  //   data = json;
-  // });
-
 </script>
 
 <style>
-	.live {
-		font-family: "Benton Sans", sans-serif;
-		font-weight: 700;
-		color: red;
-		text-align: center;
-		-webkit-transition: fadeIn 0.75s infinite alternate;
-		-moz-transition: fadeIn 0.75s infinite alternate;
-		-ms-transition: fadeIn 0.75s infinite alternate;
-		-o-transition: fadeIn 0.75s infinite alternate;
-		animation: fadeIn 0.75s infinite alternate;
-		margin-top: 30px;
-	}
 
 	.live2 {
 		font-family: "Benton Sans", sans-serif;
 		font-weight: 700;
 		color: red;
 		text-align: center;
-		margin-top: 30px;
+		/* margin-top: 30px; */
 	}
 
 	h4.cand-name {
@@ -188,15 +162,22 @@
 
 <div class="leadin">
 
-	<p class="live2"><span class="live">&bull;</span> LIVE</p>
+	<div class="elexLogo">
+		<div class="text">
+			<h3>ELECTION</h3>
+		</div>
+		<img src="https://static.startribune.com/news/projects/all/20200303-elex-results/build/img/ELEX2020.svg" alt="Election 2020"/>
+	</div>
 
 	<h1>{title}</h1>
+	<div class="share-block"></div>
 
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 	<p>Here is some intro text that will go in this space. This will only be one or two paragraphs. Short paragraphs. There are lots of potential candidates in this primary but only a few potential winners.</p>
 </div>
 
 <div class="updates">
+	<p class="live2">&bull; LIVE</p>
 	{#if typeof(time) == "string"}
 	<p class="countdown">{time}</p>
 	{:else}
@@ -222,15 +203,6 @@
 
 
 <section id="related">
-	<!-- {#if stories.length == 0}
-	<div class="relatedContainer"></div>
-	{:else}
-	<div class="relatedContainer">
-		<a href="{stories[id].url}" class="relatedLink" target="_blank"><h2 on:click={handleClick(stories.length)}>{stories[id].headline}</h2></a>
-		<p>{stories[id].summary}</p>
-	</div>
-	{/if} -->
-
 	<Promos {wire} {local}/>
 </section>
 

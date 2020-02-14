@@ -15,8 +15,8 @@
 		$: {
 			// console.log(county_data_grouped)
 			for (i = 0; i < county_data_grouped.length; i++) {
-				// counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
-				counties.push(county_data_grouped[i][1][0].reportingunitname);
+				counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
+				// counties.push(county_data_grouped[i][1][0].reportingunitname);
 			}
 		}
 
