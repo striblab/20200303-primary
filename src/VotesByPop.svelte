@@ -17,7 +17,7 @@
   let candidate_id = '';
 
   let chart_data;
-  const height = 100;
+  const height = 80;
   const min_circle_radius = 0;
   const max_circle_radius = 10;
   const min_circle_area = 0;
@@ -84,8 +84,8 @@
 
   .demographic-chart {
     width: 95%;
-    height: 100px;
-    margin: 1em auto;
+    height: 80px;
+    margin: 3em auto;
   }
 
   .county-circle-center {
@@ -96,6 +96,7 @@
 
   h5.chart-label {
     /* text-align: right; */
+    margin: 0;
   }
 
   svg {
@@ -137,20 +138,20 @@
   <h5 class="chart-label">{x_var_label}</h5>
   <svg id="{x_var}-{candidate_id}-chart" style="width: 100%; height: {height}px;">
   <!-- <svg viewBox="0 -{max_circle_radius} {width} {height + max_circle_radius}" style="width: 100%;"> -->
-    <g class="chart-lines">
+    <g class="chart-lines" transform="translate(0, {height/2})">
       <line class="x-axis" x1="0" x2="0" y1="-10" y2="10"/>
       <line class="x-axis" x1="0" x2="100%" y1="0" y2="0"/>
       <line class="x-axis" x1="100%" x2="100%" y1="-10" y2="10"/>
       <line class="median" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-22" y2="22"/>
 
     </g>
-    <g class="chart-labels">
+    <g class="chart-labels" transform="translate(0, {height/2})">
       <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)} {x_unit}</text>
       <text class="axis-label" text-anchor="end" x="100%" y="23">{f_max(x_axis_max)}{x_unit}</text>
       <text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)} {x_unit}</text>
-      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-20">am i tooltipping</text>
+      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-20"></text>
     </g>
-    <g class="county-circles">
+    <g class="county-circles" transform="translate(0, {height/2})">
     {#each chart_data as county}
       {#if county.votecount > 0}
       <circle class="countyCircle circle-{candidate_id}" cx="{positionScale(county.x_var)}%" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={showDemoTooltips} data-x="{county.x_var}" data-display-var="{county.name}: {f_votes(county.votecount)}" />
