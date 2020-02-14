@@ -127,18 +127,6 @@
 </script>
 
 <style>
-	.live {
-		font-family: "Benton Sans", sans-serif;
-		font-weight: 700;
-		color: red;
-		text-align: center;
-		-webkit-transition: fadeIn 0.75s infinite alternate;
-		-moz-transition: fadeIn 0.75s infinite alternate;
-		-ms-transition: fadeIn 0.75s infinite alternate;
-		-o-transition: fadeIn 0.75s infinite alternate;
-		animation: fadeIn 0.75s infinite alternate;
-		/* margin-top: 30px; */
-	}
 
 	.live2 {
 		font-family: "Benton Sans", sans-serif;
