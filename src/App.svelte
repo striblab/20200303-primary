@@ -254,7 +254,6 @@
 		<h2>Votes by county average income</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
-			<div>
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
@@ -268,7 +267,6 @@
 				/>
 				<!-- x_axis_min=44000
 				x_axis_max=100000 -->
-			</div>
 			{/if}
 	{/each}
 	</section>
@@ -277,20 +275,18 @@
 		<h2>Votes by county average age</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
-			<div>
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='median_age'
 					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
-					x_axis_min=30
+					x_axis_min=25
 					x_axis_max=50
 					x_min_formatter='.2r'
 					x_max_formatter='.2r'
 					x_unit=' years old'
 				/>
 				<!-- x_axis_max=60 -->
-			</div>
 			{/if}
 		{/each}
 	</section>
@@ -299,7 +295,6 @@
 		<h2>Votes by county percentage non-white</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
-			<div>
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
@@ -311,7 +306,6 @@
 					x_max_formatter='.0%'
 					x_unit=' non-white'
 				/><!-- x_axis_max=0.6 -->
-			</div>
 			{/if}
 		{/each}
 	</section>
@@ -320,7 +314,6 @@
 		<h2>Votes by county percentage who voted for Trump 2016</h2>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
-			<div>
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
@@ -334,7 +327,6 @@
 					x_unit=' voted for Trump'
 				/><!-- x_axis_max=0.75 -->
 				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
-			</div>
 			{/if}
 		{/each}
 	</section>
