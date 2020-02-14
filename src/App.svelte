@@ -5,16 +5,17 @@
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
 
-	import mn from './data/mn.json';
-	import mn_cities from './data/mn_cities.json';
-	import mn_roads from './data/mn_roads.json';
+	// import mn from './data/mn.json';
+	// import mn_cities from './data/mn_cities.json';
+	// import mn_roads from './data/mn_roads.json';
 
 	// import nh from './data/nh.json';
 	// import nh_cities from './data/nh_cities.json';
 	// import nh_roads from './data/nh_roads.json';
 
-	// import ia from './data/ia.json';
-	// import ia_cities from './data/ia_cities.json';
+	import ia from './data/ia.json';
+	import ia_cities from './data/ia_cities.json';
+	import ia_roads from './data/mn_roads.json';  // Not really using
 
 	import us_county_names from './data/us_county_names.json'
 	import { onMount } from 'svelte';
@@ -96,7 +97,8 @@
 	}
 
 	let getData = async function() {
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
 
 		const json = await response.json()
@@ -119,7 +121,8 @@
 	let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
 		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json")
     // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
@@ -216,7 +219,7 @@
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
 			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 		</Autocomplete>
-		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={ia} cityjson={ia_cities} roads_topojson={ia_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
@@ -243,48 +246,52 @@
 		<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
 		<div id="{candidate.last}-breakdown" class="candidate-breakdown">
 
-			<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
+			<VoteDensityMap {candidate} county_topojson={ia} cityjson={ia_cities} />
 			<div class="demographics">
 				<VotesByPop
 					{candidate}
 					x_var='median_income'
 					x_var_label='Votes by county average income'
-					x_axis_min=44000
-					x_axis_max=100000
+					x_axis_min=40000
+					x_axis_max=90000
 					x_min_formatter='$,'
 					x_max_formatter='$,'
 					x_unit=''
 				/>
+				<!-- x_axis_min=44000
+				x_axis_max=100000 -->
 				<VotesByPop
 					{candidate}
 					x_var='median_age'
 					x_var_label='... by average age'
 					x_axis_min=30
-					x_axis_max=60
+					x_axis_max=50
 					x_min_formatter='.2r'
 					x_max_formatter='.2r'
 					x_unit=' years old'
 				/>
+				<!-- x_axis_max=60 -->
 				<VotesByPop
 					{candidate}
 					x_var='pct_nonwhite'
 					x_var_label='... by percentage non-white'
 					x_axis_min=0
-					x_axis_max=0.6
+					x_axis_max=0.4
 					x_min_formatter='.0%'
 					x_max_formatter='.0%'
 					x_unit=' non-white'
-				/>
+				/><!-- x_axis_max=0.6 -->
 				<VotesByPop
 					{candidate}
 					x_var='rPct_2016'
 					x_var_label='... by Trump percentage 2016'
 					x_axis_min=0.25
-					x_axis_max=0.75
+
+					x_axis_max=0.85
 					x_min_formatter='.0%'
 					x_max_formatter='.0%'
 					x_unit=' voted for Trump'
-				/>
+				/><!-- x_axis_max=0.75 -->
 				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
 			</div>
 		</div>

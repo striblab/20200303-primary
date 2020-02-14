@@ -1,6 +1,6 @@
 <script>
   import * as d3 from 'd3';
-  import mn_demographics from './data/mn_demographics_history.json';
+  import demographics from './data/ia_demographics_history.json';
 
   export let candidate;
   export let x_var = 'pop_density_2018';
@@ -11,9 +11,9 @@
   export let x_max_formatter = ',.4r';
   export let x_unit = ' widgets';
 
-  let min_x = d3.min(mn_demographics.map(i => i[x_var]));
-  let max_x = d3.max(mn_demographics.map(i => i[x_var]));
-  let median_x = d3.median(mn_demographics.map(i => i[x_var]));
+  let min_x = d3.min(demographics.map(i => i[x_var]));
+  let max_x = d3.max(demographics.map(i => i[x_var]));
+  let median_x = d3.median(demographics.map(i => i[x_var]));
 
   let chart_data;
   const width = 700;
@@ -31,12 +31,12 @@
   const f_max = d3.format(x_max_formatter);
 
   $: {
-    chart_data = mn_demographics.map(function (county) {
+    chart_data = demographics.map(function (county) {
       var record = candidate.results.find(element => element.fipscode == county.fips);
       return {
         'name': county.county,
-        // 'votecount': record.votecount,
-        'votecount': county.dVotes_2016,  // Clinton 2016 test data
+        'votecount': record.votecount,
+        // 'votecount': county.dVotes_2016,  // Clinton 2016 test data
         'x_var': county[x_var],
         'x_var_name': x_var_label
       };
@@ -56,8 +56,8 @@
   //   .range([min_circle_radius, max_circle_radius]) // radius range
 
   const circlescalearea = d3.scaleLinear()
-    .domain([0, 100000]) // votecount Clinton 2016 test data
-    // .domain([0, 15000]) // votecount
+    // .domain([0, 100000]) // votecount Clinton 2016 test data
+    .domain([0, 10000]) // votecount
     .range([min_circle_area, max_circle_area]) // radius range
 
   const circle_sizer = function(input) {
