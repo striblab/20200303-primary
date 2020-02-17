@@ -170,10 +170,21 @@
 		flex-wrap: wrap;
 	}
 
-	.demographics {
-		/* max-width: 650px;
-		width: 100%; */
-		margin-bottom: 4em;
+	#demographics-groups {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-left: 5%;
+		margin-right: 5%;
+		/* width: 50%;
+		display: flex;
+		flex-wrap: wrap; */
+	}
+
+	.demographics-container {
+		/* max-width: 50%; */
+		flex: 0 43%;
+		margin-bottom: 3em;
 	}
 
 	/* .candidate-breakdown {
@@ -237,10 +248,10 @@
 </section>
 
 <section id="candidate-support">
-	<section class="demographics" id="geography">
-		<h2>Where was each candidate's support strongest?</h2>
-	  <p>Larger circles show a larger share of each candidate's votes.</p>
+	<h2>Where was each candidate's support strongest?</h2>
+	<p>Larger circles show a larger share of each candidate's votes.</p>
 
+	<div id="geography" class="demographics-container">
 		<div class="small-maps">
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
@@ -248,72 +259,13 @@
 			{/if}
 		{/each}
 		</div>
-	</section>
+	</div>
 
-	<section class="demographics" id="income">
-		<h2>Votes by county average income</h2>
+	<div id="demographics-groups">
+		<div id="trump-2016" class="demographics-container">
+		<h3>By county percentage who voted for Trump 2016</h3>
 		{#each results_by_candidate as candidate, i}
-			{#if i < 6 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
-				<VotesByPop
-					{candidate}
-					x_var='median_income'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
-					x_axis_min=40000
-					x_axis_max=90000
-					x_min_formatter='$,'
-					x_max_formatter='$,'
-					x_unit=''
-				/>
-				<!-- x_axis_min=44000
-				x_axis_max=100000 -->
-			{/if}
-	{/each}
-	</section>
-
-	<section class="demographics" id="age">
-		<h2>Votes by county average age</h2>
-		{#each results_by_candidate as candidate, i}
-			{#if i < 6 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
-				<VotesByPop
-					{candidate}
-					x_var='median_age'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
-					x_axis_min=25
-					x_axis_max=50
-					x_min_formatter='.2r'
-					x_max_formatter='.2r'
-					x_unit=' years old'
-				/>
-				<!-- x_axis_max=60 -->
-			{/if}
-		{/each}
-	</section>
-
-	<section class="demographics" id="nonwhite">
-		<h2>Votes by county percentage non-white</h2>
-		{#each results_by_candidate as candidate, i}
-			{#if i < 6 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
-				<VotesByPop
-					{candidate}
-					x_var='pct_nonwhite'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
-					x_axis_min=0
-					x_axis_max=0.4
-					x_min_formatter='.0%'
-					x_max_formatter='.0%'
-					x_unit=' non-white'
-				/><!-- x_axis_max=0.6 -->
-			{/if}
-		{/each}
-	</section>
-
-	<section class="demographics" id="trump">
-		<h2>Votes by county percentage who voted for Trump 2016</h2>
-		{#each results_by_candidate as candidate, i}
-			{#if i < 6 && candidate.results.length > 0}
+			{#if i < 4 && candidate.results.length > 0}
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
@@ -329,8 +281,68 @@
 				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
 			{/if}
 		{/each}
-	</section>
+		</div>
 
+
+		<div id="nonwhite" class="demographics-container">
+		<h3>By percentage of county population that is non-white</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
+				<VotesByPop
+					{candidate}
+					x_var='pct_nonwhite'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_axis_min=0
+					x_axis_max=0.4
+					x_min_formatter='.0%'
+					x_max_formatter='.0%'
+					x_unit=' non-white'
+				/><!-- x_axis_max=0.6 -->
+			{/if}
+		{/each}
+		</div>
+
+		<div id="income" class="demographics-container">
+		<h3>By county average income</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
+				<VotesByPop
+					{candidate}
+					x_var='median_income'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_axis_min=40000
+					x_axis_max=90000
+					x_min_formatter='$,'
+					x_max_formatter='$,'
+					x_unit=''
+				/>
+				<!-- x_axis_min=44000
+				x_axis_max=100000 -->
+			{/if}
+		{/each}
+		</div>
+
+
+		<div id="age" class="demographics-container">
+		<h3>By county average age</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<VotesByPop
+					{candidate}
+					x_var='median_age'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_axis_min=25
+					x_axis_max=50
+					x_min_formatter='.2r'
+					x_max_formatter='.2r'
+					x_unit=' years old'
+				/>
+			{/if}
+		{/each}
+		</div>
+	</div>
 </section>
 
 <div class="otherStoriesMobile">

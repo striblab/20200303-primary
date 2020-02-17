@@ -83,9 +83,12 @@
 <style>
 
   .demographic-chart {
-    width: 95%;
+    /* width: 50%; */
+    width: 100%;
     height: 80px;
-    margin: 3em auto;
+    /* margin: 3em; */
+    margin-top: 3em;
+    margin-bottom: 3em;
   }
 
   .county-circle-center {
@@ -154,7 +157,7 @@
     <g class="county-circles" transform="translate(0, {height/2})">
     {#each chart_data as county}
       {#if county.votecount > 0}
-      <circle class="countyCircle circle-{candidate_id}" cx="{positionScale(county.x_var)}%" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={showDemoTooltips} data-x="{county.x_var}" data-display-var="{county.name}: {f_votes(county.votecount)}" />
+      <circle class="countyCircle circle-{candidate_id}" cx="{positionScale(county.x_var)}%" cy="0" r="{circle_sizer(county.votecount)}" on:mouseover={showDemoTooltips} data-x="{county.x_var}" data-display-var="{county.name}: {f_votes(county.votecount)} votes" />
       <circle class="county-circle-center circle-{candidate_id}" cx="{positionScale(county.x_var)}%" cy="0" r="1"/>
       {/if}
     {/each}
