@@ -126,13 +126,10 @@ function buildTooltip(path, feature) {
 
         if (tooltip.classed('tooltip-active')) {
           tooltip.classed('tooltip-active', false);
-          // console.log("not active")
         }
         else {
           tooltip.classed('tooltip-active', true);
-          // console.log("not active")
         }
-
 
         d3.selectAll('.counties path')
             .style('opacity', 0.65)
@@ -163,15 +160,6 @@ function positionTooltip(event) {
 
     let tooltipOffset = 25;
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
-
-    // if (tooltip.classed('tooltip-active')) {
-    //   tooltip.classed('tooltip-active', false);
-    //   // console.log("not active")
-    // }
-    // else {
-    //   tooltip.classed('tooltip-active', true);
-    //   // console.log("active")
-    // }
 
     if (!cursorOffPage) {
       if (cursorX > width / 2) {
@@ -327,11 +315,11 @@ function countyClass(feature, county_data) {
         county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
-    <g class="roads">
+    <!-- <g class="roads">
       {#each road_lines as feature}
         <path d={path(feature)} class="roadLine"/>
       {/each}
-    </g>
+    </g> -->
     <g class="cities">
       {#each city_points as city}
         <circle class="cityDot" cx="{projection(city.geometry.coordinates)[0]}" cy="{projection(city.geometry.coordinates)[1]}" r=2></circle>

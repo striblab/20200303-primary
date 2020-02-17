@@ -187,7 +187,7 @@
 		<p class="countdown">Checking for new data 0:{time}</p>
 		{/if}
 	{/if}
-		<p class="lastUpdated">Last change: {last_updated}</p>
+		<!-- <p class="lastUpdated">Last change: {last_updated}</p> -->
 		<!-- <span class="updatedTime">{last_updated}</span> -->
 </div>
 
