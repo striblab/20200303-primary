@@ -77,30 +77,31 @@ let path = d3.geoPath().projection(projection);
 
 
 function hideTooltip(path, feature) {
+  // console.log("hide")
+  if (county_data_grouped) {
+    tooltip = document.getElementById('tooltip')
+    if (tooltip.classList.contains('tooltip-active')) {
+      tooltip.classList.remove('tooltip-active');
+    }
 
-  tooltip = document.getElementById('tooltip')
-  if (tooltip.classList.contains('tooltip-active')) {
-    tooltip.classList.remove('tooltip-active');
-  }
-  else {
-    tooltip.classList.add('tooltip-active');
+    d3.selectAll('.counties path')
+      .style('opacity', null)
+      .style('stroke-width', null)
   }
 
-  d3.selectAll('.counties path')
-    .style('opacity', null)
-    .style('stroke-width', null)
+
 
 }
 
 function buildTooltip(path, feature) {
+    // console.log("build")
       var i;
-      if (county_data_grouped) {
+      if (county_topojson) {
         record = county_data_grouped.find(element => element[0] == feature.properties.GEOID);
       }
       else {
         return;
       }
-
       if (record.length > 0) {
         tooltipResults = record[1];
 
@@ -108,10 +109,10 @@ function buildTooltip(path, feature) {
 
         if (tooltipResults[0].precinctsreporting === 0) {
           for (i = 0; i < tooltipResults.length; i++) {
-    				if (viable.includes(tooltipResults[i].last)) {
+            if (viable.includes(tooltipResults[i].last)) {
               top_six.push(tooltipResults[i])
             }
-    			}
+          }
         }
         else {
           top_six = tooltipResults.slice(0,6)
@@ -131,24 +132,27 @@ function buildTooltip(path, feature) {
         }
 
         d3.selectAll('.counties path')
-          .style('opacity', 0.65)
+            .style('opacity', 0.65)
 
         d3.select(path)
-          .style('opacity', 1)
-          .style('stroke-width', 1.5)
-      }
+            .style('opacity', 1)
+            .style('stroke-width', 1.5)
 
+      }
 
 }
 
 function positionTooltip(event) {
-  // if (tooltipResults.length > 0) {
+  if (county_data_grouped) {
+    // console.log("position")
     let tooltip = d3.select('#tooltip')
     let svg = document.getElementById('resultsMap')
     var bounding = svg.getBoundingClientRect()
+
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
 
+    // calculates where curson is on x axis relative to the size of the canvas
     var cursorX = event.clientX - bounding.left;
 
     tooltipHeight = tooltip.node().clientHeight;
@@ -189,7 +193,7 @@ function positionTooltip(event) {
         //   .style('left', x - (tooltipWidth / 2) + 'px')
         //   .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
     }
-  // }
+  }
 }
 
 function countyClass(feature, county_data) {
@@ -285,10 +289,30 @@ function countyClass(feature, county_data) {
 
 <!-- width="500" height="500"  -->
   <svg viewBox="0 0 {width} {height}" style="width: 100%; height: 100%;" id="resultsMap">
-    <!-- on:mouseout="{hideTooltip(event)}" -->
+    <svg height="10" width="10" xmlns="http://www.w3.org/2000/svg" version="1.1">
+  <defs>
+    <pattern id="diagonal-stripe-3" patternUnits="userSpaceOnUse" width="10" height="10">
+      <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPScjYTlhOWE5Jy8+CiAgPHBhdGggZD0nTS0xLDEgbDIsLTIKICAgICAgICAgICBNMCwxMCBsMTAsLTEwCiAgICAgICAgICAgTTksMTEgbDIsLTInIHN0cm9rZT0nIzU1OTRlNycgc3Ryb2tlLXdpZHRoPSczJy8+Cjwvc3ZnPg==" x="0" y="0" width="10" height="10">
+      </image>
+    </pattern>
+  </defs>
+</svg><!-- on:mouseout="{hideTooltip(event)}" -->
+    <defs>
+
+      <pattern id="lightstripe" patternUnits="userSpaceOnUse" width="5" height="5"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1JyBoZWlnaHQ9JzUnPgogIDxyZWN0IHdpZHRoPSc1JyBoZWlnaHQ9JzUnIGZpbGw9J3doaXRlJy8+CiAgPHBhdGggZD0nTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVonIHN0cm9rZT0nIzg4OCcgc3Ryb2tlLXdpZHRoPScxJy8+Cjwvc3ZnPg==" x="0" y="0" width="5" height="5"> </image> </pattern>
+      <pattern id="diagonal-stripe-3" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzMnLz4KPC9zdmc+" x="0" y="0" width="10" height="10"> </image> </pattern>
+      <pattern id="diagonal-stripe-1" patternUnits="userSpaceOnUse" width="10" height="10"> <image xlink:href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxMCcgaGVpZ2h0PScxMCc+CiAgPHJlY3Qgd2lkdGg9JzEwJyBoZWlnaHQ9JzEwJyBmaWxsPSd3aGl0ZScvPgogIDxwYXRoIGQ9J00tMSwxIGwyLC0yCiAgICAgICAgICAgTTAsMTAgbDEwLC0xMAogICAgICAgICAgIE05LDExIGwyLC0yJyBzdHJva2U9J2JsYWNrJyBzdHJva2Utd2lkdGg9JzEnLz4KPC9zdmc+Cg==" x="0" y="0" width="10" height="10"> </image> </pattern>
+     </defs>
     <g class="counties">
       {#each county_features as feature}
-        <path d={path(feature)} class="provinceShape {countyClass(feature, county_data_grouped)}" in:fade out:fade on:mouseover="{buildTooltip(this, feature)}" on:mousemove="{positionTooltip}" on:mouseout="{hideTooltip(this, feature)}" county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
+        <path d={path(feature)}
+        class="provinceShape {countyClass(feature, county_data_grouped)}"
+        in:fade
+        out:fade
+        on:mouseover="{buildTooltip(this, feature)}"
+        on:mousemove="{positionTooltip}"
+        on:mouseout="{hideTooltip(this, feature)}"
+        county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
     <!-- <g class="roads">
