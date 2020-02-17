@@ -9,6 +9,14 @@
 	import mn_cities from './data/mn_cities.json';
 	import mn_roads from './data/mn_roads.json';
 
+	// import nh from './data/nh.json';
+	// import nh_cities from './data/nh_cities.json';
+	// import nh_roads from './data/nh_roads.json';
+
+	// import ia from './data/ia.json';
+	// import ia_cities from './data/ia_cities.json';
+	// import ia_roads from './data/mn_roads.json';  // Not really using
+
 	import us_county_names from './data/us_county_names.json'
 	import { onMount } from 'svelte';
 	import _ from 'lodash';
@@ -90,6 +98,7 @@
 
 	let getData = async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
 
 		const json = await response.json()
@@ -113,6 +122,7 @@
 
 	onMount(async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
 		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json")
     // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
@@ -136,24 +146,34 @@
 		/* margin-top: 30px; */
 	}
 
-	h4.cand-name {
-		font-size: 0.9em;
-		margin: 1em 0 0.5em;
+	.small-maps {
+		display: flex;
+		flex-wrap: wrap;
 	}
 
-	.demographics {
-		max-width: 650px;
-		width: 100%;
-		margin-left: 2em;
+	#demographics-groups {
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		margin-left: 5%;
+		margin-right: 5%;
+		/* width: 50%;
+		display: flex;
+		flex-wrap: wrap; */
 	}
 
-	.candidate-breakdown {
+	.demographics-container {
+		/* max-width: 50%; */
+		flex: 0 43%;
+		margin-bottom: 3em;
+	}
+
+	/* .candidate-breakdown {
 		display: flex;
 	  flex-direction: row;
 	  flex-wrap: wrap;
-	  /* justify-content: space-between;*/
 	  max-width: 1000px;
-	}
+	} */
 
 	@keyframes fadeIn {
 		from { opacity: 0 }
@@ -208,61 +228,100 @@
 
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
-  <p>Larger circles show a larger share of each candidate's votes.</p>
+	<p>Larger circles show a larger share of each candidate's votes.</p>
 
-	{#each results_by_candidate as candidate, i}
-		{#if i < 6 && candidate.results.length > 0}
-		<h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
-		<div id="{candidate.last}-breakdown" class="candidate-breakdown">
+	<div id="geography" class="demographics-container">
+		<div class="small-maps">
+		{#each results_by_candidate as candidate, i}
+			{#if i < 6 && candidate.results.length > 0}
+				<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
+			{/if}
+		{/each}
+		</div>
+	</div>
 
-			<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
-			<div class="demographics">
+	<div id="demographics-groups">
+		<div id="trump-2016" class="demographics-container">
+		<h3>By county percentage who voted for Trump 2016</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
+				<VotesByPop
+					{candidate}
+					x_var='rPct_2016'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_axis_min=0.25
+
+					x_axis_max=0.75
+					x_min_formatter='.0%'
+					x_max_formatter='.0%'
+					x_unit=' voted for Trump'
+				/><!-- x_axis_max=0.75 -->
+				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
+			{/if}
+		{/each}
+		</div>
+
+
+		<div id="nonwhite" class="demographics-container">
+		<h3>By percentage of county population that is non-white</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
+				<VotesByPop
+					{candidate}
+					x_var='pct_nonwhite'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_axis_min=0
+					x_axis_max=0.6
+					x_min_formatter='.0%'
+					x_max_formatter='.0%'
+					x_unit=' non-white'
+				/><!-- x_axis_max=0.6 -->
+			{/if}
+		{/each}
+		</div>
+
+		<div id="income" class="demographics-container">
+		<h3>By county average income</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
+				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='median_income'
-					x_var_label='Votes by county average income'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
 					x_axis_min=44000
 					x_axis_max=100000
 					x_min_formatter='$,'
 					x_max_formatter='$,'
 					x_unit=''
 				/>
+				<!-- x_axis_min=44000
+				x_axis_max=100000 -->
+			{/if}
+		{/each}
+		</div>
+
+
+		<div id="age" class="demographics-container">
+		<h3>By county average age</h3>
+		{#each results_by_candidate as candidate, i}
+			{#if i < 4 && candidate.results.length > 0}
 				<VotesByPop
 					{candidate}
 					x_var='median_age'
-					x_var_label='... by average age'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
 					x_axis_min=30
-					x_axis_max=60
+					x_axis_max=56
 					x_min_formatter='.2r'
 					x_max_formatter='.2r'
 					x_unit=' years old'
 				/>
-				<VotesByPop
-					{candidate}
-					x_var='pct_nonwhite'
-					x_var_label='... by percentage non-white'
-					x_axis_min=0
-					x_axis_max=0.6
-					x_min_formatter='.0%'
-					x_max_formatter='.0%'
-					x_unit=' non-white'
-				/>
-				<VotesByPop
-					{candidate}
-					x_var='rPct_2016'
-					x_var_label='... by Trump percentage 2016'
-					x_axis_min=0.25
-					x_axis_max=0.75
-					x_min_formatter='.0%'
-					x_max_formatter='.0%'
-					x_unit=' voted for Trump'
-				/>
-				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
-			</div>
+			{/if}
+		{/each}
 		</div>
-		{/if}
-	{/each}
-
+	</div>
 </section>
 
 <div class="otherStoriesMobile">
