@@ -349,5 +349,5 @@
 </section>
 
 <section id="credits">
-		<p>Design and development by Michael Corey and Thomas Oide</p>
+		<p>Design and development by Michael Corey, Thomas Oide and CJ Sinner</p>
 </section>
