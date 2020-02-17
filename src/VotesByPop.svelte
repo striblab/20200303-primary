@@ -69,13 +69,18 @@
 
   const showDemoTooltips = function(event) {
     d3.selectAll('.votes-tooltip').attr("opacity", "0");
+    d3.selectAll('.votes-tooltip-dagger').attr("opacity", "0");
+
     let svg = d3.select('#' + x_var + '-' + candidate_id + '-chart');
     let current_x = positionScale(d3.select(event.target).attr('data-x')) + '%';
 
     console.log(current_x, event.target);
     svg.select('.votes-tooltip').attr("x", current_x);
+    svg.select('.votes-tooltip-dagger').attr("x1", current_x);
+    svg.select('.votes-tooltip-dagger').attr("x2", current_x);
     svg.select('.votes-tooltip').text(event.target.getAttribute('data-display-var'));
     svg.select('.votes-tooltip').attr("opacity", "1");
+    svg.select('.votes-tooltip-dagger').attr("opacity", "1");
 
   }
 </script>
@@ -83,10 +88,8 @@
 <style>
 
   .demographic-chart {
-    /* width: 50%; */
     width: 100%;
     height: 80px;
-    /* margin: 3em; */
     margin-top: 3em;
     margin-bottom: 3em;
   }
@@ -98,17 +101,15 @@
   }
 
   h5.chart-label {
-    /* text-align: right; */
     margin: 0;
   }
 
   svg {
-    /* width: 100%;
-    height: {height}px; */
     overflow: visible;
   }
 
-  svg .chart-labels {
+  svg .chart-labels,
+  svg .chart-tooltip-stuff {
     font-size: 11px;
     font-weight: 500;
     font-family: "Benton Sans", sans-serif;
@@ -119,6 +120,11 @@
   }
 
   svg .x-axis {
+    stroke: #000;
+    stroke-width: 0.5;
+  }
+
+  svg .votes-tooltip-dagger {
     stroke: #000;
     stroke-width: 0.5;
   }
@@ -140,19 +146,16 @@
 <div class="demographic-chart">
   <h5 class="chart-label">{x_var_label}</h5>
   <svg id="{x_var}-{candidate_id}-chart" style="width: 100%; height: {height}px;">
-  <!-- <svg viewBox="0 -{max_circle_radius} {width} {height + max_circle_radius}" style="width: 100%;"> -->
     <g class="chart-lines" transform="translate(0, {height/2})">
       <line class="x-axis" x1="0" x2="0" y1="-10" y2="10"/>
       <line class="x-axis" x1="0" x2="100%" y1="0" y2="0"/>
       <line class="x-axis" x1="100%" x2="100%" y1="-10" y2="10"/>
       <line class="median" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-22" y2="22"/>
-
     </g>
     <g class="chart-labels" transform="translate(0, {height/2})">
       <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)} {x_unit}</text>
       <text class="axis-label" text-anchor="end" x="100%" y="23">{f_max(x_axis_max)}{x_unit}</text>
       <text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)} {x_unit}</text>
-      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-20"></text>
     </g>
     <g class="county-circles" transform="translate(0, {height/2})">
     {#each chart_data as county}
@@ -162,6 +165,9 @@
       {/if}
     {/each}
     </g>
+    <g class="chart-tooltip-stuff" transform="translate(0, {height/2})">
+      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-20"></text>
+      <line class="votes-tooltip-dagger" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-17" y2="-2"/>
+    </g>
   </svg>
-  <!-- <div id="{x_var}-{candidate_id}-tooltip" class="demo-tooltip {x_var}-tooltip">Hi there</div> -->
 </div>
