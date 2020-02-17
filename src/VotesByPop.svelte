@@ -166,8 +166,8 @@
     {/each}
     </g>
     <g class="chart-tooltip-stuff" transform="translate(0, {height/2})">
-      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-20"></text>
-      <line class="votes-tooltip-dagger" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-17" y2="-2"/>
+      <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-30"></text>
+      <line class="votes-tooltip-dagger" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-27" y2="-2"/>
     </g>
   </svg>
 </div>
