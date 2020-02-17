@@ -26,6 +26,7 @@
 	export let data = [];
 	export let wire = [];
 	export let local = [];
+	export let demographic = {};
 	export let county_data = [];
 	export let county_data_grouped;
 
@@ -43,9 +44,9 @@
 			last_updated = '';
 		}
 		else {
-			// datestring = new Date(statewide_data[0].lastupdated)
-			// last_updated = datestring.toLocaleString('en-US', options)
-			last_updated = statewide_data[0].lastupdated
+			datestring = new Date(statewide_data[0].lastupdated)
+			last_updated = datestring.toLocaleString('en-US', options)
+			// last_updated = statewide_data[0].lastupdated
 		}
 	}
 
@@ -124,14 +125,17 @@
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
-		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json")
+		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
+		const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
     // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
-    const json = await response.json()
-		const wireJson = await wireResponse.json()
-		const localJson = await localResponse.json()
+    const json = await response.json();
+		const wireJson = await wireResponse.json();
+		const localJson = await localResponse.json();
+		const demographicJson = await demographicResponse.json();
     data = json;
 		wire = wireJson;
 		local = localJson;
+		demographic = demographicJson;
   });
 
 </script>
@@ -240,6 +244,7 @@
 		</div>
 	</div>
 
+	{#if demographic.show_charts == true}
 	<div id="demographics-groups">
 		<div id="trump-2016" class="demographics-container">
 		<h3>By county percentage who voted for Trump 2016</h3>
@@ -320,8 +325,11 @@
 				/>
 			{/if}
 		{/each}
+
+
 		</div>
 	</div>
+	{/if}
 </section>
 
 <div class="otherStoriesMobile">
