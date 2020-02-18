@@ -87,60 +87,6 @@
 
 <style>
 
-  .demographic-chart {
-    width: 100%;
-    height: 80px;
-    margin-top: 3em;
-    margin-bottom: 3em;
-  }
-
-  .county-circle-center {
-    fill: #FFF;
-    fill-opacity: 1;
-    pointer-events: none;
-  }
-
-  h5.chart-label {
-    margin: 0;
-  }
-
-  svg {
-    overflow: visible;
-  }
-
-  svg .chart-labels,
-  svg .chart-tooltip-stuff {
-    font-size: 11px;
-    font-weight: 500;
-    font-family: "Benton Sans", sans-serif;
-  }
-
-  svg .median-label {
-    fill: #BBB;
-  }
-
-  svg .x-axis {
-    stroke: #000;
-    stroke-width: 0.5;
-  }
-
-  svg .votes-tooltip-dagger {
-    stroke: #000;
-    stroke-width: 0.5;
-  }
-
-  svg .median {
-    stroke: #BBB;
-    stroke-width: 1.5;
-    stroke-dasharray: 4;
-  }
-
-  .votes-tooltip {
-    font-size: 11px;
-    font-weight: 500;
-    font-family: "Benton Sans", sans-serif;
-  }
-
 </style>
 
 <div class="demographic-chart">
