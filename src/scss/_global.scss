@@ -1,7 +1,7 @@
 html, body {
 	position: relative;
-	width: 100%;
-	height: 100%;
+	// width: 100%;
+	// height: 100%;
 }
 
 .content-scroll {
@@ -324,13 +324,29 @@ p.lastUpdated {
 
 }
 
-@media (max-width: 425px) {
-	#density-maps {
+@media (max-width: 600px) {
+	#candidate-support #demographics-groups {
+		flex-direction: column;
 		justify-content: center;
 	}
 
 	.small-maps {
 		flex-direction: column;
 		justify-content: center;
+	}
+}
+
+@media (max-width: 425px) {
+	h1 {
+		font-size: 60px !important;
+		line-height: 65px
+	}
+
+	#density-maps {
+		justify-content: center;
+	}
+
+	.leadin p {
+		font-size: 15px;
 	}
 }

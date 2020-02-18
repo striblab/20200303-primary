@@ -68,10 +68,14 @@ th {
   thead th {
     text-transform: uppercase;
     color: #A0A0A0;
-    font-size: 11px;
+    font-size: 9px;
     font-weight: 400;
     border-bottom: 2px solid #909090;
     padding: 2px 2px;
+  }
+
+  thead th:nth-of-type(1) {
+    visibility:hidden;
   }
 
   tbody td {
@@ -102,5 +106,57 @@ th {
   .precincts {
     margin-top: 3px;
     font-size: 10px;
+  }
+}
+
+@media (max-width: 425px) {
+	.tableWrapper {
+    margin-top: 0;
+  }
+
+  .tableResults  {
+    border-collapse: collapse;
+    border-spacing: 0;
+
+    thead th {
+      text-transform: uppercase;
+      color: #A0A0A0;
+      font-size: 10px;
+      font-weight: 400;
+      border-bottom: 2px solid #A9A9A9;
+      padding: 3px 3px;
+    }
+
+    thead th:nth-of-type(1) {
+      visibility:hidden;
+    }
+
+    tbody td {
+      padding: 6px 4px;
+      border-bottom: 1px solid #E0E0E0;
+      font-size: 13px;
+    }
+
+    .cand {
+      // display: flex;
+      // align-items: center;
+      valign: baseline;
+      width: 200px;
+      padding-left: 8px;
+    }
+
+    .votes {
+      width: 75px;
+      text-align: right;
+    }
+
+    .pct {
+      width: 50px;
+      text-align: right;
+    }
+
+    .winner {
+      background-color: #F0F0F0;
+    }
   }
 }
