@@ -178,6 +178,14 @@
 		font-size: 0.8em;
 	}
 
+	.demographic-arrows {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		font-family: "Benton Sans", sans-serif;
+		color: #BBB;
+	}
+
 	/* .candidate-breakdown {
 		display: flex;
 	  flex-direction: row;
@@ -255,6 +263,10 @@
 		<div id="trump-2016" class="demographics-container">
 		<h3>Which candidates did better in counties where Trump did well?</h3>
 		<p>Vote totals from Minnesota counties, arranged in order from least supportive of Donald Trump in the 2016 election (Ramsey County) to the most supportive (Morrison County).</p>
+		<div class="demographic-arrows">
+			<div class="arrow-less">&#8592; Liberal counties</div>
+			<div class="arrow-more">Conservative counties &#8594;</div>
+		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
@@ -278,7 +290,11 @@
 
 		<div id="nonwhite" class="demographics-container">
 		<h3>Which candidates did better in more diverse counties?</h3>
-		<p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentaage (Mahnomen County).</p>
+		<p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentage (Mahnomen County).</p>
+		<div class="demographic-arrows">
+			<div class="arrow-less">&#8592; Less diverse counties</div>
+			<div class="arrow-more">More diverse counties &#8594;</div>
+		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
@@ -300,6 +316,10 @@
 		<div id="income" class="demographics-container">
 			<h3>Which candidates did better in more affluent counties?</h3>
 			<p>Vote totals from Minnesota counties, arranged in order from smallest median income (Mahnomen County) to the largest (Carver County).</p>
+			<div class="demographic-arrows">
+				<div class="arrow-less">&#8592; Less affluent counties</div>
+				<div class="arrow-more">More affluent counties &#8594;</div>
+			</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
 				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
@@ -324,6 +344,10 @@
 		<div id="age" class="demographics-container">
 			<h3>Which candidates did better in counties with older residents?</h3>
 			<p>Vote totals from Minnesota counties, arranged in order from lowest median age (Blue Earth County) to the highest (Aitkin County).</p>
+			<div class="demographic-arrows">
+				<div class="arrow-less">&#8592; Younger counties</div>
+				<div class="arrow-more">Older counties &#8594;</div>
+			</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
 				<VotesByPop
