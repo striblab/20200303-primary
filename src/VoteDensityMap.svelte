@@ -78,10 +78,10 @@ const circle_sizer = function(input) {
 
 <style>
   .density-map {
-    max-width: 250px;
-    margin: 1.5em;
+    max-width: 255px;
+    /* margin: 1.5em; */
     /* width: 100%; */
-    margin: 15px 15px;
+    /* margin: 15px 15px; */
     background-color: "#eeeeee";
     /* margin: 0 auto; */
     /* position: relative; */

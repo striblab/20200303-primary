@@ -30,13 +30,13 @@ h1 {
 }
 
 h2 {
-	font-family: "Benton Sans", sans-serif;
+	font-family: "Benton Sans", sans-serif !important;
 	font-weight: bold;
 	font-size: 1.5em !important;
 }
 
 h3 {
-	font-family: "Benton Sans", sans-serif;
+	font-family: "Benton Sans", sans-serif !important;
 	font-weight: bold;
 	font-size: 1.2em !important;
 }
@@ -89,6 +89,14 @@ p.lastUpdated {
 	margin-bottom: 100px;
 	margin-top: 100px;
 
+	p {
+		font-family: "Poynter Serif RE",Georgia,Times,serif !important;
+		text-align: left;
+		max-width: 550px;
+		font-size: 16px;
+		margin: 15px auto;
+	}
+
 	.elexLogo {
 		display: flex;
 		flex-direction: row;
@@ -107,16 +115,11 @@ p.lastUpdated {
 		}
 
 		h3 {
+			font-family: "Popular", sans-serif !important;
 			margin-bottom: 0 !important;
 			margin-top: 0 !important;
 		}
 	}
-}
-
-.leadin p {
-	text-align: left;
-	max-width: 550px;
-	margin: 15px auto;
 }
 
 .results {
@@ -182,6 +185,70 @@ p.lastUpdated {
 	p {
 		font-family: "Benton Sans", sans-serif;
 		margin-top: 7px;
+	}
+
+	#geography .small-maps{
+		justify-content: space-between;
+	}
+
+	#demographics-groups {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		.demographic-chart {
+			width: 100%;
+			height: 80px;
+			margin-top: 25px;
+			margin-bottom: 25px;
+		}
+
+		.county-circle-center {
+			fill: #FFF;
+			fill-opacity: 1;
+			pointer-events: none;
+		}
+
+		h5.chart-label {
+			margin: 0;
+		}
+
+		svg {
+			overflow: visible;
+		}
+
+		svg .chart-labels,
+		svg .chart-tooltip-stuff {
+			font-size: 11px;
+			font-weight: 500;
+			font-family: "Benton Sans", sans-serif;
+		}
+
+		svg .median-label {
+			fill: #BBB;
+		}
+
+		svg .x-axis {
+			stroke: #000;
+			stroke-width: 0.5;
+		}
+
+		svg .votes-tooltip-dagger {
+			stroke: #000;
+			stroke-width: 0.5;
+		}
+
+		svg .median {
+			stroke: #BBB;
+			stroke-width: 1.5;
+			stroke-dasharray: 4;
+		}
+
+		.votes-tooltip {
+			font-size: 11px;
+			font-weight: 500;
+			font-family: "Benton Sans", sans-serif;
+		}
 	}
 }
 
@@ -254,10 +321,16 @@ p.lastUpdated {
 		justify-content: center;
 		flex-wrap: wrap;
 	}
+
 }
 
 @media (max-width: 425px) {
 	#density-maps {
+		justify-content: center;
+	}
+
+	.small-maps {
+		flex-direction: column;
 		justify-content: center;
 	}
 }

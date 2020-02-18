@@ -105,6 +105,13 @@ $candColors: (
   // background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPSc1JyBoZWlnaHQ9JzUnPgogIDxyZWN0IHdpZHRoPSc1JyBoZWlnaHQ9JzUnIGZpbGw9J3doaXRlJy8+CiAgPHBhdGggZD0nTTAgNUw1IDBaTTYgNEw0IDZaTS0xIDFMMSAtMVonIHN0cm9rZT0nIzg4OCcgc3Ryb2tlLXdpZHRoPScxJy8+Cjwvc3ZnPg=="); background-repeat: repeat;
 }
 
+.mapTie {
+  font-family: "Benton Sans", sans-serif;
+  font-size: 12px;
+  color: #A0A0A0;
+  margin-top: -20px;
+}
+
 .no-results {
   fill: #E8E8E8;
   // background: linear-gradient(45deg, red, blue);
