@@ -269,7 +269,6 @@
 		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='rPct_2016'
@@ -281,12 +280,10 @@
 					x_max_formatter='.0%'
 					x_unit=' voted for Trump'
 					verbose_labels={i==0}
-				/><!-- x_axis_max=0.75 -->
-				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
+				/>
 			{/if}
 		{/each}
 		</div>
-
 
 		<div id="nonwhite" class="demographics-container">
 		<h3>Which candidates did better in more diverse counties?</h3>
@@ -297,7 +294,6 @@
 		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='pct_nonwhite'
@@ -308,7 +304,7 @@
 					x_max_formatter='.0%'
 					x_unit=' non-white'
 					verbose_labels={i==0}
-				/><!-- x_axis_max=0.6 -->
+				/>
 			{/if}
 		{/each}
 		</div>
@@ -322,7 +318,6 @@
 			</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='median_income'
@@ -334,8 +329,6 @@
 					x_unit=''
 					verbose_labels={i==0}
 				/>
-				<!-- x_axis_min=44000
-				x_axis_max=100000 -->
 			{/if}
 		{/each}
 		</div>
