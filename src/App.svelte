@@ -98,7 +98,6 @@
 	}
 
 	let getData = async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
 
@@ -122,7 +121,7 @@
 	let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
 		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
 		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
@@ -168,6 +167,18 @@
 		/* max-width: 50%; */
 		flex: 0 43%;
 		margin-bottom: 3em;
+	}
+
+	.demographics-container {
+		font-size: 0.8em;
+	}
+
+	.demographic-arrows {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+		font-family: "Benton Sans", sans-serif;
+		color: #BBB;
 	}
 
 	/* .candidate-breakdown {
@@ -245,10 +256,14 @@
 	{#if demographic.show_charts == true}
 	<div id="demographics-groups">
 		<div id="trump-2016" class="demographics-container">
-		<h3>By county percentage who voted for Trump 2016</h3>
+		<h3>Which candidates did better in counties where Trump did well?</h3>
+		<p>Vote totals from Minnesota counties, arranged in order from least supportive of Donald Trump in the 2016 election (Ramsey County) to the most supportive (Morrison County).</p>
+		<div class="demographic-arrows">
+			<div class="arrow-less">&#8592; Liberal counties</div>
+			<div class="arrow-more">Conservative counties &#8594;</div>
+		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='rPct_2016'
@@ -259,18 +274,21 @@
 					x_min_formatter='.0%'
 					x_max_formatter='.0%'
 					x_unit=' voted for Trump'
-				/><!-- x_axis_max=0.75 -->
-				<!-- <VotesByPop {candidate} x_var='pop_density_2018' x_var_label='population density' x_min_formatter='.1r' x_max_formatter=',.4r' x_unit=' people per sq mile' /> -->
+					verbose_labels={i==0}
+				/>
 			{/if}
 		{/each}
 		</div>
 
-
 		<div id="nonwhite" class="demographics-container">
-		<h3>By percentage of county population that is non-white</h3>
+		<h3>Which candidates did better in more diverse counties?</h3>
+		<p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentage (Mahnomen County).</p>
+		<div class="demographic-arrows">
+			<div class="arrow-less">&#8592; Less diverse counties</div>
+			<div class="arrow-more">More diverse counties &#8594;</div>
+		</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='pct_nonwhite'
@@ -280,16 +298,21 @@
 					x_min_formatter='.0%'
 					x_max_formatter='.0%'
 					x_unit=' non-white'
-				/><!-- x_axis_max=0.6 -->
+					verbose_labels={i==0}
+				/>
 			{/if}
 		{/each}
 		</div>
 
 		<div id="income" class="demographics-container">
-		<h3>By county average income</h3>
+			<h3>Which candidates did better in more affluent counties?</h3>
+			<p>Vote totals from Minnesota counties, arranged in order from smallest median income (Mahnomen County) to the largest (Carver County).</p>
+			<div class="demographic-arrows">
+				<div class="arrow-less">&#8592; Less affluent counties</div>
+				<div class="arrow-more">More affluent counties &#8594;</div>
+			</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
-				<!-- <h5 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h5> -->
 				<VotesByPop
 					{candidate}
 					x_var='median_income'
@@ -299,16 +322,20 @@
 					x_min_formatter='$,'
 					x_max_formatter='$,'
 					x_unit=''
+					verbose_labels={i==0}
 				/>
-				<!-- x_axis_min=44000
-				x_axis_max=100000 -->
 			{/if}
 		{/each}
 		</div>
 
 
 		<div id="age" class="demographics-container">
-		<h3>By county average age</h3>
+			<h3>Which candidates did better in counties with older residents?</h3>
+			<p>Vote totals from Minnesota counties, arranged in order from lowest median age (Blue Earth County) to the highest (Aitkin County).</p>
+			<div class="demographic-arrows">
+				<div class="arrow-less">&#8592; Younger counties</div>
+				<div class="arrow-more">Older counties &#8594;</div>
+			</div>
 		{#each results_by_candidate as candidate, i}
 			{#if i < 4 && candidate.results.length > 0}
 				<VotesByPop
@@ -320,6 +347,7 @@
 					x_min_formatter='.2r'
 					x_max_formatter='.2r'
 					x_unit=' years old'
+					verbose_labels={i==0}
 				/>
 			{/if}
 		{/each}

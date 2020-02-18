@@ -10,6 +10,7 @@
   export let x_min_formatter = '.1r';
   export let x_max_formatter = ',.4r';
   export let x_unit = ' widgets';
+  export let verbose_labels = false;
 
   let min_x = d3.min(demographics.map(i => i[x_var]));
   let max_x = d3.max(demographics.map(i => i[x_var]));
@@ -30,6 +31,8 @@
   const f_min = d3.format(x_min_formatter);
   const f_max = d3.format(x_max_formatter);
   const f_votes = d3.format(',')
+
+  console.log(verbose_labels);
 
   $: {
     chart_data = demographics.map(function (county) {
@@ -60,7 +63,7 @@
 
   const circlescalearea = d3.scaleLinear()
     // .domain([0, 100000]) // votecount Clinton 2016 test data
-    .domain([0, 10000]) // votecount
+    .domain([0, 17000]) // votecount
     .range([min_circle_area, max_circle_area]) // radius range
 
   const circle_sizer = function(input) {
@@ -99,9 +102,9 @@
       <line class="median" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-22" y2="22"/>
     </g>
     <g class="chart-labels" transform="translate(0, {height/2})">
-      <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)} {x_unit}</text>
-      <text class="axis-label" text-anchor="end" x="100%" y="23">{f_max(x_axis_max)}{x_unit}</text>
-      <text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)} {x_unit}</text>
+      <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)}{#if verbose_labels == true} {x_unit}{/if}</text>
+      <text class="axis-label" text-anchor="end" x="101%" y="23">{f_max(x_axis_max)}{#if verbose_labels == true} {x_unit}{/if}</text>
+      {#if verbose_labels == true}<text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)}</text>{/if}
     </g>
     <g class="county-circles" transform="translate(0, {height/2})">
     {#each chart_data as county}
