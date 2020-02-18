@@ -1,4 +1,4 @@
-.otherStoriesMobile {
+.mobileRelated {
   display: none;
 }
 
@@ -41,12 +41,21 @@
     justify-content: center;
   }
 
+  .mobileRelated {
+    display: block;
+  }
+
+  .hot-dish {
+    display: none;
+  }
+
   .otherStories {
     display: none;
   }
 
-  .otherStoriesMobile {
+  .otherStoriesMobile, .hot-dish-mobile {
     display: block;
+    margin-bottom: 25px;
     h3 {
       font-family: "Benton Sans", sans-serif;
       font-size: 18px !important;
@@ -74,7 +83,10 @@
       color: #1d78af;
       font-family: "Benton Sans", sans-serif;
     }
-    margin-bottom: 75px;
+
+    p {
+      font-family: "Benton Sans", sans-serif;
+    }
   }
 }
 
@@ -83,7 +95,4 @@
 		justify-content: center;
 	}
 
-  .otherStoriesMobile {
-
-  }
 }

@@ -41,6 +41,8 @@ let tooltipHeight;
 let tooltipWidth;
 let tooltip;
 let record;
+let bounding;
+let cursorX;
 
 const land = feature(county_topojson, county_topojson.objects.counties);
 const roads = feature(roads_topojson, roads_topojson.objects.roads);
@@ -147,13 +149,14 @@ function positionTooltip(event) {
     // console.log("position")
     let tooltip = d3.select('#tooltip')
     let svg = document.getElementById('resultsMap')
-    var bounding = svg.getBoundingClientRect()
+    let bounding = svg.getBoundingClientRect()
+
 
     var x = event.layerX ==  event.offsetX ? event.offsetX : event.layerX;
     var y = event.layerY ==  event.offsetY ? event.offsetY : event.layerY;
 
     // calculates where curson is on x axis relative to the size of the canvas
-    var cursorX = event.clientX - bounding.left;
+    let cursorX = event.clientX - bounding.left;
 
     tooltipHeight = tooltip.node().clientHeight;
     tooltipWidth = tooltip.node().clientWidth;
@@ -162,12 +165,12 @@ function positionTooltip(event) {
     let cursorOffPage = event.clientY + (tooltipHeight + tooltipOffset) >= window.innerHeight;
 
     if (!cursorOffPage) {
-      if (cursorX > width / 2) {
+      if (cursorX > bounding.width / 2) {
         tooltip
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y + tooltipOffset + 'px');
       }
-      else if (cursorX < width / 2) {
+      else if (cursorX < bounding.width / 2) {
         tooltip
           .style('left', x + 0 + 'px')
           // .style('left', x )
@@ -178,12 +181,12 @@ function positionTooltip(event) {
         //   .style('top', y + tooltipOffset + 'px');
     }
     else {
-      if (cursorX > width / 2) {
+      if (cursorX > bounding.width / 2) {
         tooltip
           .style('left', x - (tooltipWidth) + 'px')
           .style('top', y - (tooltipHeight + tooltipOffset) + 'px');
       }
-      else if (cursorX < width / 2) {
+      else if (cursorX < bounding.width / 2) {
         tooltip
           .style('left', x + 0 + 'px')
           // .style('left', x )

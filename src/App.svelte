@@ -239,6 +239,7 @@
 	<Promos {wire} {local}/>
 </section>
 
+{#if demographic.show_charts == true}
 <section id="candidate-support">
 	<h2>Where was each candidate's support strongest?</h2>
 	<p>Larger circles show a larger share of each candidate's votes.</p>
@@ -253,7 +254,7 @@
 		</div>
 	</div>
 
-	{#if demographic.show_charts == true}
+
 	<div id="demographics-groups">
 		<div id="trump-2016" class="demographics-container">
 		<h3>Which candidates did better in counties where Trump did well?</h3>
@@ -355,17 +356,28 @@
 
 		</div>
 	</div>
-	{/if}
 </section>
+{/if}
 
-<div class="otherStoriesMobile">
-	<h3>More Star Tribune political coverage from Super Tuesday</h3>
-	<ul>
-		{#each local as result}
-		<li><a href="{result.url}">{result.headline}</a></li>
-		{/each}
-	</ul>
+<div class="mobileRelated">
+
+	<div class="otherStoriesMobile">
+		<h3>More Star Tribune political coverage from Super Tuesday</h3>
+		<ul>
+			{#each local as result}
+			<li><a href="{result.url}">{result.headline}</a></li>
+			{/each}
+		</ul>
+	</div>
+
+	<div class="hot-dish-mobile">
+		<h3>Morning Hot Dish</h3>
+		<p>Minnesota political news and musings, served up every weekday morning.</p>
+		<iframe width="250" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
+	</div>
+
 </div>
+
 
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>
