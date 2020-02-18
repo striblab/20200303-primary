@@ -239,8 +239,9 @@
 	<Promos {wire} {local}/>
 </section>
 
-{#if demographic.show_charts == true}
+
 <section id="candidate-support">
+	{#if demographic.show_maps == true}
 	<h2>Where was each candidate's support strongest?</h2>
 	<p>Larger circles show a larger share of each candidate's votes.</p>
 
@@ -253,9 +254,12 @@
 		{/each}
 		</div>
 	</div>
+	{/if}
 
-
+	{#if demographic.show_bubbles == true}
 	<div id="demographics-groups">
+
+		{#if demographic.show_trump == true}
 		<div id="trump-2016" class="demographics-container">
 		<h3>Which candidates did better in counties where Trump did well?</h3>
 		<p>Vote totals from Minnesota counties, arranged in order from least supportive of Donald Trump in the 2016 election (Ramsey County) to the most supportive (Morrison County).</p>
@@ -280,7 +284,9 @@
 			{/if}
 		{/each}
 		</div>
+		{/if}
 
+		{#if demographic.show_nonwhite}
 		<div id="nonwhite" class="demographics-container">
 		<h3>Which candidates did better in more diverse counties?</h3>
 		<p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentage (Mahnomen County).</p>
@@ -304,7 +310,9 @@
 			{/if}
 		{/each}
 		</div>
+		{/if}
 
+		{#if demographic.show_income}
 		<div id="income" class="demographics-container">
 			<h3>Which candidates did better in more affluent counties?</h3>
 			<p>Vote totals from Minnesota counties, arranged in order from smallest median income (Mahnomen County) to the largest (Carver County).</p>
@@ -328,8 +336,9 @@
 			{/if}
 		{/each}
 		</div>
+		{/if}
 
-
+		{#if demographic.show_age}
 		<div id="age" class="demographics-container">
 			<h3>Which candidates did better in counties with older residents?</h3>
 			<p>Vote totals from Minnesota counties, arranged in order from lowest median age (Blue Earth County) to the highest (Aitkin County).</p>
@@ -352,10 +361,10 @@
 				/>
 			{/if}
 		{/each}
-
-
 		</div>
+		{/if}
 	</div>
+	{/if}
 </section>
 {/if}
 
