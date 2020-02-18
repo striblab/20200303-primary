@@ -12,7 +12,7 @@ geo2topo counties=ia_counties.geojson | toposimplify -S 0.007 --filter-all | top
 geo2topo counties=nh_counties.geojson | toposimplify -S 0.1 --filter-all | topoquantize 1e5 > nh.json
 geo2topo roads=nh_interstates.geojson | toposimplify -S 0.1 --filter-all | topoquantize 1e5 > nh_roads.json
 ```
-3. Tell the JS what projection values to use
+3. We're not currently doing this, but if you did want to reproject before using, tell the JS what projection values to use
 
 geoproject 'd3.geoTransverseMercator().rotate([-134.3333333333333, 0]).center([0, 36]).translate([d.width/2,d.height/2]).fitSize([1500,1500],d)' < geojson_output.json > geojson_transversemercator.json
 
