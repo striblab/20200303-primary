@@ -98,8 +98,8 @@
 	}
 
 	let getData = async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
 
 		const json = await response.json()
 		data = json;
@@ -121,8 +121,8 @@
 	let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200217190001.json");
 		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
 		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
 		const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
