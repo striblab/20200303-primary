@@ -34,6 +34,17 @@
     color: #1d78af;
     font-family: "Benton Sans", sans-serif;
   }
+
+  .hot-dish {
+    h3 {
+      margin-bottom: 10px !important;
+    }
+    p {
+      margin-bottom: 13px !important;
+    }
+  }
+
+
 }
 
 @media (max-width: 800px) {
@@ -59,6 +70,7 @@
     h3 {
       font-family: "Benton Sans", sans-serif;
       font-size: 18px !important;
+      margin-bottom: 10px;
     }
 
     ul {
@@ -86,13 +98,11 @@
 
     p {
       font-family: "Benton Sans", sans-serif;
+      margin-bottom: 13px;
     }
   }
 }
 
 @media (max-width: 425px) {
-	#density-maps {
-		justify-content: center;
-	}
 
 }

@@ -87,7 +87,7 @@ p.lastUpdated {
 .leadin {
 	text-align: center;
 	margin-bottom: 100px;
-	margin-top: 100px;
+	margin-top: 50px;
 
 	p {
 		font-family: "Poynter Serif RE",Georgia,Times,serif !important;
@@ -95,6 +95,10 @@ p.lastUpdated {
 		max-width: 550px;
 		font-size: 16px;
 		margin: 15px auto;
+	}
+
+	a {
+		color: #1d78af;
 	}
 
 	.elexLogo {
@@ -137,7 +141,7 @@ p.lastUpdated {
 #map {
 	max-width: 1000px;
 	margin: 0 auto;
-	margin-bottom: 40px;
+	margin-bottom: 75px !important;
 	// height: auto;
 	// display: flex;
 	// display: block;
@@ -313,6 +317,8 @@ p.lastUpdated {
 		font-family: "Benton Sans", sans-serif;
 		font-size: 12px;
 		color: #989898;
+		margin-top: 16px !important;
+		margin-bottom: 16px !important;
 	}
 }
 
@@ -321,7 +327,6 @@ p.lastUpdated {
 		justify-content: center;
 		flex-wrap: wrap;
 	}
-
 }
 
 @media (max-width: 600px) {
@@ -330,20 +335,19 @@ p.lastUpdated {
 		justify-content: center;
 	}
 
-	.small-maps {
-		flex-direction: column;
+	#candidate-support #geography .small-maps{
 		justify-content: center;
+	}
+
+	.leadin .leadinDesktop {
+		display: none;
 	}
 }
 
-@media (max-width: 425px) {
+@media (max-width: 450px) {
 	h1 {
 		font-size: 60px !important;
 		line-height: 65px
-	}
-
-	#density-maps {
-		justify-content: center;
 	}
 
 	.leadin p {

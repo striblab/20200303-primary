@@ -20,6 +20,20 @@
 			}
 		}
 
+		let last_updated;
+		let datestring;
+		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
+		$: {
+			if (statewide_data.length == 0) {
+				last_updated = '';
+			}
+			else {
+				datestring = new Date(statewide_data[0].lastupdated)
+				last_updated = datestring.toLocaleString('en-US', options)
+				// last_updated = statewide_data[0].lastupdated
+			}
+		}
+
 		let state_precincts_pct
 		$: {
 			if (statewide_data.length == 0) {
@@ -285,9 +299,9 @@
 <h2>Statewide results</h2>
 {/if}
 
-<slot>
+<!-- <slot>
 
-</slot>
+</slot> -->
 <!-- <div class="updates">
 	{#if time < 10}
 	<p class="countdown">Checking for updates 0:0{time}</p>
@@ -296,7 +310,7 @@
 	{/if}
 </div> -->
 
-<!-- <h4>{new Date(last_updated).toString("MMM d, yyyy HH:mm")}</h4> -->
+<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
     type="text"
