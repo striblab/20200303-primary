@@ -4,6 +4,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
+	import Timer from './Timer.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -24,13 +25,15 @@
 	export let title;
 
 	export let data = [];
-	export let wire = [];
-	export let local = [];
-	export let demographic = {};
+	export let elex_controls = {
+		"local": [],
+		"wire": [],
+		"demographic": {}
+	};
 	export let county_data = [];
 	export let county_data_grouped;
 
-  export let statewide_data;
+  export let statewide_data = [];
 
 	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Sanders', 'Steyer', 'Warren'];
 	export let results_by_candidate = [];
@@ -51,50 +54,39 @@
 	}
 
 	$ : {
-		statewide_data = data.filter(function(d) {
-      return d.level == "state";
-    });
-    county_data = data.filter(function(d) {
-      return d.level == "county";
-    })
+		// if (data){
+			statewide_data = data.filter(function(d) {
+	      return d.level == "state";
+	    });
+	    county_data = data.filter(function(d) {
+	      return d.level == "county";
+	    })
 
-		statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
-		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
+			statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
+			county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
-		// This data used to generate the density maps, in order of biggest vote getters
-		results_by_candidate = [];
-		if (statewide_data.length > 0) {
-			active_candidates.forEach(function(candidate){
-				let candidate_data = {
-					'candidate': candidate,
-					'results': county_data.filter(function(d) {
-			      return d.last == candidate;
-			    })
-				}
-				if (candidate_data.results.length > 0) {
-					candidate_data.total_votes = statewide_data.filter(function(d) {
-			      return d.last == candidate;
-			    })[0].votecount
-					results_by_candidate.push(candidate_data);
-				}
-			});
-			results_by_candidate = results_by_candidate.sort(function(first, second) {
-			 return second.total_votes - first.total_votes;
-			})
-		}
-
-	}
-
-	// export let id = contentIDGenerator(0, stories)
-	let id = 0;
-	let length;
-	function handleClick(length) {
-		if ( id == length - 1 ) {
-			id = 0
-		}
-		else {
-			id += 1;
-		}
+			// This data used to generate the density maps, in order of biggest vote getters
+			results_by_candidate = [];
+			if (statewide_data.length > 0) {
+				active_candidates.forEach(function(candidate){
+					let candidate_data = {
+						'candidate': candidate,
+						'results': county_data.filter(function(d) {
+				      return d.last == candidate;
+				    })
+					}
+					if (candidate_data.results.length > 0) {
+						candidate_data.total_votes = statewide_data.filter(function(d) {
+				      return d.last == candidate;
+				    })[0].votecount
+						results_by_candidate.push(candidate_data);
+					}
+				});
+				results_by_candidate = results_by_candidate.sort(function(first, second) {
+				 return second.total_votes - first.total_votes;
+				})
+			}
+		// }
 	}
 
 	let getData = async function() {
@@ -106,47 +98,66 @@
 		timerInterval = setInterval(countdown, 1000);
 	}
 
-	let time = 30;
-	function countdown() {
-		if (time == 0) {
-			time = 'Updating...'
-			setTimeout(getData, 1000)
-			clearInterval(timerInterval);
-		}
-		else {
-			time--;
-		}
+	let getElexControls = async function() {
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
+		const json = await response.json()
+		elex_controls = json;
 	}
-	let timerInterval = setInterval(countdown, 1000);
+
+	// let time = 30;
+	// function countdown() {
+	// 	if (time == 0) {
+	// 		time = 'Updating...'
+	// 		setTimeout(getData, 1000)
+	// 		clearInterval(timerInterval);
+	// 	}
+	// 	else {
+	// 		time--;
+	// 	}
+	// }
+	// let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
-		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
-		const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
-    // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
+		const elex_response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
+		// const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
+		// const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
+    // // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
     const json = await response.json();
-		const wireJson = await wireResponse.json();
-		const localJson = await localResponse.json();
-		const demographicJson = await demographicResponse.json();
-    data = json;
-		wire = wireJson;
-		local = localJson;
-		demographic = demographicJson;
+		const elex_json = await elex_response.json();
+		// const localJson = await localResponse.json();
+		// const demographicJson = await demographicResponse.json();
+		if (response.ok) {
+			data = json;
+		}
+		else {
+			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+			setTimeout(getData, 3000)
+		}
+		if (elex_response.ok) {
+			elex_controls = elex_json;
+		}
+		else {
+			setTimeout(getElexControls, 3000)
+		}
+
+		// wire = wireJson;
+		// local = localJson;
+		// demographic = demographicJson;
   });
 
 </script>
 
 <style>
 
-	.live2 {
+	/* .live2 {
 		font-family: "Benton Sans", sans-serif;
 		font-weight: 700;
 		color: red;
 		text-align: center;
-		/* margin-top: 30px; */
-	}
+		/* margin-top: 30px; 
+	} */
 
 	.small-maps {
 		display: flex;
@@ -187,11 +198,12 @@
 	  max-width: 1000px;
 	} */
 
-	@keyframes fadeIn {
+	/* @keyframes fadeIn {
 		from { opacity: 0 }
-	}
+	} */
 </style>
 
+<!-- {#if statewide_data.length > 0} -->
 <div class="leadin">
 
 	<div class="elexLogo">
@@ -208,7 +220,8 @@
 	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
 </div>
 
-<div class="updates">
+<Timer />
+<!-- <div class="updates">
 	<p class="live2">&bull; LIVE</p>
 	{#if typeof(time) == "string"}
 	<p class="countdown">{time}</p>
@@ -219,28 +232,28 @@
 		<p class="countdown">Checking for new data 0:{time}</p>
 		{/if}
 	{/if}
-		<!-- <p class="lastUpdated">Last change: {last_updated}</p> -->
-		<!-- <span class="updatedTime">{last_updated}</span> -->
-</div>
+</div> -->
 
 
 <section id="map">
 	<div class="results">
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
-			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
-		</Autocomplete>
+		<!-- {#if statewide_data.length > 0} -->
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names} />
+		<!-- {/if} -->
+			<!-- <p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p> -->
+		<!-- </Autocomplete> -->
 		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
 
 
 <section id="related">
-	<Promos {wire} {local}/>
+	<Promos {elex_controls}/>
 </section>
 
-
+<!-- {#if elex_controls} -->
 <section id="candidate-support">
-	{#if demographic.show_maps == true}
+	{#if elex_controls.demographic.show_maps == true}
 	<h2>Where was each candidate's support strongest?</h2>
 	<p>Larger circles show a larger share of each candidate's votes.</p>
 
@@ -255,14 +268,14 @@
 	</div>
 	{/if}
 
-	{#if demographic.show_bubbles == true}
+	{#if elex_controls.demographic.show_bubbles == true}
 	<div id="demographics-groups">
 
-		{#if demographic.show_trump == true}
+		{#if elex_controls.demographic.show_trump == true}
 		<div id="trump-2016" class="demographics-container">
 		<h3>Who did better in counties where Trump did well?</h3>
 		<!-- <p>Vote totals from Minnesota counties, arranged in order from least supportive of Donald Trump in the 2016 election (Ramsey County) to the most supportive (Morrison County).</p> -->
-		<p>{demographic.trump_text}</p>
+		<p>{elex_controls.demographic.trump_text}</p>
 		<div class="demographic-arrows">
 			<div class="arrow-less">&#8592; Liberal counties</div>
 			<div class="arrow-more">Conservative counties &#8594;</div>
@@ -286,11 +299,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_nonwhite}
+		{#if elex_controls.demographic.show_nonwhite}
 		<div id="nonwhite" class="demographics-container">
 		<h3>Who did better in more diverse counties?</h3>
 		<!-- <p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentage (Mahnomen County).</p> -->
-		<p>{demographic.nonwhite_text}</p>
+		<p>{elex_controls.demographic.nonwhite_text}</p>
 		<div class="demographic-arrows">
 			<div class="arrow-less">&#8592; Less diverse counties</div>
 			<div class="arrow-more">More diverse counties &#8594;</div>
@@ -313,11 +326,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_income}
+		{#if elex_controls.demographic.show_income}
 		<div id="income" class="demographics-container">
 			<h3>Who did better in more affluent counties?</h3>
 			<!-- <p>Vote totals from Minnesota counties, arranged in order from smallest median income (Mahnomen County) to the largest (Carver County).</p> -->
-			<p>{demographic.income_text}</p>
+			<p>{elex_controls.demographic.income_text}</p>
 			<div class="demographic-arrows">
 				<div class="arrow-less">&#8592; Less affluent counties</div>
 				<div class="arrow-more">More affluent counties &#8594;</div>
@@ -340,11 +353,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_age}
+		{#if elex_controls.demographic.show_age}
 		<div id="age" class="demographics-container">
 			<h3>Who did better in counties with older residents?</h3>
 			<!-- <p>Vote totals from Minnesota counties, arranged in order from lowest median age (Blue Earth County) to the highest (Aitkin County).</p> -->
-			<p>{demographic.age_text}</p>
+			<p>{elex_controls.demographic.age_text}</p>
 			<div class="demographic-arrows">
 				<div class="arrow-less">&#8592; Younger counties</div>
 				<div class="arrow-more">Older counties &#8594;</div>
@@ -370,12 +383,13 @@
 	{/if}
 </section>
 
+
 <div class="mobileRelated">
 
 	<div class="otherStoriesMobile">
 		<h3>More Star Tribune political coverage from Super Tuesday</h3>
 		<ul>
-			{#each local as result}
+			{#each elex_controls.local as result}
 			<li><a href="{result.url}">{result.headline}</a></li>
 			{/each}
 		</ul>
@@ -384,11 +398,14 @@
 	<div class="hot-dish-mobile">
 		<h3>Morning Hot Dish</h3>
 		<p>Minnesota political news and musings, served up every weekday morning.</p>
-		<iframe width="250" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
+		<div>
+			<iframe width="250" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
+		</div>
+
 	</div>
 
 </div>
-
+<!-- {/if} -->
 
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>
@@ -401,3 +418,4 @@
 		<p>Data sources: Associated Press, US Census Bureau. Winner calls made by the Associated Press.</p>
 		<p>Credits: Michael Corey, Thomas Oide and C.J. Sinner</p>
 </section>
+<!-- {/if} -->

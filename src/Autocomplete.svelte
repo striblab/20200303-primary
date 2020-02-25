@@ -1,5 +1,6 @@
 <script>
 		import LastUpdated from './LastUpdated.svelte';
+		import Precincts from './Precincts.svelte';
 
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
@@ -8,43 +9,48 @@
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
 
+		// $: {
+		// 	console.log(statewide_data)
+		// 	console.log('statewide')
+		// }
+		//
+		// console.log(statewide_data)
+		// console.log('statewide outside reactive')
+
+
 		// declare responsive variables
 		let county_selector_string;
 		let key_no_space;
 
 		let counties = [];
 		var i;
+
+		let last_updated = '';
+		let state_precincts_pct;
+		let datestring;
+		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
-			// console.log(county_data_grouped)
 			for (i = 0; i < county_data_grouped.length; i++) {
 				counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
 				// counties.push(county_data_grouped[i][1][0].reportingunitname);
 			}
-		}
-
-		let last_updated;
-		let datestring;
-		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-		$: {
-			if (statewide_data.length == 0) {
-				last_updated = '';
-			}
-			else {
+			// console.log('setting statwide data')
+			if (statewide_data.length > 0) {
 				datestring = new Date(statewide_data[0].lastupdated)
 				last_updated = datestring.toLocaleString('en-US', options)
-				// last_updated = statewide_data[0].lastupdated
+				console.log('changing date')
+				console.log(last_updated)
+				// console.log('inside if')
+			}
+
+			if (statewide_data.length > 0) {
+				state_precincts_pct = statewide_data[0].precinctsreportingpct;
+				console.log('changing precinct pct')
+				console.log(state_precincts_pct)
 			}
 		}
 
-		let state_precincts_pct
-		$: {
-			if (statewide_data.length == 0) {
-				state_precincts_pct = '';
-			}
-			else {
-				state_precincts_pct = statewide_data[0].precinctsreportingpct;
-			}
-		}
+
 		let county_record;
 		let county_name;
 		$: {
@@ -88,7 +94,6 @@
 			let fips;
 
 			async function onChange (event) {
-				// Is the data given by an outside ajax request?
 			  if (search.length >= Number(minChar)) {
 					filterResults()
 					isOpen = true;
@@ -121,23 +126,12 @@
 			}
 
 			function winner(winner, manual_winner) {
-				// if (winner && manual_winner) {
-				// 	if (manual_winner) {
-				// 		return 'winner'
-				// 	}
-				// 	else if (manual_winner && )
-				// 	else {
-				// 		return 'no-winner'
-				// 	}
-				// }
-				// else {
 					if (winner || manual_winner) {
 						return 'winner'
 					}
 					else {
 						return 'no-winner'
 					}
-				// }
 			}
 
 			function titleCase (str) {
@@ -261,6 +255,7 @@
     position: absolute;
     z-index: 100;
 		font-family: "Benton Sans", sans-serif;
+		font-size: 16px !important;
   }
 
   .autocomplete-result {
@@ -464,7 +459,9 @@
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
+{#if statewide_data.length > 0}
+<Precincts {state_precincts_pct}/>
+{/if}
 
 {:else}
 
@@ -479,48 +476,73 @@
 	<tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-			{#if candidate.winner == true}
-			<tr class="winner">
-				<td class="cand">
-					<span>&#10004</span>
-					{#if candidate.first}
-						{candidate.first} {candidate.last}
-					{:else}
-						{candidate.last}
-					{/if}
-				</td>
-				<td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-			</tr>
-
-			{:else}
-	    <tr>
-				<td class="cand">
-					<span class="{dotColor(candidate.last, candidate.winner)}"></span>
-	        {#if candidate.first}
-	          {candidate.first} {candidate.last}
-	        {:else}
-	          {candidate.last}
-	        {/if}
-	      </td>
-	      <td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-
-	    </tr>
+				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else if statewide_data.filter(e => e.winner == true).length > 0}
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else}
+				<tr>
+					<td class="cand">
+						<span class="{dotColor2(candidate.last)}"></span>
+						{#if candidate.first}
+							{candidate.first} {candidate.last}
+						{:else}
+							{candidate.last}
+						{/if}
+					</td>
+					<td class="votes">
+						{#if state_precincts_pct == 0}
+							-
+						{:else}
+							{intcomma(candidate.votecount)}
+						{/if}
+					</td>
+					<td class="pct">
+						{#if state_precincts_pct == 0}
+							-
+						{:else}
+							{Math.round(candidate.votepct * 100) }%
+						{/if}
+					</td>
+				</tr>
+				{/if}
 			{/if}
-			{/if}
-	  {/each}
+		{/each}
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
+{#if statewide_data.length > 0}
+<Precincts {state_precincts_pct}/>
+{/if}
 {/if}
 </div>
