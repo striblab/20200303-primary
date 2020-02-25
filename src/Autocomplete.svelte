@@ -6,13 +6,13 @@
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
 
-		$: {
-			console.log(statewide_data)
-			console.log('statewide')
-		}
-
-		console.log(statewide_data)
-		console.log('statewide outside reactive')
+		// $: {
+		// 	console.log(statewide_data)
+		// 	console.log('statewide')
+		// }
+		//
+		// console.log(statewide_data)
+		// console.log('statewide outside reactive')
 
 
 		// declare responsive variables
@@ -21,18 +21,16 @@
 
 		let counties = [];
 		var i;
+
+		let last_updated = '';
+		let state_precincts_pct;
+		let datestring;
+		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
-			// console.log(county_data_grouped)
 			for (i = 0; i < county_data_grouped.length; i++) {
 				counties.push(county_data_grouped[i][1][0].reportingunitname.toUpperCase());
 				// counties.push(county_data_grouped[i][1][0].reportingunitname);
 			}
-		}
-
-		let last_updated = '';
-		let datestring;
-		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-		$: {
 			// console.log('setting statwide data')
 			if (statewide_data.length > 0) {
 				datestring = new Date(statewide_data[0].lastupdated)
@@ -41,26 +39,17 @@
 				console.log(last_updated)
 				// console.log('inside if')
 			}
-			// else {
-			// 	datestring = new Date(statewide_data[0].lastupdated)
-			// 	last_updated = datestring.toLocaleString('en-US', options)
-			// 	// last_updated = statewide_data[0].lastupdated
-			// }
-		}
 
-		let state_precincts_pct
-		$: {
-			// if (statewide_data.length == 0) {
-			// 	state_precincts_pct = '';
-			// }
-			// else {
-			// 	state_precincts_pct = statewide_data[0].precinctsreportingpct;
-			// }
 			if (statewide_data.length > 0) {
 				state_precincts_pct = statewide_data[0].precinctsreportingpct;
 				console.log('changing precinct pct')
 				console.log(state_precincts_pct)
 			}
+			// else {
+			// 	datestring = new Date(statewide_data[0].lastupdated)
+			// 	last_updated = datestring.toLocaleString('en-US', options)
+			// 	// last_updated = statewide_data[0].lastupdated
+			// }
 		}
 
 
@@ -498,45 +487,68 @@
 	<tbody>
 		{#each statewide_data as candidate}
 			{#if active_candidates.includes(candidate.last)}
-			{#if candidate.winner == true}
-			<tr class="winner">
-				<td class="cand">
-					<span>&#10004</span>
-					{#if candidate.first}
-						{candidate.first} {candidate.last}
-					{:else}
-						{candidate.last}
-					{/if}
-				</td>
-				<td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-			</tr>
-
-			{:else}
-	    <tr>
-				<td class="cand">
-					<span class="{dotColor(candidate.last, candidate.winner)}"></span>
-	        {#if candidate.first}
-	          {candidate.first} {candidate.last}
-	        {:else}
-	          {candidate.last}
-	        {/if}
-	      </td>
-	      <td class="votes">
-	        {intcomma(candidate.votecount)}
-	      </td>
-				<td class="pct">
-					{Math.round(candidate.votepct * 100) }%
-				</td>
-
-	    </tr>
+				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else if statewide_data.filter(e => e.winner == true).length > 0}
+					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+						<td class="cand">
+							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{#if candidate.first}
+								{candidate.first} {candidate.last}
+							{:else}
+								{candidate.last}
+							{/if}
+						</td>
+						<td class="votes">
+							{intcomma(candidate.votecount)}
+						</td>
+						<td class="pct">
+							{Math.round(candidate.votepct * 100) }%
+						</td>
+					</tr>
+				{:else}
+				<tr>
+					<td class="cand">
+						<span class="{dotColor2(candidate.last)}"></span>
+						{#if candidate.first}
+							{candidate.first} {candidate.last}
+						{:else}
+							{candidate.last}
+						{/if}
+					</td>
+					<td class="votes">
+						{#if state_precincts_pct == 0}
+							-
+						{:else}
+							{intcomma(candidate.votecount)}
+						{/if}
+					</td>
+					<td class="pct">
+						{#if state_precincts_pct == 0}
+							-
+						{:else}
+							{Math.round(candidate.votepct * 100) }%
+						{/if}
+					</td>
+				</tr>
+				{/if}
 			{/if}
-			{/if}
-	  {/each}
+		{/each}
 	</tbody>
 </table>
 
