@@ -2,6 +2,7 @@
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
+	import LastUpdated from './LastUpdated.svelte';
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
 
@@ -221,6 +222,10 @@
 	{/if}
 		<!-- <p class="lastUpdated">Last change: {last_updated}</p> -->
 		<!-- <span class="updatedTime">{last_updated}</span> -->
+		{#if statewide_data.length > 0}
+		<LastUpdated timestamp={statewide_data[0].lastupdated}></LastUpdated>
+		<LastUpdated timestamp={last_updated}></LastUpdated>
+		{/if}
 </div>
 
 

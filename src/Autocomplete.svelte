@@ -1,4 +1,6 @@
 <script>
+		import LastUpdated from './LastUpdated.svelte';
+
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
 
@@ -309,7 +311,10 @@
 	<p class="countdown">Checking for updates 0:{time}</p>
 	{/if}
 </div> -->
-
+{#if statewide_data.length > 0}
+<LastUpdated timestamp={statewide_data[0].lastupdated}></LastUpdated>
+<LastUpdated timestamp={last_updated}></LastUpdated>
+{/if}
 <p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
