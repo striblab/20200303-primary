@@ -1,5 +1,6 @@
 <script>
 		import LastUpdated from './LastUpdated.svelte';
+		import Precincts from './Precincts.svelte';
 
 		import {intcomma} from 'journalize';
 		import * as d3 from 'd3';
@@ -47,11 +48,6 @@
 				console.log('changing precinct pct')
 				console.log(state_precincts_pct)
 			}
-			// else {
-			// 	datestring = new Date(statewide_data[0].lastupdated)
-			// 	last_updated = datestring.toLocaleString('en-US', options)
-			// 	// last_updated = statewide_data[0].lastupdated
-			// }
 		}
 
 
@@ -98,7 +94,6 @@
 			let fips;
 
 			async function onChange (event) {
-				// Is the data given by an outside ajax request?
 			  if (search.length >= Number(minChar)) {
 					filterResults()
 					isOpen = true;
@@ -131,23 +126,12 @@
 			}
 
 			function winner(winner, manual_winner) {
-				// if (winner && manual_winner) {
-				// 	if (manual_winner) {
-				// 		return 'winner'
-				// 	}
-				// 	else if (manual_winner && )
-				// 	else {
-				// 		return 'no-winner'
-				// 	}
-				// }
-				// else {
 					if (winner || manual_winner) {
 						return 'winner'
 					}
 					else {
 						return 'no-winner'
 					}
-				// }
 			}
 
 			function titleCase (str) {
@@ -475,7 +459,9 @@
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
+{#if statewide_data.length > 0}
+<Precincts {state_precincts_pct}/>
+{/if}
 
 {:else}
 
@@ -555,6 +541,8 @@
 	</tbody>
 </table>
 
-<p class="precincts">{ Math.round(state_precincts_pct * 100) }% of precincts reporting</p>
+{#if statewide_data.length > 0}
+<Precincts {state_precincts_pct}/>
+{/if}
 {/if}
 </div>

@@ -1,15 +1,15 @@
 <script>
 
-export let wire;
-export let local;
+export let elex_controls;
 
 </script>
 
+{#if elex_controls}
 <div class="promos">
   <div class="natWire">
     <h3>Other Super Tuesday Results and this gets the headline to 2 lines</h3>
     <ul>
-      {#each wire as result}
+      {#each elex_controls.wire as result}
       <li><a href="{result.url}">{result.headline}</a></li>
       {/each}
     </ul>
@@ -22,9 +22,10 @@ export let local;
   <div class="otherStories">
     <h3>More Star Tribune political coverage from Super Tuesday</h3>
     <ul>
-      {#each local as result}
+      {#each elex_controls.local as result}
       <li><a href="{result.url}">{result.headline}</a></li>
       {/each}
     </ul>
   </div>
 </div>
+{/if}

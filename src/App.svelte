@@ -4,6 +4,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
+	import Timer from './Timer.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -24,9 +25,11 @@
 	export let title;
 
 	export let data = [];
-	export let wire = [];
-	export let local = [];
-	export let demographic = {};
+	export let elex_controls = {
+		"local": [],
+		"wire": [],
+		"demographic": {}
+	};
 	export let county_data = [];
 	export let county_data_grouped;
 
@@ -34,8 +37,6 @@
 
 	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Sanders', 'Steyer', 'Warren'];
 	export let results_by_candidate = [];
-
-	// export let statewide_data = [{"officename":"President","statepostal":"MN","first":"Elizabeth","last":"Warren","party":"Dem","votecount":347122,"votepct":0.478538,"winner":true,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Joe","last":"Biden","party":"Dem","votecount":250317,"votepct":0.345084,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Bernie","last":"Sanders","party":"Dem","votecount":67417,"votepct":0.09294,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Pete","last":"Buttigieg","party":"Dem","votecount":9141,"votepct":0.012602,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":null,"last":"Uncommitted","party":"Dem","votecount":7299,"votepct":0.010062,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Michael","last":"Bloomberg","party":"Dem","votecount":7190,"votepct":0.009912,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Deval","last":"Patrick","party":"Dem","votecount":5377,"votepct":0.007413,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Tom","last":"Steyer","party":"Dem","votecount":4653,"votepct":0.006415,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Amy","last":"Klobuchar","party":"Dem","votecount":4511,"votepct":0.006219,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Andrew","last":"Yang","party":"Dem","votecount":3790,"votepct":0.005225,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Michael","last":"Bennet","party":"Dem","votecount":3600,"votepct":0.004963,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Julian","last":"Castro","party":"Dem","votecount":3454,"votepct":0.004762,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"John","last":"Delaney","party":"Dem","votecount":3081,"votepct":0.004247,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Cory","last":"Booker","party":"Dem","votecount":2983,"votepct":0.004112,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Tulsi","last":"Gabbard","party":"Dem","votecount":2855,"votepct":0.003936,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false}]
 
 	let last_updated;
 	let datestring;
@@ -53,7 +54,7 @@
 	}
 
 	$ : {
-		if (data){
+		// if (data){
 			statewide_data = data.filter(function(d) {
 	      return d.level == "state";
 	    });
@@ -85,7 +86,7 @@
 				 return second.total_votes - first.total_votes;
 				})
 			}
-		}
+		// }
 	}
 
 	let getData = async function() {
@@ -97,47 +98,66 @@
 		timerInterval = setInterval(countdown, 1000);
 	}
 
-	let time = 30;
-	function countdown() {
-		if (time == 0) {
-			time = 'Updating...'
-			setTimeout(getData, 1000)
-			clearInterval(timerInterval);
-		}
-		else {
-			time--;
-		}
+	let getElexControls = async function() {
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
+		const json = await response.json()
+		elex_controls = json;
 	}
-	let timerInterval = setInterval(countdown, 1000);
+
+	// let time = 30;
+	// function countdown() {
+	// 	if (time == 0) {
+	// 		time = 'Updating...'
+	// 		setTimeout(getData, 1000)
+	// 		clearInterval(timerInterval);
+	// 	}
+	// 	else {
+	// 		time--;
+	// 	}
+	// }
+	// let timerInterval = setInterval(countdown, 1000);
 
 	onMount(async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const wireResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/wire.json");
-		const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
-		const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
-    // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
+		const elex_response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
+		// const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
+		// const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
+    // // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
     const json = await response.json();
-		const wireJson = await wireResponse.json();
-		const localJson = await localResponse.json();
-		const demographicJson = await demographicResponse.json();
-    data = json;
-		wire = wireJson;
-		local = localJson;
-		demographic = demographicJson;
+		const elex_json = await elex_response.json();
+		// const localJson = await localResponse.json();
+		// const demographicJson = await demographicResponse.json();
+		if (response.ok) {
+			data = json;
+		}
+		else {
+			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+			setTimeout(getData, 3000)
+		}
+		if (elex_response.ok) {
+			elex_controls = elex_json;
+		}
+		else {
+			setTimeout(getElexControls, 3000)
+		}
+
+		// wire = wireJson;
+		// local = localJson;
+		// demographic = demographicJson;
   });
 
 </script>
 
 <style>
 
-	.live2 {
+	/* .live2 {
 		font-family: "Benton Sans", sans-serif;
 		font-weight: 700;
 		color: red;
 		text-align: center;
-		/* margin-top: 30px; */
-	}
+		/* margin-top: 30px; 
+	} */
 
 	.small-maps {
 		display: flex;
@@ -178,9 +198,9 @@
 	  max-width: 1000px;
 	} */
 
-	@keyframes fadeIn {
+	/* @keyframes fadeIn {
 		from { opacity: 0 }
-	}
+	} */
 </style>
 
 <!-- {#if statewide_data.length > 0} -->
@@ -200,7 +220,8 @@
 	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
 </div>
 
-<div class="updates">
+<Timer />
+<!-- <div class="updates">
 	<p class="live2">&bull; LIVE</p>
 	{#if typeof(time) == "string"}
 	<p class="countdown">{time}</p>
@@ -211,9 +232,7 @@
 		<p class="countdown">Checking for new data 0:{time}</p>
 		{/if}
 	{/if}
-		<!-- <p class="lastUpdated">Last change: {last_updated}</p> -->
-		<!-- <span class="updatedTime">{last_updated}</span> -->
-</div>
+</div> -->
 
 
 <section id="map">
@@ -229,12 +248,12 @@
 
 
 <section id="related">
-	<Promos {wire} {local}/>
+	<Promos {elex_controls}/>
 </section>
 
-
+<!-- {#if elex_controls} -->
 <section id="candidate-support">
-	{#if demographic.show_maps == true}
+	{#if elex_controls.demographic.show_maps == true}
 	<h2>Where was each candidate's support strongest?</h2>
 	<p>Larger circles show a larger share of each candidate's votes.</p>
 
@@ -249,14 +268,14 @@
 	</div>
 	{/if}
 
-	{#if demographic.show_bubbles == true}
+	{#if elex_controls.demographic.show_bubbles == true}
 	<div id="demographics-groups">
 
-		{#if demographic.show_trump == true}
+		{#if elex_controls.demographic.show_trump == true}
 		<div id="trump-2016" class="demographics-container">
 		<h3>Who did better in counties where Trump did well?</h3>
 		<!-- <p>Vote totals from Minnesota counties, arranged in order from least supportive of Donald Trump in the 2016 election (Ramsey County) to the most supportive (Morrison County).</p> -->
-		<p>{demographic.trump_text}</p>
+		<p>{elex_controls.demographic.trump_text}</p>
 		<div class="demographic-arrows">
 			<div class="arrow-less">&#8592; Liberal counties</div>
 			<div class="arrow-more">Conservative counties &#8594;</div>
@@ -280,11 +299,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_nonwhite}
+		{#if elex_controls.demographic.show_nonwhite}
 		<div id="nonwhite" class="demographics-container">
 		<h3>Who did better in more diverse counties?</h3>
 		<!-- <p>Vote totals from Minnesota counties, arranged in order from smallest percentage of non-white residents (Big Stone County) to the largest percentage (Mahnomen County).</p> -->
-		<p>{demographic.nonwhite_text}</p>
+		<p>{elex_controls.demographic.nonwhite_text}</p>
 		<div class="demographic-arrows">
 			<div class="arrow-less">&#8592; Less diverse counties</div>
 			<div class="arrow-more">More diverse counties &#8594;</div>
@@ -307,11 +326,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_income}
+		{#if elex_controls.demographic.show_income}
 		<div id="income" class="demographics-container">
 			<h3>Who did better in more affluent counties?</h3>
 			<!-- <p>Vote totals from Minnesota counties, arranged in order from smallest median income (Mahnomen County) to the largest (Carver County).</p> -->
-			<p>{demographic.income_text}</p>
+			<p>{elex_controls.demographic.income_text}</p>
 			<div class="demographic-arrows">
 				<div class="arrow-less">&#8592; Less affluent counties</div>
 				<div class="arrow-more">More affluent counties &#8594;</div>
@@ -334,11 +353,11 @@
 		</div>
 		{/if}
 
-		{#if demographic.show_age}
+		{#if elex_controls.demographic.show_age}
 		<div id="age" class="demographics-container">
 			<h3>Who did better in counties with older residents?</h3>
 			<!-- <p>Vote totals from Minnesota counties, arranged in order from lowest median age (Blue Earth County) to the highest (Aitkin County).</p> -->
-			<p>{demographic.age_text}</p>
+			<p>{elex_controls.demographic.age_text}</p>
 			<div class="demographic-arrows">
 				<div class="arrow-less">&#8592; Younger counties</div>
 				<div class="arrow-more">Older counties &#8594;</div>
@@ -364,12 +383,13 @@
 	{/if}
 </section>
 
+
 <div class="mobileRelated">
 
 	<div class="otherStoriesMobile">
 		<h3>More Star Tribune political coverage from Super Tuesday</h3>
 		<ul>
-			{#each local as result}
+			{#each elex_controls.local as result}
 			<li><a href="{result.url}">{result.headline}</a></li>
 			{/each}
 		</ul>
@@ -378,11 +398,14 @@
 	<div class="hot-dish-mobile">
 		<h3>Morning Hot Dish</h3>
 		<p>Minnesota political news and musings, served up every weekday morning.</p>
-		<iframe width="250" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
+		<div>
+			<iframe width="250" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
+		</div>
+
 	</div>
 
 </div>
-
+<!-- {/if} -->
 
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>

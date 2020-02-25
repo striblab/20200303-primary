@@ -327,6 +327,17 @@ p.lastUpdated {
 		justify-content: center;
 		flex-wrap: wrap;
 	}
+
+	#map {
+		margin-bottom: 15px !important;
+	}
+
+	#related {
+		margin-bottom: 12px !important;
+	}
+	#candidate-support {
+		margin-bottom: 15px !important;
+	}
 }
 
 @media (max-width: 600px) {
