@@ -30,10 +30,12 @@
 	export let county_data = [];
 	export let county_data_grouped;
 
-  export let statewide_data;
+  export let statewide_data = [];
 
 	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Sanders', 'Steyer', 'Warren'];
 	export let results_by_candidate = [];
+
+	// export let statewide_data = [{"officename":"President","statepostal":"MN","first":"Elizabeth","last":"Warren","party":"Dem","votecount":347122,"votepct":0.478538,"winner":true,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Joe","last":"Biden","party":"Dem","votecount":250317,"votepct":0.345084,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Bernie","last":"Sanders","party":"Dem","votecount":67417,"votepct":0.09294,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Pete","last":"Buttigieg","party":"Dem","votecount":9141,"votepct":0.012602,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":null,"last":"Uncommitted","party":"Dem","votecount":7299,"votepct":0.010062,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Michael","last":"Bloomberg","party":"Dem","votecount":7190,"votepct":0.009912,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Deval","last":"Patrick","party":"Dem","votecount":5377,"votepct":0.007413,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Tom","last":"Steyer","party":"Dem","votecount":4653,"votepct":0.006415,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Amy","last":"Klobuchar","party":"Dem","votecount":4511,"votepct":0.006219,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Andrew","last":"Yang","party":"Dem","votecount":3790,"votepct":0.005225,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Michael","last":"Bennet","party":"Dem","votecount":3600,"votepct":0.004963,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Julian","last":"Castro","party":"Dem","votecount":3454,"votepct":0.004762,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"John","last":"Delaney","party":"Dem","votecount":3081,"votepct":0.004247,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Cory","last":"Booker","party":"Dem","votecount":2983,"votepct":0.004112,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false},{"officename":"President","statepostal":"MN","first":"Tulsi","last":"Gabbard","party":"Dem","votecount":2855,"votepct":0.003936,"winner":false,"level":"state","precinctsreporting":4110,"precinctstotal":4110,"precinctsreportingpct":1,"seatname":null,"fipscode":null,"reportingunitid":"state-MN-1","reportingunitname":null,"lastupdated":"1988-01-01 00:00:00","manual_winner":false}]
 
 	let last_updated;
 	let datestring;
@@ -51,49 +53,38 @@
 	}
 
 	$ : {
-		statewide_data = data.filter(function(d) {
-      return d.level == "state";
-    });
-    county_data = data.filter(function(d) {
-      return d.level == "county";
-    })
+		if (data){
+			statewide_data = data.filter(function(d) {
+	      return d.level == "state";
+	    });
+	    county_data = data.filter(function(d) {
+	      return d.level == "county";
+	    })
 
-		statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
-		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
+			statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
+			county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
-		// This data used to generate the density maps, in order of biggest vote getters
-		results_by_candidate = [];
-		if (statewide_data.length > 0) {
-			active_candidates.forEach(function(candidate){
-				let candidate_data = {
-					'candidate': candidate,
-					'results': county_data.filter(function(d) {
-			      return d.last == candidate;
-			    })
-				}
-				if (candidate_data.results.length > 0) {
-					candidate_data.total_votes = statewide_data.filter(function(d) {
-			      return d.last == candidate;
-			    })[0].votecount
-					results_by_candidate.push(candidate_data);
-				}
-			});
-			results_by_candidate = results_by_candidate.sort(function(first, second) {
-			 return second.total_votes - first.total_votes;
-			})
-		}
-
-	}
-
-	// export let id = contentIDGenerator(0, stories)
-	let id = 0;
-	let length;
-	function handleClick(length) {
-		if ( id == length - 1 ) {
-			id = 0
-		}
-		else {
-			id += 1;
+			// This data used to generate the density maps, in order of biggest vote getters
+			results_by_candidate = [];
+			if (statewide_data.length > 0) {
+				active_candidates.forEach(function(candidate){
+					let candidate_data = {
+						'candidate': candidate,
+						'results': county_data.filter(function(d) {
+				      return d.last == candidate;
+				    })
+					}
+					if (candidate_data.results.length > 0) {
+						candidate_data.total_votes = statewide_data.filter(function(d) {
+				      return d.last == candidate;
+				    })[0].votecount
+						results_by_candidate.push(candidate_data);
+					}
+				});
+				results_by_candidate = results_by_candidate.sort(function(first, second) {
+				 return second.total_votes - first.total_votes;
+				})
+			}
 		}
 	}
 
@@ -192,6 +183,7 @@
 	}
 </style>
 
+<!-- {#if statewide_data.length > 0} -->
 <div class="leadin">
 
 	<div class="elexLogo">
@@ -226,9 +218,11 @@
 
 <section id="map">
 	<div class="results">
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names}>
-			<p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p>
-		</Autocomplete>
+		<!-- {#if statewide_data.length > 0} -->
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names} />
+		<!-- {/if} -->
+			<!-- <p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p> -->
+		<!-- </Autocomplete> -->
 		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
 	</div>
 </section>
@@ -401,3 +395,4 @@
 		<p>Data sources: Associated Press, US Census Bureau. Winner calls made by the Associated Press.</p>
 		<p>Credits: Michael Corey, Thomas Oide and C.J. Sinner</p>
 </section>
+<!-- {/if} -->

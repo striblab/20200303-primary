@@ -57,11 +57,11 @@ p.lastUpdated {
 }
 
 .updatedTime {
-	-webkit-transition: fadeIn 1s 3 alternate;
-	-moz-transition: fadeIn 1s 3 alternate;
-	-ms-transition: fadeIn 1s 3 alternate;
-	-o-transition: fadeIn 1s 3 alternate;
-	animation: fadeIn 1s 3 alternate;
+	// -webkit-transition: fadeIn 1s 3 alternate;
+	// -moz-transition: fadeIn 1s 3 alternate;
+	// -ms-transition: fadeIn 1s 3 alternate;
+	// -o-transition: fadeIn 1s 3 alternate;
+	// animation: fadeIn 1s 3 alternate;
 }
 
 .updates {
@@ -113,13 +113,13 @@ p.lastUpdated {
 		}
 
 		.text {
-			font-family: "Popular", sans-serif !important;
+			font-family: "Benton Sans", sans-serif !important;
 			margin-right: 5px;
 
 		}
 
 		h3 {
-			font-family: "Popular", sans-serif !important;
+			font-family: "Benton Sans", sans-serif !important;
 			margin-bottom: 0 !important;
 			margin-top: 0 !important;
 		}

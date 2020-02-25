@@ -6,6 +6,15 @@
 			return s.replace(/[-\\^$*+?.()|[\]{}]/g, "\\$&")
 		}
 
+		$: {
+			console.log(statewide_data)
+			console.log('statewide')
+		}
+
+		console.log(statewide_data)
+		console.log('statewide outside reactive')
+
+
 		// declare responsive variables
 		let county_selector_string;
 		let key_no_space;
@@ -20,29 +29,41 @@
 			}
 		}
 
-		let last_updated;
+		let last_updated = '';
 		let datestring;
 		var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 		$: {
-			if (statewide_data.length == 0) {
-				last_updated = '';
-			}
-			else {
+			// console.log('setting statwide data')
+			if (statewide_data.length > 0) {
 				datestring = new Date(statewide_data[0].lastupdated)
 				last_updated = datestring.toLocaleString('en-US', options)
-				// last_updated = statewide_data[0].lastupdated
+				console.log('changing date')
+				console.log(last_updated)
+				// console.log('inside if')
 			}
+			// else {
+			// 	datestring = new Date(statewide_data[0].lastupdated)
+			// 	last_updated = datestring.toLocaleString('en-US', options)
+			// 	// last_updated = statewide_data[0].lastupdated
+			// }
 		}
 
 		let state_precincts_pct
 		$: {
-			if (statewide_data.length == 0) {
-				state_precincts_pct = '';
-			}
-			else {
+			// if (statewide_data.length == 0) {
+			// 	state_precincts_pct = '';
+			// }
+			// else {
+			// 	state_precincts_pct = statewide_data[0].precinctsreportingpct;
+			// }
+			if (statewide_data.length > 0) {
 				state_precincts_pct = statewide_data[0].precinctsreportingpct;
+				console.log('changing precinct pct')
+				console.log(state_precincts_pct)
 			}
 		}
+
+
 		let county_record;
 		let county_name;
 		$: {
@@ -259,6 +280,7 @@
     position: absolute;
     z-index: 100;
 		font-family: "Benton Sans", sans-serif;
+		font-size: 16px !important;
   }
 
   .autocomplete-result {
