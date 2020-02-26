@@ -38,15 +38,15 @@
 			if (statewide_data.length > 0) {
 				datestring = new Date(statewide_data[0].lastupdated)
 				last_updated = datestring.toLocaleString('en-US', options)
-				console.log('changing date')
-				console.log(last_updated)
+				// console.log('changing date')
+				// console.log(last_updated)
 				// console.log('inside if')
 			}
 
 			if (statewide_data.length > 0) {
 				state_precincts_pct = statewide_data[0].precinctsreportingpct;
-				console.log('changing precinct pct')
-				console.log(state_precincts_pct)
+				// console.log('changing precinct pct')
+				// console.log(state_precincts_pct)
 			}
 		}
 

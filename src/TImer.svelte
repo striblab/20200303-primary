@@ -19,7 +19,7 @@
 		}
 		else {
 			time--;
-      console.log(time)
+      // console.log(time)
 		}
 	}
 	let timerInterval = setInterval(countdown, 1000);
@@ -37,13 +37,15 @@
 
 <div class="updates">
 	<p class="live2">&bull; LIVE</p>
-	{#if typeof(time) == "string"}
-	<p class="countdown">{time}</p>
-	{:else}
-		{#if time < 10}
-		<p class="countdown">Checking for new data 0:0{time}</p>
-		{:else}
-		<p class="countdown">Checking for new data 0:{time}</p>
-		{/if}
-	{/if}
+  {#if time}
+  	{#if typeof(time) == "string"}
+  	<p class="countdown">{time}</p>
+  	{:else}
+  		{#if time < 10}
+  		<p class="countdown">Checking for new data 0:0{time}</p>
+  		{:else}
+  		<p class="countdown">Checking for new data 0:{time}</p>
+  		{/if}
+  	{/if}
+  {/if}
 </div>

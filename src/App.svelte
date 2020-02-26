@@ -4,7 +4,7 @@
 	import Autocomplete from './Autocomplete.svelte';
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
-	import Timer from './Timer.svelte';
+	// import Timer from './Timer.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -104,19 +104,21 @@
 		elex_controls = json;
 	}
 
-	// let time = 30;
-	// function countdown() {
-	// 	if (time == 0) {
-	// 		time = 'Updating...'
-	// 		setTimeout(getData, 1000)
-	// 		clearInterval(timerInterval);
-	// 	}
-	// 	else {
-	// 		time--;
-	// 	}
-	// }
-	// let timerInterval = setInterval(countdown, 1000);
+	let time = 30;
+	function countdown() {
+		if (time == 0) {
+			time = 'Updating...'
+			setTimeout(getData, 1000)
+			clearInterval(timerInterval);
+		}
+		else {
+			time--;
+		}
+	}
+	let timerInterval = setInterval(countdown, 1000);
 
+	let backup_timer;
+	let backup_timer_controls;
 	onMount(async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
@@ -133,13 +135,16 @@
 		}
 		else {
 			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-			setTimeout(getData, 3000)
+			console.log('results error')
+			backup_timer = setTimeout(getData, 3000)
 		}
+
 		if (elex_response.ok) {
 			elex_controls = elex_json;
 		}
 		else {
-			setTimeout(getElexControls, 3000)
+			console.log('controls error')
+			backup_timer_controls = setTimeout(getElexControls, 3000)
 		}
 
 		// wire = wireJson;
@@ -151,13 +156,13 @@
 
 <style>
 
-	/* .live2 {
+	.live2 {
 		font-family: "Benton Sans", sans-serif;
 		font-weight: 700;
 		color: red;
 		text-align: center;
-		/* margin-top: 30px; 
-	} */
+		/* margin-top: 30px; */
+	}
 
 	.small-maps {
 		display: flex;
@@ -220,8 +225,8 @@
 	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
 </div>
 
-<Timer />
-<!-- <div class="updates">
+<!-- <Timer /> -->
+<div class="updates">
 	<p class="live2">&bull; LIVE</p>
 	{#if typeof(time) == "string"}
 	<p class="countdown">{time}</p>
@@ -232,7 +237,7 @@
 		<p class="countdown">Checking for new data 0:{time}</p>
 		{/if}
 	{/if}
-</div> -->
+</div>
 
 
 <section id="map">
@@ -410,7 +415,7 @@
 <section id="delegate-tracker">
 	<h2>Delegate Tracker</h2>
 	<p>Chatter about delegate tracker</p>
-	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="450"></iframe>
+	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
 
