@@ -412,7 +412,10 @@ function countyClass(feature, county_data) {
         class="provinceShape {countyClass(feature, county_data_grouped)}"
         in:fade
         out:fade
-        on:click="{buildTooltipMobile(this, feature)}"
+        on:mouseover="{buildTooltip(this, feature)}"
+        on:mousemove="{positionTooltip}"
+        on:mouseout="{hideTooltip(this, feature)}"
+
         county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
@@ -421,9 +424,8 @@ function countyClass(feature, county_data) {
         <path d={path(feature)} class="roadLine"/>
       {/each}
     </g> -->
-        <!-- on:mouseover="{buildTooltip(this, feature)}" -->
-        <!-- on:mousemove="{positionTooltip}" -->
-        <!-- on:mouseout="{hideTooltip(this, feature)}" -->
+    <!-- on:click="{buildTooltipMobile(this, feature)}" -->
+
 
     <g class="cities">
       {#each city_points as city}

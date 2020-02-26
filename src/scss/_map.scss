@@ -16,6 +16,9 @@ $candColors: (
   patrick: #9F9F9F,
   bennet: #9F9F9F,
   yang: #9F9F9F,
+  castro: #9f9f9f,
+  delaney: #9f9f9f,
+  williamson: #9f9f9f
 );
 
 @each $cand, $color in $candColors {

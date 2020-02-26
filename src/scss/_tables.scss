@@ -39,6 +39,20 @@ th {
     font-size: 16px !important;
   }
 
+  td.expand {
+    text-align: center;
+    font-family: "Benton Sans", sans-serif;
+  	font-style: normal;
+  	font-size: 14px !important;
+  	color: #A0A0A0;
+    padding: 10px 4px;
+  }
+
+  td.expand:hover {
+    color: 	#404040;
+    cursor: pointer;
+  }
+
   .cand {
     // display: flex;
     // align-items: center;

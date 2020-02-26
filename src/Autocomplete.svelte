@@ -22,6 +22,7 @@
 		let county_selector_string;
 		let key_no_space;
 
+
 		let counties = [];
 		var i;
 
@@ -50,6 +51,21 @@
 			}
 		}
 
+		// expanding table variables
+		let expand_cands = '+ See all candidates';
+		let expanded = false;
+
+		function handleClick() {
+			if (expanded === false) {
+				expanded = true;
+				expand_cands = '\u2013 See active candidates';
+			}
+			else {
+				expanded = false;
+				expand_cands = '+ See all candidates';
+			}
+
+		}
 
 		let county_record;
 		let county_name;
@@ -349,23 +365,50 @@
 	</thead>
   <tbody>
 		{#each value as candidate}
-			{#if active_candidates.includes(candidate.last)}
-	    <tr>
-	      <td class="cand">
+			{#if expanded == false}
+				{#if active_candidates.includes(candidate.last)}
+		    <tr>
+		      <td class="cand">
+						<span class="{dotColor2(candidate.last)}"></span>
+		        {#if candidate.first}
+		          {candidate.first} {candidate.last}
+		        {:else}
+		          {candidate.last}
+		        {/if}
+		      </td>
+		      <td class="votes">
+						{#if Math.round(value[1].precinctsreporting) == 0}
+							-
+						{:else}
+							{intcomma(candidate.votecount)}
+						{/if}
+		      </td>
+					<td class="pct">
+						{#if Math.round(value[1].precinctsreporting) == 0}
+							-
+						{:else}
+							{Math.round(candidate.votepct * 1000) / 10 }%
+						{/if}
+					</td>
+		    </tr>
+				{/if}
+			{:else}
+			<tr>
+				<td class="cand">
 					<span class="{dotColor2(candidate.last)}"></span>
-	        {#if candidate.first}
-	          {candidate.first} {candidate.last}
-	        {:else}
-	          {candidate.last}
-	        {/if}
-	      </td>
-	      <td class="votes">
+					{#if candidate.first}
+						{candidate.first} {candidate.last}
+					{:else}
+						{candidate.last}
+					{/if}
+				</td>
+				<td class="votes">
 					{#if Math.round(value[1].precinctsreporting) == 0}
 						-
 					{:else}
 						{intcomma(candidate.votecount)}
 					{/if}
-	      </td>
+				</td>
 				<td class="pct">
 					{#if Math.round(value[1].precinctsreporting) == 0}
 						-
@@ -373,9 +416,10 @@
 						{Math.round(candidate.votepct * 1000) / 10 }%
 					{/if}
 				</td>
-	    </tr>
+			</tr>
 			{/if}
 	  {/each}
+		<tr on:click={handleClick}><td class="expand" colspan="3">{expand_cands}</td></tr>
 	</tbody>
 </table>
 
@@ -393,6 +437,7 @@
 	</thead>
   <tbody>
 		{#each statewide_data as candidate}
+		{#if expanded === false}
 			{#if active_candidates.includes(candidate.last)}
 				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
@@ -455,7 +500,70 @@
 				</tr>
 				{/if}
 			{/if}
+		{:else}
+		{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
+			<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+				<td class="cand">
+					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+					{#if candidate.first}
+						{candidate.first} {candidate.last}
+					{:else}
+						{candidate.last}
+					{/if}
+				</td>
+				<td class="votes">
+					{intcomma(candidate.votecount)}
+				</td>
+				<td class="pct">
+					{Math.round(candidate.votepct * 1000) / 10 }%
+				</td>
+			</tr>
+		{:else if statewide_data.filter(e => e.winner == true).length > 0}
+			<tr class="{winner(candidate.winner, candidate.manual_winner)}">
+				<td class="cand">
+					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+					{#if candidate.first}
+						{candidate.first} {candidate.last}
+					{:else}
+						{candidate.last}
+					{/if}
+				</td>
+				<td class="votes">
+					{intcomma(candidate.votecount)}
+				</td>
+				<td class="pct">
+					{Math.round(candidate.votepct * 1000) / 10 }%
+				</td>
+			</tr>
+		{:else}
+		<tr>
+			<td class="cand">
+				<span class="{dotColor2(candidate.last)}"></span>
+				{#if candidate.first}
+					{candidate.first} {candidate.last}
+				{:else}
+					{candidate.last}
+				{/if}
+			</td>
+			<td class="votes">
+				{#if state_precincts_pct == 0}
+					-
+				{:else}
+					{intcomma(candidate.votecount)}
+				{/if}
+			</td>
+			<td class="pct">
+				{#if state_precincts_pct == 0}
+					-
+				{:else}
+					{Math.round(candidate.votepct * 1000) / 10 }%
+				{/if}
+			</td>
+		</tr>
+		{/if}
+		{/if}
 		{/each}
+		<tr on:click={handleClick}><td class="expand" colspan="3">{expand_cands}</td></tr>
 	</tbody>
 </table>
 
@@ -538,6 +646,7 @@
 				{/if}
 			{/if}
 		{/each}
+		<tr on:click={handleClick}><td class="expand" colspan="3">{expand_cands}</td></tr>
 	</tbody>
 </table>
 
