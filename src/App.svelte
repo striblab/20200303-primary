@@ -44,75 +44,65 @@
 	let last_updated;
 	let datestring;
 	let timerInterval;
-	export let time = 30;
-	export let time_formatted = 'Getting data...'
+	let time = 30;
 	let backup_timer;
 	let backup_timer_controls;
 	const zero = d3.format("02d");
 
 	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-	// $: {
-	//
-	// }
 
-	const format_timer_remaining = function (input) {
+	const format_timer_remaining_nuclear = function (input) {
 		if (input == 0) {
-			return 'Updating...'
+			document.getElementById('countdown-container').innerHTML = 'Updating...';
+			// return 'Updating...'
 		} else {
-			return 'Checking for new data 0:' + zero(input);
+			// return 'Checking for new data 0:' + zero(input);
+			document.getElementById('countdown-container').innerHTML = 'Checking for new data 0:' + zero(input);
 		}
 	}
 
-	$: time_formatted = format_timer_remaining(time);
-
 	$ : {
-			if (statewide_data.length == 0) {
-				last_updated = '';
-			}
-			else {
-				datestring = new Date(statewide_data[0].lastupdated)
-				last_updated = datestring.toLocaleString('en-US', options)
-				// last_updated = statewide_data[0].lastupdated
-			}
+		if (statewide_data.length == 0) {
+			last_updated = '';
+		}
+		else {
+			datestring = new Date(statewide_data[0].lastupdated)
+			last_updated = datestring.toLocaleString('en-US', options)
+			// last_updated = statewide_data[0].lastupdated
+			format_timer_remaining_nuclear(time);
+		}
 
-		// 	if (time == 0) {
-		// 		time_formatted = 'Updating...'
-		// 	} else {
-		// 		time_formatted = 'Checking for new data 0:' + zero(time);
-		// 	}
-		// // if (data){
-			statewide_data = data.filter(function(d) {
-	      return d.level == "state";
-	    });
-	    county_data = data.filter(function(d) {
-	      return d.level == "county";
-	    })
+		statewide_data = data.filter(function(d) {
+      return d.level == "state";
+    });
+    county_data = data.filter(function(d) {
+      return d.level == "county";
+    })
 
-			statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
-			county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
+		statewide_data = _.orderBy(statewide_data, ["votecount"], ["desc"])
+		county_data_grouped = Object.entries(_.chain(county_data).orderBy(["votecount"], ["desc"]).groupBy("fipscode").value());
 
-			// This data used to generate the density maps, in order of biggest vote getters
-			results_by_candidate = [];
-			if (statewide_data.length > 0) {
-				active_candidates.forEach(function(candidate){
-					let candidate_data = {
-						'candidate': candidate,
-						'results': county_data.filter(function(d) {
-				      return d.last == candidate;
-				    })
-					}
-					if (candidate_data.results.length > 0) {
-						candidate_data.total_votes = statewide_data.filter(function(d) {
-				      return d.last == candidate;
-				    })[0].votecount
-						results_by_candidate.push(candidate_data);
-					}
-				});
-				results_by_candidate = results_by_candidate.sort(function(first, second) {
-				 return second.total_votes - first.total_votes;
-				})
-			}
-		// }
+		// This data used to generate the density maps, in order of biggest vote getters
+		results_by_candidate = [];
+		if (statewide_data.length > 0) {
+			active_candidates.forEach(function(candidate){
+				let candidate_data = {
+					'candidate': candidate,
+					'results': county_data.filter(function(d) {
+			      return d.last == candidate;
+			    })
+				}
+				if (candidate_data.results.length > 0) {
+					candidate_data.total_votes = statewide_data.filter(function(d) {
+			      return d.last == candidate;
+			    })[0].votecount
+					results_by_candidate.push(candidate_data);
+				}
+			});
+			results_by_candidate = results_by_candidate.sort(function(first, second) {
+			 return second.total_votes - first.total_votes;
+			})
+		}
 	}
 
 	let getData = async function() {
@@ -130,14 +120,13 @@
 		elex_controls = json;
 	}
 
-	// let time = 30;
 	function countdown() {
-		console.log(timerInterval, time);
+		format_timer_remaining_nuclear(time);
 		if (time == 0) {
-			// time = 'Updating...'
 			clearInterval(timerInterval);
 			// Wait 1 second so we see the "updating" message
-			backup_timer = setTimeout(getData, 1000);
+			// backup_timer = setTimeout(getData, 1000);
+			getData();
 		}
 		else {
 			time--;
@@ -158,11 +147,12 @@
 		if (response.ok) {
 			console.log('got initial data, starting interval')
 			data = json;
+			format_timer_remaining_nuclear(time);
 			timerInterval = setInterval(countdown, 1000);
 		}
 		else {
 			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-			console.log('results error')
+			console.log('results error. Checking again in 3 seconds.')
 			backup_timer = setTimeout(getData, 3000)
 		}
 
@@ -246,26 +236,15 @@
 	</div>
 
 	<h1>{title}</h1>
-	<div class="share-block"></div>
+	<!-- <div class="share-block"></div> -->
 
 	<p>Super Tuesday is around the corner, and nearly one-third of this presidential cycle’s delegates will be up for grabs from 14 states, including Minnesota. Though Republicans also have a primary tonight, Pres. Donald Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> here.</p>
 	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
 </div>
 
-<!-- <Timer /> -->
 <div class="updates">
 	<p class="live2">&bull; LIVE</p>
-	<!-- <TimerMini {time}></TimerMini> -->
-	<p class="countdown">{time_formatted}</p>
-	{#if typeof(time) == "string"}
-	<p class="countdown">{time}</p>
-	{:else}
-		{#if time < 10}
-		<p class="countdown">Checking for new data 0:0{time}</p>
-		{:else}
-		<p class="countdown">Checking for new data 0:{time}</p>
-		{/if}
-	{/if}
+	<p id="countdown-container" class="countdown">Loading data ...</p>
 </div>
 
 

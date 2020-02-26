@@ -32,7 +32,7 @@
   const f_max = d3.format(x_max_formatter);
   const f_votes = d3.format(',')
 
-  console.log(verbose_labels);
+  // console.log(verbose_labels);
 
   $: {
     chart_data = demographics.map(function (county) {
