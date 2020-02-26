@@ -71,16 +71,26 @@
   }
 
   const showDemoTooltips = function(event) {
-    d3.selectAll('.votes-tooltip').attr("opacity", "0");
-    d3.selectAll('.votes-tooltip-dagger').attr("opacity", "0");
+    d3.selectAll('.votes-tooltip').style("opacity", "0");
+    d3.selectAll('.votes-tooltip-dagger').style("opacity", "0");
 
     let svg = d3.select('#' + x_var + '-' + candidate_id + '-chart');
-    let current_x = positionScale(d3.select(event.target).attr('data-x')) + '%';
+    let current_x = positionScale(d3.select(event.target).attr('data-x'));
+    let current_x_str = current_x + '%';
 
-    console.log(current_x, event.target);
-    svg.select('.votes-tooltip').attr("x", current_x);
-    svg.select('.votes-tooltip-dagger').attr("x1", current_x);
-    svg.select('.votes-tooltip-dagger').attr("x2", current_x);
+    // console.log(current_x, current_x_str, event.target);
+    svg.select('.votes-tooltip').attr("x", current_x_str);
+    svg.select('.votes-tooltip-dagger').attr("x1", current_x_str);
+    svg.select('.votes-tooltip-dagger').attr("x2", current_x_str);
+
+    svg.select('.votes-tooltip').attr("text-anchor", function () {
+      if (current_x < 20) {
+        return "start";
+      } else if (current_x > 80) {
+        return "end";
+      }
+      return "middle";
+    });
     svg.select('.votes-tooltip').text(event.target.getAttribute('data-display-var'));
     svg.select('.votes-tooltip').style("opacity", "1");
     svg.select('.votes-tooltip-dagger').style("opacity", "1");
