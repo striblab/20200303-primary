@@ -1,9 +1,12 @@
 <script>
+	// import TimerMini from './TimerMini.svelte';
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
 	import VotesByPop from './VotesByPop.svelte';
 	import Promos from './Promos.svelte';
+
+	import * as d3 from 'd3';
 	// import Timer from './Timer.svelte';
 
 	import mn from './data/mn.json';
@@ -40,21 +43,44 @@
 
 	let last_updated;
 	let datestring;
+	let timerInterval;
+	export let time = 30;
+	export let time_formatted = 'Getting data...'
+	let backup_timer;
+	let backup_timer_controls;
+	const zero = d3.format("02d");
 
 	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
-	$: {
-		if (statewide_data.length == 0) {
-			last_updated = '';
-		}
-		else {
-			datestring = new Date(statewide_data[0].lastupdated)
-			last_updated = datestring.toLocaleString('en-US', options)
-			// last_updated = statewide_data[0].lastupdated
+	// $: {
+	//
+	// }
+
+	const format_timer_remaining = function (input) {
+		if (input == 0) {
+			return 'Updating...'
+		} else {
+			return 'Checking for new data 0:' + zero(input);
 		}
 	}
 
+	$: time_formatted = format_timer_remaining(time);
+
 	$ : {
-		// if (data){
+			if (statewide_data.length == 0) {
+				last_updated = '';
+			}
+			else {
+				datestring = new Date(statewide_data[0].lastupdated)
+				last_updated = datestring.toLocaleString('en-US', options)
+				// last_updated = statewide_data[0].lastupdated
+			}
+
+		// 	if (time == 0) {
+		// 		time_formatted = 'Updating...'
+		// 	} else {
+		// 		time_formatted = 'Checking for new data 0:' + zero(time);
+		// 	}
+		// // if (data){
 			statewide_data = data.filter(function(d) {
 	      return d.level == "state";
 	    });
@@ -92,7 +118,7 @@
 	let getData = async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const json = await response.json()
+		const json = await response.json();
 		data = json;
 		time = 30;
 		timerInterval = setInterval(countdown, 1000);
@@ -104,21 +130,20 @@
 		elex_controls = json;
 	}
 
-	let time = 30;
+	// let time = 30;
 	function countdown() {
+		console.log(timerInterval, time);
 		if (time == 0) {
-			time = 'Updating...'
-			setTimeout(getData, 1000)
+			// time = 'Updating...'
 			clearInterval(timerInterval);
+			// Wait 1 second so we see the "updating" message
+			backup_timer = setTimeout(getData, 1000);
 		}
 		else {
 			time--;
 		}
 	}
-	let timerInterval = setInterval(countdown, 1000);
 
-	let backup_timer;
-	let backup_timer_controls;
 	onMount(async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
@@ -131,7 +156,9 @@
 		// const localJson = await localResponse.json();
 		// const demographicJson = await demographicResponse.json();
 		if (response.ok) {
+			console.log('got initial data, starting interval')
 			data = json;
+			timerInterval = setInterval(countdown, 1000);
 		}
 		else {
 			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
@@ -228,6 +255,8 @@
 <!-- <Timer /> -->
 <div class="updates">
 	<p class="live2">&bull; LIVE</p>
+	<!-- <TimerMini {time}></TimerMini> -->
+	<p class="countdown">{time_formatted}</p>
 	{#if typeof(time) == "string"}
 	<p class="countdown">{time}</p>
 	{:else}
