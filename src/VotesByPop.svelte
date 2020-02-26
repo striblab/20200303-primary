@@ -82,8 +82,8 @@
     svg.select('.votes-tooltip-dagger').attr("x1", current_x);
     svg.select('.votes-tooltip-dagger').attr("x2", current_x);
     svg.select('.votes-tooltip').text(event.target.getAttribute('data-display-var'));
-    svg.select('.votes-tooltip').attr("opacity", "1");
-    svg.select('.votes-tooltip-dagger').attr("opacity", "1");
+    svg.select('.votes-tooltip').style("opacity", "1");
+    svg.select('.votes-tooltip-dagger').style("opacity", "1");
 
   }
 </script>
