@@ -370,7 +370,7 @@
 					{#if Math.round(value[1].precinctsreporting) == 0}
 						-
 					{:else}
-						{Math.round(candidate.votepct * 100) }%
+						{Math.round(candidate.votepct * 1000) / 10 }%
 					{/if}
 				</td>
 	    </tr>
@@ -408,7 +408,7 @@
 							{intcomma(candidate.votecount)}
 						</td>
 						<td class="pct">
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						</td>
 					</tr>
 				{:else if statewide_data.filter(e => e.winner == true).length > 0}
@@ -425,7 +425,7 @@
 							{intcomma(candidate.votecount)}
 						</td>
 						<td class="pct">
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						</td>
 					</tr>
 				{:else}
@@ -449,7 +449,7 @@
 						{#if state_precincts_pct == 0}
 							-
 						{:else}
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						{/if}
 					</td>
 				</tr>
@@ -490,7 +490,7 @@
 							{intcomma(candidate.votecount)}
 						</td>
 						<td class="pct">
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						</td>
 					</tr>
 				{:else if statewide_data.filter(e => e.winner == true).length > 0}
@@ -507,7 +507,7 @@
 							{intcomma(candidate.votecount)}
 						</td>
 						<td class="pct">
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						</td>
 					</tr>
 				{:else}
@@ -531,7 +531,7 @@
 						{#if state_precincts_pct == 0}
 							-
 						{:else}
-							{Math.round(candidate.votepct * 100) }%
+							{Math.round(candidate.votepct * 1000) / 10 }%
 						{/if}
 					</td>
 				</tr>
