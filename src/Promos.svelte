@@ -14,11 +14,11 @@ export let elex_controls;
       {/each}
     </ul>
   </div>
-  <!-- <div class="hot-dish">
+  <div class="hot-dish">
     <h3>Morning Hot Dish</h3>
     <p>Minnesota political news and musings, served up every weekday morning.</p>
     <iframe width="300" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
-  </div> -->
+  </div>
   <div class="otherStories">
     <h3>More Star Tribune political coverage from Super Tuesday</h3>
     <ul>
