@@ -1,5 +1,4 @@
 <script>
-	// import TimerMini from './TimerMini.svelte';
 	import Map from './Map.svelte';
 	import VoteDensityMap from './VoteDensityMap.svelte';
 	import Autocomplete from './Autocomplete.svelte';
@@ -7,7 +6,6 @@
 	import Promos from './Promos.svelte';
 
 	import * as d3 from 'd3';
-	// import Timer from './Timer.svelte';
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -52,13 +50,7 @@
 	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
 	const format_timer_remaining_nuclear = function (input) {
-		if (input == 0) {
-			document.getElementById('countdown-container').innerHTML = 'Updating...';
-			// return 'Updating...'
-		} else {
-			// return 'Checking for new data 0:' + zero(input);
-			document.getElementById('countdown-container').innerHTML = 'Checking for new data 0:' + zero(input);
-		}
+		document.getElementById('countdown-container').innerHTML = 'Checking for new data 0:' + zero(input);
 	}
 
 	$ : {
@@ -106,67 +98,48 @@
 	}
 
 	let getData = async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
+		document.getElementById('countdown-container').innerHTML = 'Updating...';
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const json = await response.json();
-		data = json;
-		time = 30;
-		timerInterval = setInterval(countdown, 1000);
+
+		if (response.ok) {
+			time = 30;
+			format_timer_remaining_nuclear(time);
+			timerInterval = setInterval(countdown, 1000);
+			data = await response.json();
+      return data;
+    } else {
+			document.getElementById('countdown-container').innerHTML = "Couldn't load data. Trying again in 5 seconds...";
+			backup_timer = setTimeout(getData, 5000);
+			// data = [];  // Don't do this so you don't overwrite good results with a temporary 404
+			return [];
+    }
 	}
 
 	let getElexControls = async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
-		const json = await response.json()
-		elex_controls = json;
+
+		if (response.ok) {
+			elex_controls = await response.json()
+      return elex_controls;
+    } else {
+			throw new Error(todo);
+    }
 	}
 
 	function countdown() {
-		format_timer_remaining_nuclear(time);
 		if (time == 0) {
 			clearInterval(timerInterval);
-			// Wait 1 second so we see the "updating" message
-			// backup_timer = setTimeout(getData, 1000);
 			getData();
 		}
 		else {
+			format_timer_remaining_nuclear(time);
 			time--;
 		}
 	}
 
 	onMount(async function() {
-		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const elex_response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
-		// const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
-		// const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
-    // // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");
-    const json = await response.json();
-		const elex_json = await elex_response.json();
-		// const localJson = await localResponse.json();
-		// const demographicJson = await demographicResponse.json();
-		if (response.ok) {
-			console.log('got initial data, starting interval')
-			data = json;
-			format_timer_remaining_nuclear(time);
-			timerInterval = setInterval(countdown, 1000);
-		}
-		else {
-			// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-			console.log('results error. Checking again in 3 seconds.')
-			backup_timer = setTimeout(getData, 3000)
-		}
-
-		if (elex_response.ok) {
-			elex_controls = elex_json;
-		}
-		else {
-			console.log('controls error')
-			backup_timer_controls = setTimeout(getElexControls, 3000)
-		}
-
-		// wire = wireJson;
-		// local = localJson;
-		// demographic = demographicJson;
+		getData();
+		getElexControls();
   });
 
 </script>
