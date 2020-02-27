@@ -211,6 +211,8 @@
 		justify-content: space-between;
 		font-family: "Benton Sans", sans-serif;
 		color: #BBB;
+		padding-top: 7px !important;
+		font-size: 13px !important;
 	}
 
 	/* .candidate-breakdown {
