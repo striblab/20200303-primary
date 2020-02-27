@@ -95,6 +95,7 @@ p.lastUpdated {
 		max-width: 550px;
 		font-size: 16px;
 		margin: 15px auto;
+		line-height: 140%;
 	}
 
 	a {
@@ -141,7 +142,7 @@ p.lastUpdated {
 #map {
 	max-width: 1000px;
 	margin: 0 auto;
-	margin-bottom: 75px !important;
+	margin-bottom: 100px !important;
 	// height: auto;
 	// display: flex;
 	// display: block;
@@ -167,7 +168,7 @@ p.lastUpdated {
 #candidate-support {
 	max-width: 1000px;
 	margin: 0 auto;
-	margin-bottom: 75px;
+	margin-bottom: 65px;
 
 	h2 {
 		margin-bottom: 0;
@@ -177,6 +178,7 @@ p.lastUpdated {
 		font-family: "Benton Sans", sans-serif;
 		font-size: 16px;
 		font-weight: bold;
+		// margin-bottom: 0 !important;
 	}
 
 	h5 {
@@ -195,6 +197,7 @@ p.lastUpdated {
 
 	#geography .small-maps{
 		justify-content: space-between;
+		margin-bottom: 60px;
 	}
 
 	#demographics-groups {
@@ -225,6 +228,7 @@ p.lastUpdated {
 
 		h5.chart-label {
 			margin: 0;
+			margin-top: -100px;
 		}
 
 		svg {
@@ -296,7 +300,7 @@ p.lastUpdated {
 #related {
 	max-width: 1000px;
 	margin: 0 auto;
-	margin-bottom: 85px;
+	margin-bottom: 100px;
 
 	.relatedContainer {
 		background-color: #D0D0D0;
@@ -327,6 +331,7 @@ p.lastUpdated {
 #credits {
 	max-width: 1000px;
 	margin: 0 auto;
+	margin-bottom: 125px;
 	p {
 		font-family: "Benton Sans", sans-serif;
 		font-size: 12px;

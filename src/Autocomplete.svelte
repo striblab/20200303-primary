@@ -283,7 +283,7 @@
     box-shadow: 2px 2px 24px rgba(0, 0, 0, 0.1);
     position: absolute;
     z-index: 100;
-		font-family: "Benton Sans", sans-serif;
+		font-family: "Benton Sans", sans-serif !important;
 		font-size: 16px !important;
   }
 
@@ -293,6 +293,7 @@
     text-align: left;
     height: 2rem;
     padding: 0.25rem 0.5rem;
+		font-family: "Benton Sans", sans-serif !important;
     cursor: pointer;
   }
 
