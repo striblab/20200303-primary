@@ -90,8 +90,8 @@ const circle_sizer = function(input) {
   }
 
   h4.cand-name {
-    font-size: 0.9em;
-    margin: 1em 0 0.5em;
+    font-size: 16px;
+    margin-bottom: 0;
   }
 
   .provinceShape {

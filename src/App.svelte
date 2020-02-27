@@ -50,7 +50,7 @@
 	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
 	const format_timer_remaining_nuclear = function (input) {
-		document.getElementById('countdown-container').innerHTML = 'Checking for new data 0:' + zero(input);
+		document.getElementById('countdown-container').innerHTML = 'Checking for new data in 0:' + zero(input);
 	}
 
 	$ : {

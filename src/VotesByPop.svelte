@@ -103,18 +103,13 @@
 </style>
 
 <div class="demographic-chart">
-  <h5 class="chart-label">{x_var_label}</h5>
+
   <svg id="{x_var}-{candidate_id}-chart" style="width: 100%; height: {height}px;">
     <g class="chart-lines" transform="translate(0, {height/2})">
       <line class="x-axis" x1="0" x2="0" y1="-10" y2="10"/>
       <line class="x-axis" x1="0" x2="100%" y1="0" y2="0"/>
       <line class="x-axis" x1="100%" x2="100%" y1="-10" y2="10"/>
       <line class="median" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-22" y2="22"/>
-    </g>
-    <g class="chart-labels" transform="translate(0, {height/2})">
-      <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)}{#if verbose_labels == true} {x_unit}{/if}</text>
-      <text class="axis-label" text-anchor="end" x="101%" y="23">{f_max(x_axis_max)}{#if verbose_labels == true} {x_unit}{/if}</text>
-      {#if verbose_labels == true}<text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)}</text>{/if}
     </g>
     <g class="county-circles" transform="translate(0, {height/2})">
     {#each chart_data as county}
@@ -124,9 +119,15 @@
       {/if}
     {/each}
     </g>
+    <g class="chart-labels" transform="translate(0, {height/2})">
+      <text class="axis-label" x="-3" y="23">{f_min(x_axis_min)}{#if verbose_labels == true} {x_unit}{/if}</text>
+      <text class="axis-label" text-anchor="end" x="101%" y="23">{f_max(x_axis_max)}{#if verbose_labels == true} {x_unit}{/if}</text>
+      {#if verbose_labels == true}<text class="median-label" text-anchor="middle" x="{positionScale(median_x)}%" y="35">median: {f_max(median_x)}</text>{/if}
+    </g>
     <g class="chart-tooltip-stuff" transform="translate(0, {height/2})">
       <text class="votes-tooltip" text-anchor="middle" x="{positionScale(median_x)}%" y="-30"></text>
       <line class="votes-tooltip-dagger" x1="{positionScale(median_x)}%" x2="{positionScale(median_x)}%" y1="-27" y2="-2"/>
     </g>
   </svg>
+  <h5 class="chart-label">{x_var_label}</h5>
 </div>

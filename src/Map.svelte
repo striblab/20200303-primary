@@ -433,5 +433,5 @@ function countyClass(feature, county_data) {
       {/each}
     </g>
   </svg>
-  <p class="mapTie">Stripes indicate a tie.</p>
+  <p class="mapTie">Stripes indicate a tie in a county.</p>
 </div>
