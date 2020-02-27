@@ -115,7 +115,7 @@
 	}
 
 	let getElexControls = async function() {
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/test_controls.json");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
 		const json = await response.json()
 		elex_controls = json;
 	}
@@ -136,7 +136,7 @@
 	onMount(async function() {
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200206040222.json"); // iowa
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		const elex_response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/test_controls.json");
+		const elex_response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
 		// const localResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/local.json");
 		// const demographicResponse = await fetch("https://static.startribune.com/elections/projects/2020-election-results/demographic.json");
     // // const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200210170906.json");

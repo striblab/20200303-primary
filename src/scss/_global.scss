@@ -87,7 +87,7 @@ p.lastUpdated {
 .leadin {
 	text-align: center;
 	margin-bottom: 100px;
-	margin-top: 50px;
+	margin-top: 0;
 
 	p {
 		font-family: "Poynter Serif RE",Georgia,Times,serif !important;
@@ -354,6 +354,10 @@ p.lastUpdated {
 
 	.leadin .leadinDesktop {
 		display: none;
+	}
+
+	.leadin {
+		margin-top: 15px !important;
 	}
 }
 
