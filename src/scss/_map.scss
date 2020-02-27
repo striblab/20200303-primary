@@ -221,6 +221,19 @@ $candColors: (
   }
 }
 
+@media (max-width: 1024px) {
+  @each $cand, $color in $candColors {
+    .winner .cand .legend-#{$cand} {
+      height: 10px;
+      width: 10px;
+      background-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      margin-right: 9px !important;
+    }
+  }
+}
+
 @media (max-width: 500px) {
 	#density-maps {
 		justify-content: center;
