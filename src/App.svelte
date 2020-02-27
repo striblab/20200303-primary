@@ -217,7 +217,7 @@
 	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
 </div>
 
-<div class="updates">
+<div id="maptop" class="updates">
 	<p class="live2">&bull; LIVE</p>
 	<p id="countdown-container" class="countdown">Loading data ...</p>
 </div>
