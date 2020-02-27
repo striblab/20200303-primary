@@ -415,7 +415,6 @@ function countyClass(feature, county_data) {
         on:mouseover="{buildTooltip(this, feature)}"
         on:mousemove="{positionTooltip}"
         on:mouseout="{hideTooltip(this, feature)}"
-        onclick="void(0)"
         county_name={feature.properties.NAME.replace(/\s/g,'').replace(/\./g,' ').toUpperCase()}/>
       {/each}
     </g>
