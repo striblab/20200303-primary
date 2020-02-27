@@ -240,9 +240,12 @@ function buildTooltip(path, feature) {
             .style('opacity', 1)
             .style('stroke-width', 1.5)
 
+        // Google analytics event
+        // console.log(county_name);
+        window.gtag("event", "Map county hover/click", {'event_category': '2020 Primary results', 'event_label': county_name});
       }
 
-}
+  }
 
 function positionTooltip(event) {
   if (county_data_grouped) {

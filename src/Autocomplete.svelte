@@ -26,6 +26,9 @@
 		let counties = [];
 		var i;
 
+		// export let search_timeout;
+		// export let previous_search_term = '';
+
 		let last_updated = '';
 		let state_precincts_pct;
 		let datestring;
@@ -59,10 +62,12 @@
 			if (expanded === false) {
 				expanded = true;
 				expand_cands = '\u2013 See active candidates';
+				window.gtag("event", "Candidate list click", {'event_category': '2020 Primary results', 'event_label': 'Show all candidates'});
 			}
 			else {
 				expanded = false;
 				expand_cands = '+ See all candidates';
+				window.gtag("event", "Candidate list click", {'event_category': '2020 Primary results', 'event_label': 'Show only top candidates'});
 			}
 
 		}
@@ -186,6 +191,7 @@
 
 				const height = results.length > maxItems ? maxItems : results.length
 				list.style.height = `${height * 2.25}rem`
+
 			}
     function onKeyDown (event) {
       if (event.keyCode === 40 && arrowCounter < results.length) {
@@ -231,6 +237,9 @@
 					.style('opacity', 1)
 					.style('stroke-width', 1.5)
 
+			// send Google analytics event
+			logSearch(key);
+
       } else if (!value) {
         search = null;
       }
@@ -242,6 +251,10 @@
        isOpen = true;
        filterResults();
     }
+	}
+
+	const logSearch = function (search_string) {
+		window.gtag("event", "County search", {'event_category': '2020 Primary results', 'event_label': search_string});
 	}
 
 </script>

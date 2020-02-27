@@ -95,6 +95,8 @@
     svg.select('.votes-tooltip').style("opacity", "1");
     svg.select('.votes-tooltip-dagger').style("opacity", "1");
 
+    window.gtag("event", "Bubble chart (" + x_var + ")", {'event_category': '2020 Primary results', 'event_label': candidate_id});
+
   }
 </script>
 

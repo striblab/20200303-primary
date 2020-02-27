@@ -140,6 +140,13 @@
 	onMount(async function() {
 		getData();
 		getElexControls();
+
+		// Connect to Google analytics so you can send events
+		window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+		window.gtag = gtag;
+	  gtag('js', new Date());
+	  gtag('config', 'UA-114906116-1');
   });
 
 </script>
