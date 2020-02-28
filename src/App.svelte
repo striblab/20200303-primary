@@ -220,11 +220,13 @@
 	<h1>{title}</h1>
 	<div class="share-block"></div>
 
-	<p>Super Tuesday is around the corner, and nearly one-third of this presidential cycle’s delegates will be up for grabs from 14 states, including Minnesota. Though Republicans also have a primary tonight, Pres. Donald Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> here.</p>
-	<p class="leadinDesktop">Eight major candidates remain in the nomination fight, and it will be former New York City Mayor Mike Bloomberg’s first test for votes after sitting out the first four states. Hometown Sen. Amy Klobuchar will be looking to garner big support here, but it could be tight between her and national leader Sen. Bernie Sanders, who  won Minnesota’s presidential caucus fight in 2016 against Hillary Clinton.</p>
+	<p>
+		Super Tuesday, when voters in Minnesota and 13 other states help choose their party's presidential nominee, is March 3. Nearly one-third of the Democratic Party delegates will be up for grabs. Although Republicans also have a primary, President Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> in Minnesota.
+	</p>
+	<p class="leadinDesktop">Eight major candidates remain in the Democratic contest, and it will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses. Minnesota Sen. Amy Klobuchar will be looking to garner big support — and delegates — in her home state, but it could be a close race against Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton.</p>
 </div>
 
-<div id="maptop" class="updates">
+<div id="maptop" class="updates" style="display: none;">
 	<p class="live2">&bull; LIVE</p>
 	<p id="countdown-container" class="countdown">Loading data ...</p>
 	<p class="lastUpdatedIe">Results update about every 30 seconds</p>
@@ -405,7 +407,7 @@
 
 <section id="delegate-tracker">
 	<h2>Committed delegates by candidate</h2>
-	<p>Going into Super Tuesday, Sen. Sanders holds a 20-delegate lead over the next closest challenger, Mayor Buttigieg. It's been a relatively tight race otherwise, with former Vice President Biden, and Sens. Warren and Klobuchar closer to the bottom. Fourteen states vote March 3, including Minnesota, California and Texas, so more than 1,300 delegates are at stake, the most of any single day of the primary season. After Tuesday, the race could look very different.</p>
+	<p>Heading into Super Tuesday, Sanders holds a 20-delegate lead over his next closest challenger, and he could widen his lead on March 3. More than 1,300 delegates will be at stake, the most of any single day of the primary season.</p>
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
