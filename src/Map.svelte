@@ -114,6 +114,9 @@ function buildTooltip(path, feature) {
           for (i = 0; i < tooltipResults.length; i++) {
             if (viable.includes(tooltipResults[i].last)) {
               top_six.push(tooltipResults[i])
+              top_six.sort(function(a, b) {
+       					return a.last.localeCompare(b.last);
+    					})
             }
           }
         }
