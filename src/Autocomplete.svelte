@@ -42,16 +42,15 @@
 			if (statewide_data.length > 0) {
 				datestring = new Date(statewide_data[0].lastupdated)
 				last_updated = datestring.toLocaleString('en-US', options)
-				// console.log('changing date')
-				// console.log(last_updated)
-				// console.log('inside if')
+				state_precincts_pct = statewide_data[0].precinctsreportingpct;
+
+				if (statewide_data[0].precinctsreporting === 0) {
+					statewide_data.sort(function(a, b) {
+   					return a.last.localeCompare(b.last);
+					})
+				}
 			}
 
-			if (statewide_data.length > 0) {
-				state_precincts_pct = statewide_data[0].precinctsreportingpct;
-				// console.log('changing precinct pct')
-				// console.log(state_precincts_pct)
-			}
 		}
 
 		// expanding table variables
@@ -337,7 +336,7 @@
 	{/if}
 </div> -->
 {#if statewide_data.length > 0}
-<LastUpdated timestamp={last_updated} raw_timestamp={statewide_data[0].lastupdated}></LastUpdated>
+<LastUpdated timestamp={last_updated} raw_timestamp={statewide_data[0].lastupdated} {statewide_data}></LastUpdated>
 {/if}
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input
