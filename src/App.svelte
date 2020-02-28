@@ -227,6 +227,7 @@
 <div id="maptop" class="updates">
 	<p class="live2">&bull; LIVE</p>
 	<p id="countdown-container" class="countdown">Loading data ...</p>
+	<p class="lastUpdatedIe">Results update about every 30 seconds</p>
 </div>
 
 
@@ -382,7 +383,7 @@
 <div class="mobileRelated">
 
 	<div class="otherStoriesMobile">
-		<h3>More Star Tribune political coverage from Super Tuesday</h3>
+		<h3>Minnesota primary updates</h3>
 		<ul>
 			{#each elex_controls.local as result}
 			<li><a href="{result.url}">{result.headline}</a></li>
@@ -403,8 +404,8 @@
 <!-- {/if} -->
 
 <section id="delegate-tracker">
-	<h2>Delegate Tracker</h2>
-	<p>Chatter about delegate tracker</p>
+	<h2>Committed delegates by candidate</h2>
+	<p>Going into Super Tuesday, Sen. Sanders holds a 20-delegate lead over the next closest challenger, Mayor Buttigieg. It's been a relatively tight race otherwise, with former Vice President Biden, and Sens. Warren and Klobuchar closer to the bottom. Fourteen states vote March 3, including Minnesota, California and Texas, so more than 1,300 delegates are at stake, the most of any single day of the primary season. After Tuesday, the race could look very different.</p>
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>

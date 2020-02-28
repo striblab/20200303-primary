@@ -70,6 +70,10 @@ $candColors: (
   }
 }
 
+.lastUpdatedIe {
+  display: none;
+}
+
 #resultsMap {
   margin-left: 15px;
   max-width: 500px;
@@ -217,7 +221,19 @@ $candColors: (
 // IE11 needs a specific height
 @media screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
   .county-map {
-    height: 400px;
+    height: 600px;
+  }
+
+  #countdown-container {
+    display: none;
+  }
+
+  .lastUpdated {
+    display: none;
+  }
+
+  .lastUpdatedIe {
+    display: block;
   }
 }
 

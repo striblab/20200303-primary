@@ -120,7 +120,7 @@ p.lastUpdated {
 		}
 
 		h3 {
-			font-family: "Benton Sans", sans-serif !important;
+			font-family: "Popular", sans-serif !important;
 			margin-bottom: 0 !important;
 			margin-top: 0 !important;
 		}
@@ -152,6 +152,7 @@ p.lastUpdated {
     height: 2rem;
     font-size: 1rem;
     padding: 0.25rem 0.5rem;
+		font-family: "Benton Sans", sans-serif;
   }
 
 	.county_input {
@@ -192,7 +193,7 @@ p.lastUpdated {
 		font-family: "Benton Sans", sans-serif;
 		font-size: 15px !important;
 		margin-top: 7px;
-		margin-bottom: 15px !important;
+		margin-bottom: 30px !important;
 	}
 
 	#geography .small-maps{
@@ -207,6 +208,7 @@ p.lastUpdated {
 
 		p {
 			font-size: 13px !important;
+			margin-bottom: 15px !important;
 		}
 
 		h3 {

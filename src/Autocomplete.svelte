@@ -337,7 +337,7 @@
 	{/if}
 </div> -->
 {#if statewide_data.length > 0}
-<LastUpdated timestamp={last_updated}></LastUpdated>
+<LastUpdated timestamp={last_updated} raw_timestamp={statewide_data[0].lastupdated}></LastUpdated>
 {/if}
 <div on:click="{(event)=>event.stopPropagation()}" class="autocomplete">
   <input

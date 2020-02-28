@@ -7,7 +7,7 @@ export let elex_controls;
 {#if elex_controls}
 <div class="promos">
   <div class="natWire">
-    <h3>Other Super Tuesday Results and this gets the headline to 2 lines</h3>
+    <h3>Super Tuesday: National news</h3>
     <ul>
       {#each elex_controls.wire as result}
       <li><a href="{result.url}">{result.headline}</a></li>
@@ -20,7 +20,7 @@ export let elex_controls;
     <iframe width="300" height="150" src="http://www.startribune.com/hot-dish-signup/567799381/?c=n" frameborder="0" title="Hot Dish Signup"></iframe>
   </div>
   <div class="otherStories">
-    <h3>More Star Tribune political coverage from Super Tuesday</h3>
+    <h3>Minnesota primary updates</h3>
     <ul>
       {#each elex_controls.local as result}
       <li><a href="{result.url}">{result.headline}</a></li>
