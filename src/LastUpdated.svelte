@@ -10,7 +10,7 @@ import * as moment from 'moment';
   let last_updatedIE;
   let options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
-  let results = false
+  let results = false;
 
   moment.defaultFormat = "DD.MM.YYYY HH:mm";
 

@@ -100,7 +100,6 @@
 	let getData = async function() {
 		document.getElementById('countdown-container').innerHTML = 'Updating...';
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
-		// const response2 = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-20200228172115.json");
 
 		if (response.ok) {
 			time = 30;
