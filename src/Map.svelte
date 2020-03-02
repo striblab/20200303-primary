@@ -299,6 +299,7 @@ function countyClass(feature, county_data) {
     </table>
 
       <div class="precincts">
+        <p class="">* = suspended campaign</p>
         { Math.round(tooltipResults[0].precinctsreportingpct * 100) }% precincts reporting in county
       </div>
       {/if}
