@@ -6,6 +6,8 @@
 	import Promos from './Promos.svelte';
 
 	import * as d3 from 'd3';
+	const queryString = require('query-string');
+	const scrollToElement = require('scroll-to-element');
 
 	import mn from './data/mn.json';
 	import mn_cities from './data/mn_cities.json';
@@ -20,7 +22,7 @@
 	// import ia_roads from './data/mn_roads.json';  // Not really using
 
 	import us_county_names from './data/us_county_names.json'
-	import { onMount } from 'svelte';
+	import { onMount, afterUpdate } from 'svelte';
 	import _ from 'lodash';
 
 	export let title;
@@ -47,6 +49,12 @@
 	let backup_timer;
 	let backup_timer_controls;
 	const zero = d3.format("02d");
+
+	let locked_to_map = false;
+	const parsed = queryString.parse(location.search);
+	if (parsed.lock_to_map == 'true') {
+		locked_to_map = true;
+	}
 
 	const dropped_asterisk = function (candidate) {
 		if (dropped_candidates.includes(candidate)) {
@@ -158,6 +166,13 @@
 	  gtag('config', 'UA-114906116-1');
   });
 
+	// Primarily for showing on a TV in the newsroom
+	if(locked_to_map === true) {
+		afterUpdate(() => {
+			scrollToElement('#maptop');
+		});
+	}
+
 </script>
 
 <style>
@@ -243,7 +258,7 @@
 
 
 <section id="map">
-	<div class="results">
+	<div id="results_top" class="results">
 		<!-- {#if statewide_data.length > 0} -->
 		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {dropped_candidates} {us_county_names} />
 		<!-- {/if} -->
