@@ -444,6 +444,7 @@
 	</tbody>
 </table>
 
+<p class="asterisk"><span>*</span> = suspended campaign</p>
 <p class="precincts">{ Math.round(value[1].precinctsreportingpct * 100) }% of precincts reporting</p>
 
 {:else if search.length <= 2 }
@@ -590,7 +591,7 @@
 
 {#if statewide_data.length > 0}
 <!-- <p class="asterisk">Asterisks indicate suspended campaign</p> -->
-<p class="asterisk">* = suspended campaign</p>
+<p class="asterisk"><span>*</span> = suspended campaign</p>
 <Precincts {state_precincts_pct}/>
 {/if}
 
@@ -674,8 +675,8 @@
 </table>
 
 {#if statewide_data.length > 0}
+<p class="asterisk"><span>*</span> = suspended campaign</p>
 <Precincts {state_precincts_pct}/>
-<p>Asterisks indicates candidate suspended their campaign</p>
 {/if}
 {/if}
 </div>

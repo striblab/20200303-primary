@@ -143,6 +143,11 @@ p.asterisk {
 	font-family: "Benton Sans", sans-serif;
   font-size: 12px;
   color: #a0a0a0;
+	margin-bottom: 0 !important;
+
+	span {
+		font-size: 14px;
+	}
 }
 
 #map {
@@ -303,7 +308,7 @@ p.asterisk {
 	font-style: italic;
 	font-size: 12px;
 	color: #A0A0A0;
-	margin-top: 12px !important;
+	margin-top: 6px !important;
 }
 
 #related {
