@@ -36,7 +36,7 @@
 
   export let statewide_data = [];
 
-	export let active_candidates = ['Biden', 'Bloomberg', 'Gabbard', 'Klobuchar', 'Sanders', 'Warren'];
+	export let active_candidates = ['Biden', 'Bloomberg', 'Gabbard', 'Sanders', 'Warren'];
 	export let results_by_candidate = [];
 
 	let last_updated;
@@ -223,7 +223,7 @@
 	<p>
 		Super Tuesday, when voters in Minnesota and 13 other states help choose their party's presidential nominee, is March 3. Nearly one-third of the Democratic Party delegates will be up for grabs. Although Republicans also have a primary, President Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> in Minnesota.
 	</p>
-	<p class="leadinDesktop">Six major candidates remain in the Democratic contest, and it will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses. Minnesota Sen. Amy Klobuchar will be looking to garner big support — and delegates — in her home state, but it could be a close race against Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton.</p>
+	<p class="leadinDesktop">With candidates in flux for the Democratic contest, the results could go several different ways. It will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses, but Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton, could do well again, especially with Amy Klobuchar now out of the race.</p>
 </div>
 
 <div id="maptop" class="updates" style="display: none;">
