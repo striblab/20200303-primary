@@ -36,7 +36,8 @@
 
   export let statewide_data = [];
 
-	export let active_candidates = ['Biden', 'Bloomberg', 'Gabbard', 'Sanders', 'Warren'];
+	export let active_candidates = ['Biden', 'Bloomberg', 'Buttigieg', 'Gabbard', 'Klobuchar', 'Sanders', 'Warren'];
+	export let dropped_candidates = ['Bennet', 'Booker', 'Buttigieg', 'Castro', 'Delaney', 'Klobuchar', 'Patrick', 'Steyer', 'Williamson', 'Yang'];
 	export let results_by_candidate = [];
 
 	let last_updated;
@@ -236,11 +237,11 @@
 <section id="map">
 	<div class="results">
 		<!-- {#if statewide_data.length > 0} -->
-		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {us_county_names} />
+		<Autocomplete {statewide_data} {county_data_grouped} items={county_data_grouped} {active_candidates} {dropped_candidates} {us_county_names} />
 		<!-- {/if} -->
 			<!-- <p class="lastUpdated">Last change: <span class="updatedTime">{last_updated}</span></p> -->
 		<!-- </Autocomplete> -->
-		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {us_county_names}/>
+		<Map county_topojson={mn} cityjson={mn_cities} roads_topojson={mn_roads} {county_data_grouped} {dropped_candidates} {us_county_names}/>
 	</div>
 </section>
 

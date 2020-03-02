@@ -92,6 +92,7 @@
 			export let statewide_data;
 			export let county_data_grouped;
 			export let active_candidates;
+			export let dropped_candidates;
 			export let us_county_names;
 
 			// autocomplete props
@@ -129,6 +130,13 @@
 						.style('stroke-width', 1)
 					  .style('opacity', 1)
 				}
+			}
+
+			function dropped_checker(candidate) {
+				if (dropped_candidates.includes(candidate)) {
+					return '*';
+				}
+				return '';
 			}
 
 			function dotColor(candidate, winner) {
@@ -384,9 +392,9 @@
 		      <td class="cand">
 						<span class="{dotColor2(candidate.last)}"></span>
 		        {#if candidate.first}
-		          {candidate.first} {candidate.last}
+		          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 		        {:else}
-		          {candidate.last}
+		          {candidate.last}{dropped_checker(candidate.last)}
 		        {/if}
 		      </td>
 		      <td class="votes">
@@ -410,9 +418,9 @@
 				<td class="cand">
 					<span class="{dotColor2(candidate.last)}"></span>
 					{#if candidate.first}
-						{candidate.first} {candidate.last}
+						{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 					{:else}
-						{candidate.last}
+						{candidate.last}{dropped_checker(candidate.last)}
 					{/if}
 				</td>
 				<td class="votes">
@@ -457,10 +465,10 @@
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 							{#if candidate.first}
-								{candidate.first} {candidate.last}
-							{:else}
-								{candidate.last}
-							{/if}
+			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+			        {:else}
+			          {candidate.last}{dropped_checker(candidate.last)}
+			        {/if}
 						</td>
 						<td class="votes">
 							{intcomma(candidate.votecount)}
@@ -474,10 +482,10 @@
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 							{#if candidate.first}
-								{candidate.first} {candidate.last}
-							{:else}
-								{candidate.last}
-							{/if}
+			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+			        {:else}
+			          {candidate.last}{dropped_checker(candidate.last)}
+			        {/if}
 						</td>
 						<td class="votes">
 							{intcomma(candidate.votecount)}
@@ -491,10 +499,10 @@
 					<td class="cand">
 						<span class="{dotColor2(candidate.last)}"></span>
 						{#if candidate.first}
-							{candidate.first} {candidate.last}
-						{:else}
-							{candidate.last}
-						{/if}
+		          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+		        {:else}
+		          {candidate.last}{dropped_checker(candidate.last)}
+		        {/if}
 					</td>
 					<td class="votes">
 						{#if state_precincts_pct == 0}
@@ -519,9 +527,9 @@
 				<td class="cand">
 					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 					{#if candidate.first}
-						{candidate.first} {candidate.last}
+						{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 					{:else}
-						{candidate.last}
+						{candidate.last}{dropped_checker(candidate.last)}
 					{/if}
 				</td>
 				<td class="votes">
@@ -536,9 +544,9 @@
 				<td class="cand">
 					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 					{#if candidate.first}
-						{candidate.first} {candidate.last}
+						{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 					{:else}
-						{candidate.last}
+						{candidate.last}{dropped_checker(candidate.last)}
 					{/if}
 				</td>
 				<td class="votes">
@@ -553,9 +561,9 @@
 			<td class="cand">
 				<span class="{dotColor2(candidate.last)}"></span>
 				{#if candidate.first}
-					{candidate.first} {candidate.last}
+					{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 				{:else}
-					{candidate.last}
+					{candidate.last}{dropped_checker(candidate.last)}
 				{/if}
 			</td>
 			<td class="votes">
@@ -602,10 +610,10 @@
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 							{#if candidate.first}
-								{candidate.first} {candidate.last}
-							{:else}
-								{candidate.last}
-							{/if}
+			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+			        {:else}
+			          {candidate.last}{dropped_checker(candidate.last)}
+			        {/if}
 						</td>
 						<td class="votes">
 							{intcomma(candidate.votecount)}
@@ -619,10 +627,10 @@
 						<td class="cand">
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
 							{#if candidate.first}
-								{candidate.first} {candidate.last}
-							{:else}
-								{candidate.last}
-							{/if}
+			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+			        {:else}
+			          {candidate.last}{dropped_checker(candidate.last)}
+			        {/if}
 						</td>
 						<td class="votes">
 							{intcomma(candidate.votecount)}
@@ -636,10 +644,10 @@
 					<td class="cand">
 						<span class="{dotColor2(candidate.last)}"></span>
 						{#if candidate.first}
-							{candidate.first} {candidate.last}
-						{:else}
-							{candidate.last}
-						{/if}
+		          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
+		        {:else}
+		          {candidate.last}{dropped_checker(candidate.last)}
+		        {/if}
 					</td>
 					<td class="votes">
 						{#if state_precincts_pct == 0}
