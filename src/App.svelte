@@ -48,6 +48,13 @@
 	let backup_timer_controls;
 	const zero = d3.format("02d");
 
+	const dropped_asterisk = function (candidate) {
+		if (dropped_candidates.includes(candidate)) {
+			return '*';
+		}
+		return '';
+	}
+
 	var options = { year: 'numeric', month: 'short', day: 'numeric', hour: 'numeric', minute: 'numeric'};
 
 	const format_timer_remaining_nuclear = function (input) {
@@ -118,6 +125,7 @@
 
 	let getElexControls = async function() {
 		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
+		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/test_controls.json");
 
 		if (response.ok) {
 			elex_controls = await response.json()
@@ -260,7 +268,7 @@
 		<div class="small-maps">
 		{#each results_by_candidate as candidate, i}
 			{#if i < 6 && candidate.results.length > 0}
-				<VoteDensityMap {candidate} county_topojson={mn} cityjson={mn_cities} />
+				<VoteDensityMap {candidate} dropped_asterisk={dropped_asterisk(candidate.results[0].last)} county_topojson={mn} cityjson={mn_cities} />
 			{/if}
 		{/each}
 		</div>
@@ -284,7 +292,7 @@
 				<VotesByPop
 					{candidate}
 					x_var='rPct_2016'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}{dropped_asterisk(candidate.results[0].last)}'
 					x_axis_min=0.25
 
 					x_axis_max=0.75
@@ -312,7 +320,7 @@
 				<VotesByPop
 					{candidate}
 					x_var='pct_nonwhite'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}{dropped_asterisk(candidate.results[0].last)}'
 					x_axis_min=0
 					x_axis_max=0.6
 					x_min_formatter='.0%'
@@ -339,7 +347,7 @@
 				<VotesByPop
 					{candidate}
 					x_var='median_income'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}{dropped_asterisk(candidate.results[0].last)}'
 					x_axis_min=44000
 					x_axis_max=100000
 					x_min_formatter='$,'
@@ -366,7 +374,7 @@
 				<VotesByPop
 					{candidate}
 					x_var='median_age'
-					x_var_label='{candidate.results[0].first} {candidate.results[0].last}'
+					x_var_label='{candidate.results[0].first} {candidate.results[0].last}{dropped_asterisk(candidate.results[0].last)}'
 					x_axis_min=30
 					x_axis_max=56
 					x_min_formatter='.2r'
