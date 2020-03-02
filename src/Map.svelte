@@ -25,7 +25,7 @@ $: {
   }
 }
 
-let viable = ['Biden', 'Sanders', 'Warren', 'Bloomberg', 'Klobuchar', 'Gabbard']
+let viable = ['Biden', 'Sanders', 'Warren', 'Bloomberg', 'Gabbard']
 let county_features;
 let city_points;
 let road_lines;
