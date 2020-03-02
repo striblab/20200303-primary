@@ -8,6 +8,7 @@ export let cityjson;
 export let roads_topojson;
 export let us_county_names;
 export let county_data_grouped;
+export let dropped_candidates;
 
 import { geoAlbers, geoPath, geoMercator } from "d3-geo";
 import { feature } from 'topojson';
@@ -77,6 +78,12 @@ const projection = d3.geoConicConformal()
 
 let path = d3.geoPath().projection(projection);
 
+function dropped_checker(candidate) {
+  if (dropped_candidates.includes(candidate)) {
+    return '*';
+  }
+  return '';
+}
 
 function hideTooltip(path, feature) {
   // console.log("hide")
@@ -270,7 +277,7 @@ function countyClass(feature, county_data) {
         {#if top_six}
           {#each top_six as result}
             <tr>
-              <td class="cand">{result.last}</td>
+              <td class="cand">{result.last}{dropped_checker(result.last)}</td>
               <td class="votes">
                 {#if Math.round(top_six[0].precinctsreporting) === 0}
                   -

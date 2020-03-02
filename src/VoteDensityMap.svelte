@@ -11,6 +11,7 @@ export let county_centroids;
 export let cityjson;
 let city_points = cityjson.features;
 export let candidate;
+export let dropped_asterisk = '';
 let aspect_ratio = 1.3
 export let width = 200;
 export let height = width * aspect_ratio;
@@ -111,7 +112,7 @@ const circle_sizer = function(input) {
   <!-- {#if candidate.results.length > 0}
   <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
   {/if} -->
-  <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}</h4>
+  <h4 class="cand-name">{candidate.results[0].first} {candidate.results[0].last}{dropped_asterisk}</h4>
   <svg viewBox="0 15 {width} {height + 15}" style="width: 100%; height: 100%;">
     <!-- on:mouseout="{hideTooltip(event)}" -->
     <g class="counties">
