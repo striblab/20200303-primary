@@ -54,18 +54,18 @@
 		}
 
 		// expanding table variables
-		let expand_cands = '+ See all candidates';
+		let expand_cands = '+ Show more candidates';
 		let expanded = false;
 
 		function handleClick() {
 			if (expanded === false) {
 				expanded = true;
-				expand_cands = '\u2013 See active candidates';
+				expand_cands = '\u2013 Show fewer candidates';
 				window.gtag("event", "Candidate list click", {'event_category': '2020 Primary results', 'event_label': 'Show all candidates'});
 			}
 			else {
 				expanded = false;
-				expand_cands = '+ See all candidates';
+				expand_cands = '+ Show more candidates';
 				window.gtag("event", "Candidate list click", {'event_category': '2020 Primary results', 'event_label': 'Show only top candidates'});
 			}
 
@@ -581,6 +581,8 @@
 </table>
 
 {#if statewide_data.length > 0}
+<!-- <p class="asterisk">Asterisks indicate suspended campaign</p> -->
+<p class="asterisk">* = suspended campaign</p>
 <Precincts {state_precincts_pct}/>
 {/if}
 
@@ -665,6 +667,7 @@
 
 {#if statewide_data.length > 0}
 <Precincts {state_precincts_pct}/>
+<p>Asterisks indicates candidate suspended their campaign</p>
 {/if}
 {/if}
 </div>
