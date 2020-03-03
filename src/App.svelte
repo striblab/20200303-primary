@@ -412,7 +412,7 @@
 		<h3>Minnesota primary updates</h3>
 		<ul>
 			{#each elex_controls.local as result}
-			<li><a href="{result.url}">{result.headline}</a></li>
+			<li><a href="{result.url}" target="_blank">{result.headline}</a></li>
 			{/each}
 		</ul>
 	</div>
