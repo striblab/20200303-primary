@@ -245,7 +245,7 @@
 	<div class="share-block"></div>
 
 	<p>
-		Super Tuesday, when voters in Minnesota and 13 other states help choose their party's presidential nominee, is March 3. Nearly one-third of the Democratic Party delegates will be up for grabs. Although Republicans also have a primary, President Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> in Minnesota.
+		It's March 3, also known as Super Tuesday, when nearly one-third of the Democratic Party delegates will be up for grabs from 14 states, including Minnesota. Although Republicans also have a primary today, President Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> here. Polls close at 8 p.m.
 	</p>
 	<p class="leadinDesktop">With candidates in flux for the Democratic contest, the results could go several different ways. It will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses, but Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton, could do well again, especially with Amy Klobuchar now out of the race.</p>
 </div>
@@ -431,7 +431,7 @@
 
 <section id="delegate-tracker">
 	<h2>Committed delegates by candidate</h2>
-	<p>Heading into Super Tuesday, Sanders has the most delegates among all candidates, a lead that could potentially widen on March 3. More than 1,300 delegates will be at stake, the most of any single day of the primary season.</p>
+	<p>Heading into Super Tuesday, Sen. Sanders and Biden have split away from a further narrowing pack. More than 1,300 delegates are at stake today, the most of any single day of the primary season.</p>
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/2/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
