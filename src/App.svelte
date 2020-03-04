@@ -115,8 +115,8 @@
 
 	let getData = async function() {
 		document.getElementById('countdown-container').innerHTML = 'Updating...';
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json?x-request=html");
-		console.log(response, response.ok);
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/json/results-latest.json");
+		// console.log(response, response.ok);
 		if (response.ok) {
 			time = 30;
 			format_timer_remaining_nuclear(time);
@@ -132,7 +132,7 @@
 	}
 
 	let getElexControls = async function() {
-		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json?x-request=html");
+		const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/elex_controls.json");
 		// const response = await fetch("https://static.startribune.com/elections/projects/2020-election-results/test_controls.json");
 
 		if (response.ok) {
@@ -245,12 +245,19 @@
 	<div class="share-block"></div>
 
 	<p>
-		Former Vice President Joe Biden won Minnesota's presidential primary on Super Tuesday, when voters went to the polls in 14 states. Republicans also held a primary, but President Trump <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">was unopposed</a> on Minnesota's ballot.
+		Former Vice President Joe Biden won Minnesota's presidential primary on Super Tuesday, netting about half of Minnesota's 75 available delegates. Republicans also held a primary, but President Trump <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/" target="_blank">was unopposed</a> on Minnesota's ballot.
 	</p>
-	<p class="leadinDesktop">The last-minute exit of Sen. Amy Klobuchar from the race and her endorsement of Biden muddled expectations for the primary. The state's 75 delegates will be split among candidates who get at least 15% of the vote.</p>
+	<p class="leadinDesktop">The last-minute exit of Sen. Amy Klobuchar from the race and her endorsement of Biden muddled expectations for the primary. See a detailed precinct-by-precinct view of Minnesota's results <a target="_blank" href="http://www.startribune.com/how-minnesota-voted-in-the-2020-democratic-primary-neighborhood-by-neighborhood/567235161/">here</a>.</p>
 </div>
 
-<div id="maptop" class="updates">
+<section id="delegate-tracker">
+	<h2>The delegate horse race</h2>
+	<p>Fourteen states awarded hundreds of new delegates on Super Tuesday, the majority going to former Vice President Joe Biden and Sen. Bernie Sanders. Former New York City Mayor Mike Bloomberg also received a handful of delegates in his first round of contests, but dropped out of the race the next morning. Sen. Elizabeth Warren remains in the race but is well behind the frontrunners.</p>
+	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/50/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="700"></iframe>
+	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
+</section>
+
+<div id="maptop" class="updates" style="display:none;">
 	<p class="live2">&bull; LIVE</p>
 	<p id="countdown-container" class="countdown">Loading data ...</p>
 	<p class="lastUpdatedIe">Results update about every 30 seconds</p>
@@ -428,13 +435,6 @@
 
 </div>
 <!-- {/if} -->
-
-<section id="delegate-tracker">
-	<h2>Committed delegates by candidate</h2>
-	<p>Heading into Super Tuesday, Sen. Sanders and Biden have split away from a further narrowing pack. More than 1,300 delegates are at stake today, the most of any single day of the primary season.</p>
-	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/50/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="500"></iframe>
-	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
-</section>
 
 <section id="credits">
 		<p>Data sources: Associated Press, US Census Bureau. Winner calls made by the Associated Press.</p>

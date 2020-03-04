@@ -19,6 +19,7 @@ th {
 .tableResults  {
   border-collapse: collapse;
   border-spacing: 0;
+  font-variant-numeric: tabular-nums;
 
   thead th {
     text-transform: uppercase;
@@ -69,6 +70,7 @@ th {
   .pct {
     width: 50px;
     text-align: right;
+    padding-left: 8px;
   }
 
   .winner {
@@ -83,6 +85,7 @@ th {
     border-collapse: collapse;
     border-spacing: 0;
     margin-bottom: 0 !important;
+    font-variant-numeric: tabular-nums;
   }
 
   thead th {
