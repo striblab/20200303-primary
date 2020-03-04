@@ -67,6 +67,8 @@ $candColors: (
     border-radius: 50%;
     display: inline-block;
     margin-right: 5px !important;
+    color: transparent;
+    text-shadow: 0 0 0 $color;
   }
 }
 
@@ -81,10 +83,6 @@ $candColors: (
 
 .no-winner {
   background-color: white;
-
-  span {
-    visibility: hidden !important;
-  }
 }
 
 .cities {

@@ -141,7 +141,7 @@
 
 			function dotColor(candidate, winner) {
 				if (!winner) {
-					return 'legend-' + candidate.toLowerCase() + 'noWinner';
+					return 'legend-' + candidate.toLowerCase() + ' noWinner';
 				}
 				else {
 					return 'legend-' + candidate.toLowerCase();
@@ -464,7 +464,11 @@
 				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
+							{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+							<span class="{dotColor2(candidate.last)}"></span>
+							{:else}
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{/if}
 							{#if candidate.first}
 			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 			        {:else}
@@ -481,7 +485,11 @@
 				{:else if statewide_data.filter(e => e.winner == true).length > 0}
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
+							{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+							<span class="{dotColor2(candidate.last)}"></span>
+							{:else}
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{/if}
 							{#if candidate.first}
 			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 			        {:else}
@@ -526,7 +534,11 @@
 		{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
 			<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 				<td class="cand">
+					{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+					<span class="{dotColor2(candidate.last)}"></span>
+					{:else}
 					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+					{/if}
 					{#if candidate.first}
 						{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 					{:else}
@@ -543,7 +555,11 @@
 		{:else if statewide_data.filter(e => e.winner == true).length > 0}
 			<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 				<td class="cand">
+					{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+					<span class="{dotColor2(candidate.last)}"></span>
+					{:else}
 					<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+					{/if}
 					{#if candidate.first}
 						{candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 					{:else}
@@ -611,7 +627,11 @@
 				{#if statewide_data.filter(e => e.manual_winner == true).length > 0 }
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
+							{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+							<span class="{dotColor2(candidate.last)}"></span>
+							{:else}
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{/if}
 							{#if candidate.first}
 			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 			        {:else}
@@ -628,7 +648,11 @@
 				{:else if statewide_data.filter(e => e.winner == true).length > 0}
 					<tr class="{winner(candidate.winner, candidate.manual_winner)}">
 						<td class="cand">
+							{#if (winner(candidate.winner, candidate.manual_winner) === 'no-winner')}
+							<span class="{dotColor2(candidate.last)}"></span>
+							{:else}
 							<span class="{dotColor(candidate.last, candidate.winner)}">&#10004</span>
+							{/if}
 							{#if candidate.first}
 			          {candidate.first} {candidate.last}{dropped_checker(candidate.last)}
 			        {:else}
