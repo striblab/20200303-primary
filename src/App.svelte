@@ -250,7 +250,7 @@
 	<p class="leadinDesktop">With candidates in flux for the Democratic contest, the results could go several different ways. It will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses, but Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton, could do well again, especially with Amy Klobuchar now out of the race.</p>
 </div>
 
-<div id="maptop" class="updates" style="display: none;">
+<div id="maptop" class="updates">
 	<p class="live2">&bull; LIVE</p>
 	<p id="countdown-container" class="countdown">Loading data ...</p>
 	<p class="lastUpdatedIe">Results update about every 30 seconds</p>
