@@ -68,7 +68,7 @@ const radius_calc = function(area) {
 
 const circlescalearea = d3.scaleLinear()
   //.domain([0, 75000]) // votecount Clinton 2016 test data
-  .domain([0, 65000]) // votecount
+  .domain([0, 70000]) // votecount
   .range([min_circle_area, max_circle_area]); // radius range
 
 const circle_sizer = function(input) {
