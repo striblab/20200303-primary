@@ -245,7 +245,7 @@
 	<div class="share-block"></div>
 
 	<p>
-		It's March 3, also known as Super Tuesday, when nearly one-third of the Democratic Party delegates will be up for grabs from 14 states, including Minnesota. Although Republicans also have a primary today, President Trump is <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">running unopposed</a> here. Polls close at 8 p.m.
+		It's March 3, also known as Super Tuesday, when nearly one-third of the Democratic Party delegates are up for grabs from 14 states, including Minnesota. Although Republicans also had a primary today, President Trump <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/">was unopposed</a> on Minnesota's ballot. Polls closed at 8 p.m.
 	</p>
 	<p class="leadinDesktop">With candidates in flux for the Democratic contest, the results could go several different ways. It will be former New York City Mayor Mike Bloomberg’s first test after sitting out four states' primaries and caucuses, but Sen. Bernie Sanders, who won Minnesota’s caucus in 2016 over Hillary Clinton, could do well again, especially with Amy Klobuchar now out of the race.</p>
 </div>
