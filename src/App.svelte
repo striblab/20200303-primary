@@ -25,8 +25,6 @@
 	import { onMount, afterUpdate } from 'svelte';
 	import _ from 'lodash';
 
-	export let title;
-
 	export let data = [];
 	export let elex_controls = {
 		"local": [],
@@ -231,25 +229,6 @@
 	} */
 </style>
 
-<!-- {#if statewide_data.length > 0} -->
-<div class="leadin">
-
-	<div class="elexLogo">
-		<div class="text">
-			<h3>ELECTION</h3>
-		</div>
-		<img src="https://static.startribune.com/news/projects/all/20200303-elex-results/build/img/ELEX2020.svg" alt="Election 2020"/>
-	</div>
-
-	<h1>{title}</h1>
-	<div class="share-block"></div>
-
-	<p>
-		Former Vice President Joe Biden won Minnesota's presidential primary on Super Tuesday, netting about half of Minnesota's 75 available delegates. Republicans also held a primary, but President Trump <a href="http://www.startribune.com/justices-reject-challenge-to-minnesota-gop-s-trump-only-primary-ballot/566856442/" target="_blank">was unopposed</a> on Minnesota's ballot.
-	</p>
-	<p class="leadinDesktop">The last-minute exit of Sen. Amy Klobuchar from the race and her endorsement of Biden muddled expectations for the primary. See a detailed precinct-by-precinct view of Minnesota's results <a target="_blank" href="http://www.startribune.com/how-minnesota-voted-in-the-2020-democratic-primary-neighborhood-by-neighborhood/567235161/">here</a>.</p>
-</div>
-
 <section id="delegate-tracker">
 	<h2>The delegate horse race</h2>
 	<p>Fourteen states awarded hundreds of new delegates on Super Tuesday, the majority going to former Vice President Joe Biden and Sen. Bernie Sanders. Former New York City Mayor Mike Bloomberg and Sen. Elizabeth Warren also received a handful of delegates, but both have since dropped out of the race.</p>
@@ -434,10 +413,8 @@
 	</div>
 
 </div>
-<!-- {/if} -->
 
 <section id="credits">
 		<p>Data sources: Associated Press, US Census Bureau. Winner calls made by the Associated Press.</p>
 		<p>Credits: Michael Corey, Thomas Oide and C.J. Sinner</p>
 </section>
-<!-- {/if} -->
