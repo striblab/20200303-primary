@@ -252,7 +252,7 @@
 
 <section id="delegate-tracker">
 	<h2>The delegate horse race</h2>
-	<p>Fourteen states awarded hundreds of new delegates on Super Tuesday, the majority going to former Vice President Joe Biden and Sen. Bernie Sanders. Former New York City Mayor Mike Bloomberg also received a handful of delegates in his first round of contests, but dropped out of the race the next morning. Sen. Elizabeth Warren remains in the race but is well behind the frontrunners.</p>
+	<p>Fourteen states awarded hundreds of new delegates on Super Tuesday, the majority going to former Vice President Joe Biden and Sen. Bernie Sanders. Former New York City Mayor Mike Bloomberg and Sen. Elizabeth Warren also received a handful of delegates, but both have since dropped out of the race.</p>
 	<iframe title="National delegate count [draft]" aria-label="Interactive line chart" id="datawrapper-chart-X8NB4" src="//datawrapper.dwcdn.net/X8NB4/50/" scrolling="no" frameborder="0" style="width: 0; min-width: 100% !important; border: none;" height="700"></iframe>
 	<script type="text/javascript">!function(){"use strict";window.addEventListener("message",function(a){if(void 0!==a.data["datawrapper-height"])for(var e in a.data["datawrapper-height"]){var t=document.getElementById("datawrapper-chart-"+e)||document.querySelector("iframe[src*='"+e+"']");t&&(t.style.height=a.data["datawrapper-height"][e]+"px")}})}();</script>
 </section>
