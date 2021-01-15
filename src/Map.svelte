@@ -97,9 +97,6 @@ function hideTooltip(path, feature) {
       .style('opacity', null)
       .style('stroke-width', null)
   }
-
-
-
 }
 
 
